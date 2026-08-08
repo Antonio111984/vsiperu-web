@@ -143,38 +143,192 @@ const Chevron = ({
 );
 
 /* Iconos de categoría (48x48) */
+/* =========================================================
+   ICONOS DE CATEGORÍAS
+   Estilo industrial lineal - 48x48
+========================================================= */
+
 const CAT_ICONS: Record<string, React.ReactNode> = {
+  /* -------------------------
+     GRASERA / ZERK FITTING
+  ------------------------- */
   graseras: (
     <>
-      <circle cx="24" cy="12" r="6" />
-      <path d="M24 18v10M18 28h12v6H18zM20 34v8h8v-8M15 42h18" />
+      {/* Cabeza */}
+      <path
+        d="
+          M19.5 9
+          C19.5 5.7 21.5 3.5 24 3.5
+          C26.5 3.5 28.5 5.7 28.5 9
+          V11
+          C28.5 13 27 14.5 25 14.5
+          H23
+          C21 14.5 19.5 13 19.5 11
+          V9Z
+        "
+      />
+
+      {/* Cuello */}
+      <path d="M21.5 14.5V18H26.5V14.5" />
+
+      {/* Hexágono */}
+      <path
+        d="
+          M18.5 18
+          H29.5
+          L33 23
+          L29.5 28
+          H18.5
+          L15 23
+          L18.5 18Z
+        "
+      />
+
+      {/* Cuerpo roscado */}
+      <path d="M19.5 28V43M28.5 28V43" />
+
+      {/* Rosca */}
+      <path d="M19.5 32H28.5M19.5 35.5H28.5M19.5 39H28.5M19.5 42.5H28.5" />
     </>
   ),
-  valvulas: <path d="M16 8h16M24 8v8M12 16h24v14H12zM8 18h4v10H8zM36 18h4v10h-4zM18 30v10M30 30v10M14 40h20" />,
+
+  /* -------------------------
+     VÁLVULA INDUSTRIAL
+     Tipo compuerta / gate valve
+  ------------------------- */
+  valvulas: (
+    <>
+      {/* Volante */}
+      <circle cx="24" cy="8" r="5.5" />
+      <circle cx="24" cy="8" r="1.5" />
+
+      {/* Vástago */}
+      <path d="M24 13.5V19" />
+
+      {/* Bonete */}
+      <path d="M19 19H29L31 23H17L19 19Z" />
+
+      {/* Cuerpo válvula */}
+      <path
+        d="
+          M16 23
+          H32
+          L35 28
+          L32 33
+          H16
+          L13 28
+          L16 23Z
+        "
+      />
+
+      {/* Bridas */}
+      <path d="M8 23V33M13 24V32" />
+      <path d="M35 24V32M40 23V33" />
+
+      {/* Conexión horizontal */}
+      <path d="M8 28H13M35 28H40" />
+
+      {/* Pernos */}
+      <path d="M8 25H5M8 31H5M40 25H43M40 31H43" />
+    </>
+  ),
+
+  /* -------------------------
+     TUBERÍA HDPE
+  ------------------------- */
   tubos: (
     <>
-      <ellipse cx="14" cy="30" rx="6" ry="9" />
-      <ellipse cx="30" cy="30" rx="6" ry="9" />
-      <path d="M14 21h16M14 39h16" />
-      <ellipse cx="26" cy="14" rx="5" ry="7" />
-      <path d="M26 7h8M26 21h8" />
+      {/* Tubería superior */}
+      <ellipse cx="17" cy="15" rx="7" ry="7" />
+      <ellipse cx="17" cy="15" rx="4" ry="4" />
+      <path d="M17 8H33" />
+      <path d="M17 22H33" />
+      <path d="M33 8C36.8 8 40 11.1 40 15C40 18.9 36.8 22 33 22" />
+
+      {/* Tubería inferior */}
+      <ellipse cx="14" cy="34" rx="7" ry="7" />
+      <ellipse cx="14" cy="34" rx="4" ry="4" />
+      <path d="M14 27H30" />
+      <path d="M14 41H30" />
+      <path d="M30 27C33.8 27 37 30.1 37 34C37 37.9 33.8 41 30 41" />
     </>
   ),
+
+  /* -------------------------
+     PLANCHAS METÁLICAS
+  ------------------------- */
   planchas: (
     <>
-      <path d="M24 10l16 7-16 7-16-7z" />
-      <path d="M8 24l16 7 16-7M8 31l16 7 16-7" />
+      {/* Plancha superior */}
+      <path
+        d="
+          M9 15
+          L31 9
+          L40 14
+          L18 21
+          L9 15Z
+        "
+      />
+
+      {/* Espesor superior */}
+      <path d="M9 15V19L18 25L40 18V14" />
+
+      {/* Segunda plancha */}
+      <path d="M9 24L18 30L40 23" />
+      <path d="M9 24V28L18 34L40 27V23" />
+
+      {/* Tercera plancha */}
+      <path d="M9 33L18 39L40 32" />
+      <path d="M9 33V37L18 43L40 36V32" />
     </>
   ),
+
+  /* -------------------------
+     ACCESORIOS / CODO INDUSTRIAL
+  ------------------------- */
   accesorios: (
     <>
-      <path d="M10 34V22a12 12 0 0112-12h4" />
-      <rect x="6" y="34" width="8" height="8" />
-      <rect x="26" y="6" width="8" height="8" />
-      <circle cx="24" cy="24" r="3" />
+      {/* Boca superior */}
+      <rect x="27" y="5" width="12" height="7" rx="1" />
+      <path d="M30 12V17" />
+      <path d="M36 12V17" />
+
+      {/* Codo */}
+      <path
+        d="
+          M33 17
+          C33 17 33 17 33 17
+          C23 17 17 23 17 33
+        "
+      />
+
+      <path
+        d="
+          M28 17
+          C19.5 19
+          14 24.5
+          12 33
+        "
+      />
+
+      {/* Boca inferior */}
+      <rect x="7" y="33" width="12" height="8" rx="1" />
+
+      {/* Detalles de brida */}
+      <path d="M10 33V30M16 33V30" />
+      <path d="M30 8H36" />
+
+      {/* Unión */}
+      <circle cx="17" cy="28" r="1.8" />
     </>
   ),
 };
+
+
+/* =========================================================
+   COMPONENTE
+========================================================= */
+
 const CatIcon = ({
   id,
   s = 52,
@@ -196,6 +350,7 @@ const CatIcon = ({
     fill="none"
     stroke={c}
     strokeWidth={w}
+    strokeLinecap="round"
     strokeLinejoin="round"
     aria-hidden="true"
   >
@@ -496,7 +651,7 @@ export default function Home() {
                   <Ph src={s.imagen} alt={s.imagenAlt} dark />
                 </div>
                 <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(5,43,89,.94)_0%,rgba(5,43,89,.8)_40%,rgba(5,43,89,.42)_70%,rgba(5,43,89,.14)_100%)]" />
-
+               
                 <div className="pointer-events-none relative z-[2] mx-auto grid max-w-page grid-cols-[minmax(0,680px)] items-center px-6 pb-[clamp(72px,7.5vw,104px)] pt-[clamp(56px,7vw,96px)]">
                   <div>
                     <div className="inline-flex items-center gap-[9px] rounded-full border border-[rgba(228,122,36,.42)] bg-[rgba(228,122,36,.14)] px-3.5 py-[7px] text-[13px] font-bold text-[#FFB672]">
@@ -688,6 +843,7 @@ export default function Home() {
               </div>
             ) : null}
 
+            {/* Productos */}
             <div className="mt-9 grid grid-cols-4 gap-x-[26px] gap-y-[30px] w1024:grid-cols-3 w900:grid-cols-2 w640:gap-x-4 w640:gap-y-[26px] w380:grid-cols-1">
               {items.map((p) => (
                 <article className="flex flex-col" key={p.sku}>
@@ -729,6 +885,7 @@ export default function Home() {
               ))}
             </div>
 
+              {/* Paginado */}
             <div className="mt-11 flex flex-wrap items-center justify-center gap-2">
               <button
                 aria-label="Página anterior"
@@ -874,7 +1031,7 @@ export default function Home() {
                 <span className="border-b-[3px] border-naranja pb-0.5 text-naranja">la rapidez de siempre</span>
               </p>
               <div className="mt-[34px] h-[clamp(190px,24vw,280px)] w-[clamp(190px,24vw,280px)] overflow-hidden rounded-full border-[5px] border-white shadow-avatar">
-                <Ph src="" alt="Foto del asesor" />
+                <Ph src="/extras/persona1.png" alt="Foto del asesor" />
               </div>
               <div className="mt-[30px] flex flex-wrap gap-3">
                 <a

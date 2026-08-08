@@ -3,7 +3,7 @@
     {
       "titulo": "Graseras, válvulas y suministros industriales para la industria más exigente",
       "descripcion": "Tu aliado estratégico desde hace 10 años. Importación directa desde China, stock inmediato en Lima y despacho a todo el Perú — con precio de importador, no de intermediario.",
-      "imagen": "",
+      "imagen": "/portadas/portada1.png",
       "imagenAlt": "Imagen de fondo del slide 1 (diseño completo, ~1920x760)",
       "ctaTexto": "Cotiza ahora por WhatsApp",
       "ctaMensaje": "Hola VSI, necesito una cotización"
@@ -11,7 +11,7 @@
     {
       "titulo": "Válvulas cuchilla que sí aguantan relaves, pulpas y lodos",
       "descripcion": "Unidireccionales y bidireccionales para cortar flujo con sólidos en suspensión. La elección de minería, pesca y agroindustria cuando una válvula convencional no resiste.",
-      "imagen": "",
+      "imagen": "/portadas/portada2.png",
       "imagenAlt": "Imagen de fondo del slide 2 (diseño completo, ~1920x760)",
       "ctaTexto": "Cotizar válvulas",
       "ctaMensaje": "Hola VSI, quiero cotizar VÁLVULAS CUCHILLA"
@@ -19,7 +19,7 @@
     {
       "titulo": "Tubería HDPE corrugada y accesorios, con stock listo en Lima",
       "descripcion": "Alta resistencia química y mecánica, ligera y de instalación rápida. Línea completa de accesorios para drenaje pluvial, agrícola y minero.",
-      "imagen": "",
+      "imagen": "/portadas/portada3.png",
       "imagenAlt": "Imagen de fondo del slide 3 (diseño completo, ~1920x760)",
       "ctaTexto": "Cotizar tubería HDPE",
       "ctaMensaje": "Hola VSI, quiero cotizar TUBERÍA HDPE"
@@ -31,7 +31,7 @@
       "titulo": "GRASERAS",
       "destacado": true,
       "nota": "MÁS VENDIDO",
-      "imagen": "",
+      "imagen": "/categorias/tubos.jpg",
       "imagenAlt": "Foto de graseras"
     },
     {
@@ -39,7 +39,7 @@
       "titulo": "VÁLVULAS",
       "destacado": false,
       "nota": "",
-      "imagen": "",
+      "imagen": "/categorias/planchas.jpg",
       "imagenAlt": "Foto de válvulas"
     },
     {
@@ -47,7 +47,7 @@
       "titulo": "TUBOS HDPE",
       "destacado": false,
       "nota": "",
-      "imagen": "",
+      "imagen": "/categorias/planchas.jpg",
       "imagenAlt": "Foto de tubería HDPE"
     },
     {
@@ -55,7 +55,7 @@
       "titulo": "PLANCHAS",
       "destacado": false,
       "nota": "",
-      "imagen": "",
+      "imagen": "/categorias/planchas.jpg",
       "imagenAlt": "Foto de planchas"
     },
     {
@@ -63,7 +63,7 @@
       "titulo": "ACCESORIOS",
       "destacado": false,
       "nota": "",
-      "imagen": "",
+      "imagen": "/categorias/planchas.jpg",
       "imagenAlt": "Foto de accesorios"
     }
   ],
@@ -184,47 +184,47 @@
         {
           "nombre": "Grasera recta 1/8\" NPT",
           "desc": "Grasera recta de acero zincado, rosca 1/8\" NPT. La medida de mayor rotación en mantenimiento industrial.",
-          "imagen": ""
+          "imagen": "/productos/a1.jpeg"
         },
         {
           "nombre": "Grasera 45° 1/8\" NPT",
           "desc": "Codo a 45° para puntos de engrase con acceso restringido, sin necesidad de desmontar el equipo.",
-          "imagen": ""
+          "imagen": "/productos/a2.jpeg"
         },
         {
           "nombre": "Grasera 90° 1/8\" NPT",
           "desc": "Codo a 90° para engrase lateral en chumaceras, pines y bocinas de difícil alcance.",
-          "imagen": ""
+          "imagen": "/productos/a1.jpeg"
         },
         {
           "nombre": "Grasera recta 1/4\" NPT",
           "desc": "Mayor caudal de grasa por bombeo, para equipos de gran porte y ciclos de mantenimiento cortos.",
-          "imagen": ""
+          "imagen": "/productos/a2.jpeg"
         },
         {
           "nombre": "Grasera métrica M6 x 1",
           "desc": "Rosca métrica fina para maquinaria importada europea y asiática.",
-          "imagen": ""
+          "imagen": "/productos/a1.jpeg"
         },
         {
           "nombre": "Grasera métrica M8 x 1.25",
           "desc": "Rosca métrica estándar, la más usada en equipos agrícolas y de construcción.",
-          "imagen": ""
+          "imagen": "/productos/a2.jpeg"
         },
         {
           "nombre": "Grasera métrica M10 x 1",
           "desc": "Para chumaceras y pines de gran porte con alta exigencia de lubricación.",
-          "imagen": ""
+          "imagen": "/productos/a1.jpeg"
         },
         {
           "nombre": "Grasera inoxidable 304 / 316",
           "desc": "Para ambientes corrosivos: plantas pesqueras, alimentos, químicos y entorno marino.",
-          "imagen": ""
+          "imagen": "/productos/a2.jpeg"
         },
         {
           "nombre": "Grasera tipo botón",
           "desc": "Perfil bajo para espacios reducidos donde una grasera convencional no entra.",
-          "imagen": ""
+          "imagen": "/productos/a1.jpeg"
         }
       ]
     },
