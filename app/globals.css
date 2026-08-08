@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Solo lo que no puede vivir como utilidad: resets base, comportamiento de
+   scroll y el offset de las anclas (que cambia con el alto real del header).
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 overflow-x-hidden bg-white font-body text-texto antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply m-0 font-head font-extrabold tracking-[-0.02em] text-balance;
+  }
+
+  p {
+    @apply m-0 text-pretty;
+  }
+
+  img {
+    @apply block max-w-full;
+  }
+
+  svg,
+  iframe,
+  video {
+    @apply max-w-full;
+  }
+
+  a {
+    @apply text-azul no-underline;
+  }
+
+  a:hover {
+    @apply text-naranja;
+  }
+
+  ul {
+    @apply m-0 list-none p-0;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font-family: inherit;
+    font-size: 15px;
+  }
+
+  /* Offset de anclas = alto del header sticky. Cambia cuando el buscador
+     pasa a su propia línea (760px). */
+  section[id],
+  div[id] {
+    scroll-margin-top: 152px;
+  }
+
+  @media (max-width: 760px) {
+    section[id],
+    div[id] {
+      scroll-margin-top: 176px;
+    }
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    height: 0;
+  }
+}

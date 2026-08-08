@@ -1,0 +1,426 @@
+{
+  "hero": [
+    {
+      "titulo": "Graseras, válvulas y suministros industriales para la industria más exigente",
+      "descripcion": "Tu aliado estratégico desde hace 10 años. Importación directa desde China, stock inmediato en Lima y despacho a todo el Perú — con precio de importador, no de intermediario.",
+      "imagen": "",
+      "imagenAlt": "Imagen de fondo del slide 1 (diseño completo, ~1920x760)",
+      "ctaTexto": "Cotiza ahora por WhatsApp",
+      "ctaMensaje": "Hola VSI, necesito una cotización"
+    },
+    {
+      "titulo": "Válvulas cuchilla que sí aguantan relaves, pulpas y lodos",
+      "descripcion": "Unidireccionales y bidireccionales para cortar flujo con sólidos en suspensión. La elección de minería, pesca y agroindustria cuando una válvula convencional no resiste.",
+      "imagen": "",
+      "imagenAlt": "Imagen de fondo del slide 2 (diseño completo, ~1920x760)",
+      "ctaTexto": "Cotizar válvulas",
+      "ctaMensaje": "Hola VSI, quiero cotizar VÁLVULAS CUCHILLA"
+    },
+    {
+      "titulo": "Tubería HDPE corrugada y accesorios, con stock listo en Lima",
+      "descripcion": "Alta resistencia química y mecánica, ligera y de instalación rápida. Línea completa de accesorios para drenaje pluvial, agrícola y minero.",
+      "imagen": "",
+      "imagenAlt": "Imagen de fondo del slide 3 (diseño completo, ~1920x760)",
+      "ctaTexto": "Cotizar tubería HDPE",
+      "ctaMensaje": "Hola VSI, quiero cotizar TUBERÍA HDPE"
+    }
+  ],
+  "bento": [
+    {
+      "catIndex": 0,
+      "titulo": "GRASERAS",
+      "destacado": true,
+      "nota": "MÁS VENDIDO",
+      "imagen": "",
+      "imagenAlt": "Foto de graseras"
+    },
+    {
+      "catIndex": 1,
+      "titulo": "VÁLVULAS",
+      "destacado": false,
+      "nota": "",
+      "imagen": "",
+      "imagenAlt": "Foto de válvulas"
+    },
+    {
+      "catIndex": 2,
+      "titulo": "TUBOS HDPE",
+      "destacado": false,
+      "nota": "",
+      "imagen": "",
+      "imagenAlt": "Foto de tubería HDPE"
+    },
+    {
+      "catIndex": 3,
+      "titulo": "PLANCHAS",
+      "destacado": false,
+      "nota": "",
+      "imagen": "",
+      "imagenAlt": "Foto de planchas"
+    },
+    {
+      "catIndex": 4,
+      "titulo": "ACCESORIOS",
+      "destacado": false,
+      "nota": "",
+      "imagen": "",
+      "imagenAlt": "Foto de accesorios"
+    }
+  ],
+  "servicios": [
+    {
+      "titulo": "IMPORTACIÓN BAJO PEDIDO",
+      "mensaje": "Hola VSI, quiero consultar por IMPORTACIÓN BAJO PEDIDO",
+      "imagen": "",
+      "imagenAlt": "Foto: contenedor / importación",
+      "fila": 1
+    },
+    {
+      "titulo": "DESPACHO NACIONAL",
+      "mensaje": "Hola VSI, quiero consultar por DESPACHO NACIONAL",
+      "imagen": "",
+      "imagenAlt": "Foto: camión / despacho",
+      "fila": 1
+    },
+    {
+      "titulo": "ABASTECIMIENTO PROGRAMADO",
+      "mensaje": "Hola VSI, quiero consultar por ABASTECIMIENTO PROGRAMADO",
+      "imagen": "",
+      "imagenAlt": "Foto horizontal amplia: almacén con stock",
+      "fila": 2
+    },
+    {
+      "titulo": "ASESORÍA TÉCNICA",
+      "mensaje": "Hola VSI, quiero consultar por ASESORÍA TÉCNICA",
+      "imagen": "",
+      "imagenAlt": "Foto vertical: asesor técnico en planta",
+      "fila": 3
+    },
+    {
+      "titulo": "ATENCIÓN CORPORATIVA",
+      "mensaje": "Hola VSI, quiero consultar por ATENCIÓN CORPORATIVA",
+      "imagen": "",
+      "imagenAlt": "Foto vertical: oficina / documentos",
+      "fila": 3
+    },
+    {
+      "titulo": "COTIZACIÓN EN 24 HORAS",
+      "mensaje": "Hola VSI, quiero una COTIZACIÓN en 24 horas",
+      "imagen": "",
+      "imagenAlt": "Foto vertical: asesor cotizando",
+      "fila": 3
+    }
+  ],
+  "marcas": [
+    {
+      "nombre": "Marca 1",
+      "imagen": ""
+    },
+    {
+      "nombre": "Marca 2",
+      "imagen": ""
+    },
+    {
+      "nombre": "Marca 3",
+      "imagen": ""
+    },
+    {
+      "nombre": "Marca 4",
+      "imagen": ""
+    },
+    {
+      "nombre": "Marca 5",
+      "imagen": ""
+    },
+    {
+      "nombre": "Marca 6",
+      "imagen": ""
+    },
+    {
+      "nombre": "Marca 7",
+      "imagen": ""
+    },
+    {
+      "nombre": "Marca 8",
+      "imagen": ""
+    }
+  ],
+  "faqs": [
+    [
+      "¿Qué tipos de graseras manejan?",
+      "Manejamos graseras rectas, de 45° y de 90°, en todas las medidas y grados. Somos importadores directos, por lo que podemos atender tanto pedidos por unidad como volúmenes mayoristas."
+    ],
+    [
+      "¿Cuál es la diferencia entre válvula cuchilla unidireccional y bidireccional?",
+      "La unidireccional sella en un solo sentido del flujo y es la opción más económica para líneas de descarga. La bidireccional garantiza estanqueidad en ambos sentidos y se usa cuando la presión puede invertirse."
+    ],
+    [
+      "¿Despachan a provincias?",
+      "Sí. Despachamos a todo el Perú y coordinamos el envío a mina, planta u obra a través del operador logístico que prefieras."
+    ],
+    [
+      "¿Venden a empresas con factura?",
+      "Sí. Somos Suministros Industriales VSI, RUC 20609295539, y emitimos factura electrónica en todas nuestras ventas."
+    ],
+    [
+      "¿En cuánto tiempo responden una cotización?",
+      "Dentro de las 24 horas hábiles. Por WhatsApp la respuesta suele ser el mismo día, en horario de oficina."
+    ]
+  ],
+  "categorias": [
+    {
+      "id": "graseras",
+      "label": "Graseras",
+      "skuPrefijo": "GRA",
+      "medidas": [
+        "1/8\" NPT",
+        "1/4\" NPT",
+        "M6 x 1",
+        "M8 x 1.25",
+        "M10 x 1",
+        "Otra medida"
+      ],
+      "productos": [
+        {
+          "nombre": "Grasera recta 1/8\" NPT",
+          "desc": "Grasera recta de acero zincado, rosca 1/8\" NPT. La medida de mayor rotación en mantenimiento industrial.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Grasera 45° 1/8\" NPT",
+          "desc": "Codo a 45° para puntos de engrase con acceso restringido, sin necesidad de desmontar el equipo.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Grasera 90° 1/8\" NPT",
+          "desc": "Codo a 90° para engrase lateral en chumaceras, pines y bocinas de difícil alcance.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Grasera recta 1/4\" NPT",
+          "desc": "Mayor caudal de grasa por bombeo, para equipos de gran porte y ciclos de mantenimiento cortos.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Grasera métrica M6 x 1",
+          "desc": "Rosca métrica fina para maquinaria importada europea y asiática.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Grasera métrica M8 x 1.25",
+          "desc": "Rosca métrica estándar, la más usada en equipos agrícolas y de construcción.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Grasera métrica M10 x 1",
+          "desc": "Para chumaceras y pines de gran porte con alta exigencia de lubricación.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Grasera inoxidable 304 / 316",
+          "desc": "Para ambientes corrosivos: plantas pesqueras, alimentos, químicos y entorno marino.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Grasera tipo botón",
+          "desc": "Perfil bajo para espacios reducidos donde una grasera convencional no entra.",
+          "imagen": ""
+        }
+      ]
+    },
+    {
+      "id": "valvulas",
+      "label": "Válvulas",
+      "skuPrefijo": "VAL",
+      "medidas": [
+        "2\"",
+        "3\"",
+        "4\"",
+        "6\"",
+        "8\"",
+        "Otra medida"
+      ],
+      "productos": [
+        {
+          "nombre": "Válvula cuchilla unidireccional 2\"",
+          "desc": "Sello en un sentido de flujo. Solución económica para líneas de descarga con sólidos.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla unidireccional 4\"",
+          "desc": "Para pulpas y granulados de mediana densidad en planta.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla unidireccional 6\"",
+          "desc": "Alta capacidad de paso con corte limpio sobre material en suspensión.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla bidireccional 3\"",
+          "desc": "Estanqueidad en ambos sentidos del flujo, para líneas reversibles.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla bidireccional 6\"",
+          "desc": "Diseñada para líneas donde la presión puede invertirse sin aviso.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla bidireccional 8\"",
+          "desc": "Relaves y lodos de alta densidad, con cuerpo reforzado.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla con volante manual",
+          "desc": "Operación manual, sin requerir aire comprimido ni instalación eléctrica.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla con actuador neumático",
+          "desc": "Para automatización de planta e integración con el sistema de control.",
+          "imagen": ""
+        }
+      ]
+    },
+    {
+      "id": "tubos",
+      "label": "Tubos HDPE",
+      "skuPrefijo": "HDP",
+      "medidas": [
+        "4\"",
+        "6\"",
+        "8\"",
+        "12\"",
+        "Otra medida"
+      ],
+      "productos": [
+        {
+          "nombre": "Tubería HDPE corrugada 4\"",
+          "desc": "Drenaje agrícola y pluvial. Ligera, flexible y de instalación rápida.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tubería HDPE corrugada 6\"",
+          "desc": "Conducción de mediano caudal con alta resistencia química.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tubería HDPE corrugada 8\"",
+          "desc": "Obra civil y minería, con buena resistencia al aplastamiento.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tubería HDPE corrugada 12\"",
+          "desc": "Alto caudal para colectores principales y drenaje de gran escala.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Codo HDPE 90°",
+          "desc": "Cambio de dirección en línea corrugada sin pérdida de estanqueidad.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tee HDPE",
+          "desc": "Derivación de línea para ramales secundarios.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Unión / cople HDPE",
+          "desc": "Empalme de tramos con sello confiable.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tapón HDPE",
+          "desc": "Cierre de extremo de línea para pruebas o final de tramo.",
+          "imagen": ""
+        }
+      ]
+    },
+    {
+      "id": "planchas",
+      "label": "Planchas",
+      "skuPrefijo": "PLA",
+      "medidas": [
+        "1/8\"",
+        "3/16\"",
+        "1/4\"",
+        "3/8\"",
+        "1/2\"",
+        "Otro espesor"
+      ],
+      "productos": [
+        {
+          "nombre": "Plancha LAC (laminada en caliente)",
+          "desc": "Estructuras, bases de equipo y trabajos de metalmecánica pesada.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha LAF (laminada en frío)",
+          "desc": "Acabado fino para carpintería metálica y piezas a la vista.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha estriada",
+          "desc": "Pisos y plataformas antideslizantes en planta y escaleras.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha galvanizada",
+          "desc": "Resistencia a la corrosión en aplicaciones expuestas a intemperie.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha inoxidable 304",
+          "desc": "Alimentos, pesca y farmacéutica: superficie sanitaria y de fácil limpieza.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha inoxidable 316",
+          "desc": "Ambientes salinos y químicos agresivos, con molibdeno para mayor resistencia.",
+          "imagen": ""
+        }
+      ]
+    },
+    {
+      "id": "accesorios",
+      "label": "Accesorios",
+      "skuPrefijo": "ACC",
+      "medidas": [
+        "Según requerimiento"
+      ],
+      "productos": [
+        {
+          "nombre": "Abrazaderas metálicas",
+          "desc": "Sujeción firme de mangueras y líneas en distintos diámetros.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Niples roscados",
+          "desc": "Empalmes cortos en las medidas más usadas en planta.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Conexiones roscadas",
+          "desc": "Codos, tees y uniones bajo pedido según tu especificación.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Bridas",
+          "desc": "Según norma y diámetro requerido para conexión de líneas.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tapones y reducciones",
+          "desc": "Complemento de línea para cierres y cambios de diámetro.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Suministro bajo pedido",
+          "desc": "¿No está en la lista? Lo importamos para ti con tu especificación exacta.",
+          "imagen": ""
+        }
+      ]
+    }
+  ]
+}

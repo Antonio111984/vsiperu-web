@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1450 460" width="1450" height="460" fill="none">
+  <defs>
+    <mask id="vsiCutout" maskUnits="userSpaceOnUse" x="0" y="0" width="470" height="460">
+      <rect x="0" y="0" width="470" height="460" fill="white"></rect>
+      <text x="118" y="299" fill="black" font-family="Manrope, Arial, sans-serif" font-weight="800" font-size="150" letter-spacing="-18">VSI</text>
+    </mask>
+  </defs>
+  <g mask="url(#vsiCutout)">
+    <path d="M92 298V126c0-22 8-41 24-57 15-15 34-23 56-23h252v194l-3 1c-44-7-83-11-118-11-70 0-137 16-211 68z" fill="#0C3C9A"></path>
+    <path d="M92 334c75-54 145-77 232-77 32 0 65 3 100 8v123c-42-7-79-10-112-10-84 0-157 17-220 32V334z" fill="#FF8616"></path>
+  </g>
+  <text x="480" y="176" fill="#0C3C9A" font-family="Manrope, Arial, sans-serif" font-weight="800" font-size="128" textLength="960" lengthAdjust="spacingAndGlyphs">SUMINISTROS</text>
+  <text x="480" y="279" fill="#FF8616" font-family="Manrope, Arial, sans-serif" font-weight="800" font-size="128" textLength="960" lengthAdjust="spacingAndGlyphs">INDUSTRIALES</text>
+</svg>
