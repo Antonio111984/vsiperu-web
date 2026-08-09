@@ -31,7 +31,7 @@
       "titulo": "GRASERAS",
       "destacado": true,
       "nota": "MÁS VENDIDO",
-      "imagen": "/categorias/tubos.jpg",
+      "imagen": "/categorias/graseras.png",
       "imagenAlt": "Foto de graseras"
     },
     {
@@ -39,7 +39,7 @@
       "titulo": "VÁLVULAS",
       "destacado": false,
       "nota": "",
-      "imagen": "/categorias/planchas.jpg",
+      "imagen": "/categorias/valvulas.png",
       "imagenAlt": "Foto de válvulas"
     },
     {
@@ -47,7 +47,7 @@
       "titulo": "TUBOS HDPE",
       "destacado": false,
       "nota": "",
-      "imagen": "/categorias/planchas.jpg",
+      "imagen": "/categorias/tubos.png",
       "imagenAlt": "Foto de tubería HDPE"
     },
     {
@@ -55,7 +55,7 @@
       "titulo": "PLANCHAS",
       "destacado": false,
       "nota": "",
-      "imagen": "/categorias/planchas.jpg",
+      "imagen": "/categorias/planchas.png",
       "imagenAlt": "Foto de planchas"
     },
     {
@@ -63,51 +63,51 @@
       "titulo": "ACCESORIOS",
       "destacado": false,
       "nota": "",
-      "imagen": "/categorias/planchas.jpg",
+      "imagen": "/categorias/accesorios.png",
       "imagenAlt": "Foto de accesorios"
     }
   ],
   "servicios": [
     {
-      "titulo": "IMPORTACIÓN BAJO PEDIDO",
-      "mensaje": "Hola VSI, quiero consultar por IMPORTACIÓN BAJO PEDIDO",
-      "imagen": "",
-      "imagenAlt": "Foto: contenedor / importación",
+      "titulo": "Fabricación de bridas rompeagua",
+      "mensaje": "Hola VSI, quiero consultar por bridas rompeagua",
+      "imagen": "/servicios/Fabricación de bridas rompeagua.png",
+      "imagenAlt": "Foto de bridas rompeagua",
       "fila": 1
     },
     {
-      "titulo": "DESPACHO NACIONAL",
-      "mensaje": "Hola VSI, quiero consultar por DESPACHO NACIONAL",
-      "imagen": "",
-      "imagenAlt": "Foto: camión / despacho",
+      "titulo": "Arenado, granallado y galvanizado",
+      "mensaje": "Hola VSI, quiero consultar por arenado, granallado y galvanizado",
+      "imagen": "/servicios/Arenado, granallado y galvanizado.png",
+      "imagenAlt": "Foto de arenado, granallado y galvanizado",
       "fila": 1
     },
     {
-      "titulo": "ABASTECIMIENTO PROGRAMADO",
-      "mensaje": "Hola VSI, quiero consultar por ABASTECIMIENTO PROGRAMADO",
-      "imagen": "",
-      "imagenAlt": "Foto horizontal amplia: almacén con stock",
+      "titulo": "Corte de tubos y fabricación de niples",
+      "mensaje": "Hola VSI, quiero consultar por corte de tubos y fabricación de niples",
+      "imagen": "/servicios/Corte de tubos y fabricación de niples.png",
+      "imagenAlt": "Foto de corte de tubos y fabricación de niples",
       "fila": 2
     },
     {
-      "titulo": "ASESORÍA TÉCNICA",
-      "mensaje": "Hola VSI, quiero consultar por ASESORÍA TÉCNICA",
-      "imagen": "",
-      "imagenAlt": "Foto vertical: asesor técnico en planta",
+      "titulo": "Pintado de tubos",
+      "mensaje": "Hola VSI, quiero consultar por pintado de tubos",
+      "imagen": "/servicios/Pintado de tubos.png",
+      "imagenAlt": "Foto de pintado de tubos",
       "fila": 3
     },
     {
-      "titulo": "ATENCIÓN CORPORATIVA",
-      "mensaje": "Hola VSI, quiero consultar por ATENCIÓN CORPORATIVA",
+      "titulo": "Outlets",
+      "mensaje": "Hola VSI, quiero consultar por outlets",
       "imagen": "",
-      "imagenAlt": "Foto vertical: oficina / documentos",
+      "imagenAlt": "Foto de outlets",
       "fila": 3
     },
     {
-      "titulo": "COTIZACIÓN EN 24 HORAS",
-      "mensaje": "Hola VSI, quiero una COTIZACIÓN en 24 horas",
-      "imagen": "",
-      "imagenAlt": "Foto vertical: asesor cotizando",
+      "titulo": "Roscado y ranurado",
+      "mensaje": "Hola VSI, quiero consultar por roscado y ranurado",
+      "imagen": "/servicios/Roscado y ranurado.png",
+      "imagenAlt": "Foto de roscado y ranurado",
       "fila": 3
     }
   ],

@@ -44,16 +44,16 @@ const FILAS_SERVICIOS = [
   {
     n: 2,
     grid: "grid grid-cols-1 gap-5",
-    alto: "h-[500px] w1024:h-[400px] w760:h-[320px]",
+    alto: "h-[430px] w1024:h-[400px] w760:h-[320px]",
     grad:
-      "bg-[linear-gradient(180deg,rgba(5,43,89,.06)_0%,rgba(5,43,89,.38)_46%,rgba(5,43,89,.95)_100%)]",
+      "bg-[linear-gradient(180deg,rgba(5,43,89,.06)_0%,rgba(5,43,89,.38)_25%,rgba(5,43,89,.95)_100%)]",
   },
   {
     n: 3,
     grid: "grid grid-cols-3 gap-5 w760:grid-cols-1",
-    alto: "h-[700px] w1024:h-[480px] w760:h-[400px]",
+    alto: "h-[530px] w1024:h-[480px] w760:h-[400px]",
     grad:
-      "bg-[linear-gradient(180deg,rgba(5,43,89,.05)_0%,rgba(5,43,89,.26)_48%,rgba(5,43,89,.95)_100%)]",
+      "bg-[linear-gradient(180deg,rgba(5,43,89,.05)_0%,rgba(5,43,89,.26)_22%,rgba(5,43,89,.95)_100%)]",
   },
 ] as const;
 
@@ -945,7 +945,7 @@ export default function Home() {
                         <Ph src={s.imagen} alt={s.imagenAlt} dark />
                         <div className={`pointer-events-none absolute inset-0 ${fila.grad}`} />
                         <div className="pointer-events-none absolute bottom-[26px] left-7 right-7">
-                          <h3 className="text-[clamp(21px,2.4vw,27px)] leading-[1.08] text-white [text-shadow:0_2px_14px_rgba(0,0,0,.45)]">
+                          <h3 className="text-[clamp(21px,2.4vw,27px)] leading-[1.08] text-white [text-shadow:0_2px_14px_rgba(0,0,0,.45)] uppercase">
                             {s.titulo}
                           </h3>
                           <span className="mt-4 inline-flex items-center gap-[9px] rounded-full bg-naranja px-5 py-[11px] text-[14px] font-bold text-white">
@@ -1015,7 +1015,7 @@ export default function Home() {
         {/* ------------------------ cotiza en 1 minuto ----------------------- */}
         <section
           id="contacto"
-          className="relative overflow-hidden bg-[linear-gradient(105deg,#052B59_0%,#083B7A_65%,#0A4788_100%)]"
+          className="relative overflow-hidden bg-[#052B59] bg-[url('/extras/cotizar.png')] bg-cover bg-center bg-no-repeat"
         >
           <div className="pointer-events-none absolute -right-[140px] -top-[140px] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(228,122,36,.18),transparent_62%)]" />
           <div className="relative mx-auto grid max-w-page grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] items-center gap-12 px-6 py-[clamp(48px,6vw,70px)] w1024:grid-cols-1 w1024:gap-[34px]">
