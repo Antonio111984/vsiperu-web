@@ -998,7 +998,7 @@ export default function Home() {
                 {content.marcas.map((m) => (
                   <div
                     key={m.nombre}
-                    className="h-[92px] shrink-0 basis-[200px] overflow-hidden rounded-lg border border-linea-2 bg-[#FBFCFD] w640:h-20 w640:basis-[160px] w380:basis-[140px]"
+                    className="h-[70px] shrink-0 basis-[200px] overflow-hidden w640:h-20 w640:basis-[160px] w380:basis-[140px]"
                   >
                     <Ph src={m.imagen} alt={m.nombre} />
                   </div>
@@ -1227,7 +1227,7 @@ export default function Home() {
                 <b className="font-bold text-white">Teléfono:</b> {site.phoneDisplay}
                 <br />
                 <b className="font-bold text-white">Email:</b>{" "}
-                <a href={`mailto:${site.emailLogistica}`} className="hover:text-white">
+                <a href={`mailto:${site.emailLogistica}`} className="text-white">
                   {site.emailLogistica}
                 </a>
               </p>
@@ -1275,10 +1275,6 @@ export default function Home() {
                 </a>
               ))}
             </div>
-            <h4 className={`${FOOTER_H4} mt-[30px]`}>SECTORES</h4>
-            <p className="mt-3 text-[14.5px] leading-[1.7] text-[#9FB8D4]">
-              Minería · Pesca · Agroindustria · Construcción · Distribuidores
-            </p>
           </div>
 
           <div>

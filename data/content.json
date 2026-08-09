@@ -114,35 +114,35 @@
   "marcas": [
     {
       "nombre": "Marca 1",
-      "imagen": ""
+      "imagen": "/testimonios/genebre-logo.jpg"
     },
     {
       "nombre": "Marca 2",
-      "imagen": ""
+      "imagen": "/testimonios/swagelok-logo.jpg"
     },
     {
       "nombre": "Marca 3",
-      "imagen": ""
+      "imagen": "/testimonios/genebre-logo.jpg"
     },
     {
       "nombre": "Marca 4",
-      "imagen": ""
+      "imagen": "/testimonios/swagelok-logo.jpg"
     },
     {
       "nombre": "Marca 5",
-      "imagen": ""
+      "imagen": "/testimonios/genebre-logo.jpg"
     },
     {
       "nombre": "Marca 6",
-      "imagen": ""
+      "imagen": "/testimonios/swagelok-logo.jpg"
     },
     {
       "nombre": "Marca 7",
-      "imagen": ""
+      "imagen": "/testimonios/genebre-logo.jpg"
     },
     {
       "nombre": "Marca 8",
-      "imagen": ""
+      "imagen": "/testimonios/swagelok-logo.jpg"
     }
   ],
   "faqs": [
