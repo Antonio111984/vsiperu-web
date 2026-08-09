@@ -56,7 +56,15 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
-  icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
+  // Iconos servidos desde public/. El .ico y el .png se generan a partir de
+  // public/vsiperu-favicon.svg, que es la fuente de verdad.
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: "/vsiperu-favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+  },
   verification: site.googleSiteVerification
     ? { google: site.googleSiteVerification }
     : undefined,
@@ -78,7 +86,7 @@ const jsonLd = {
       name: site.name,
       legalName: site.legalName,
       url: site.url,
-      logo: `${site.url}/logo-vsi.svg`,
+      logo: `${site.url}/vsiperu-logo.svg`,
       foundingDate: String(site.foundingYear),
       taxID: site.ruc,
       areaServed: { "@type": "Country", name: "Perú" },

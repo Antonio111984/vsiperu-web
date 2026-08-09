@@ -541,7 +541,7 @@ export default function Home() {
             className={`${CONTAINER} flex h-[92px] items-center gap-[26px] w760:h-auto w760:flex-wrap w760:gap-3 w760:py-3.5 w520:px-[18px]`}
           >
             <a href="#top" aria-label={site.name} className="flex shrink-0 items-center">
-              <img src="/logo-vsi.svg" alt={site.name} width={430} height={56} className="h-14 w-auto w520:h-11" />
+              <img src="/vsiperu-logo.svg" alt={site.name} width={430} height={56} className="h-14 w-auto w520:h-11" />
             </a>
 
             <div className="relative flex-1 max-w-[520px] w1024:max-w-none w760:order-3 w760:w-full w760:basis-full">
@@ -1214,7 +1214,7 @@ export default function Home() {
       <footer className="bg-azul-osc">
         <div className="mx-auto grid max-w-page grid-cols-[1.25fr_0.85fr_0.85fr_1fr] gap-11 px-6 pb-[46px] pt-[60px] w1024:grid-cols-2 w1024:gap-[34px] w520:grid-cols-1">
           <div>
-            <img src="/logo-vsi.svg" alt={site.name} className="h-16 w-auto brightness-0 invert" />
+            <img src="/vsiperu-logo.svg" alt={site.name} className="h-16 w-auto brightness-0 invert" />
             <p className="mt-[18px] max-w-[340px] text-[14.5px] leading-[1.65] text-[#9FB8D4]">
               Tu aliado estratégico. Brindamos soluciones integrales con productos de alta calidad para los sectores más
               exigentes de la industria.
