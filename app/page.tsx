@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { site, waLink } from "@/lib/site";
+import { site, waLink, msgCotizar } from "@/lib/site";
 import { captureAttribution, convert, attributionText } from "@/lib/analytics";
 import content from "@/data/content.json";
 
@@ -401,11 +401,17 @@ export default function Home() {
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const marcasRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     captureAttribution();
     heroTimer.current = setInterval(() => setHero((h) => (h + 1) % content.hero.length), 7000);
-    const close = () => setMenu(false);
+    // Solo cierra si el clic ocurrió fuera del menú: en el App Router React
+    // delega los eventos en `document`, así que este listener corre siempre
+    // después del onClick del botón (stopPropagation no lo evita).
+    const close = (e: MouseEvent) => {
+      if (!menuRef.current?.contains(e.target as Node)) setMenu(false);
+    };
     document.addEventListener("click", close);
     return () => {
       if (heroTimer.current) clearInterval(heroTimer.current);
@@ -495,7 +501,7 @@ export default function Home() {
   }
 
   const modalMsg = prod
-    ? `Hola VSI, quiero cotizar:\n${prod.nombre}\nSKU: ${prod.sku}${medida ? `\nMedida: ${medida}` : ""}\nCantidad: ${qty}`
+    ? msgCotizar({ producto: `${prod.nombre} (SKU ${prod.sku})`, medida, cantidad: qty })
     : "";
 
   return (
@@ -563,7 +569,7 @@ export default function Home() {
 
             <a
               className="flex shrink-0 items-center gap-[9px] rounded-full bg-naranja px-5 py-3 text-[14.5px] font-bold text-white shadow-cta-sm hover:bg-naranja-osc hover:text-white w640:hidden"
-              {...wa("Hola VSI, quiero cotizar", "header")}
+              {...wa(msgCotizar(), "header")}
             >
               <Wa s={17} /> Cotizar
             </a>
@@ -572,13 +578,10 @@ export default function Home() {
 
         <div className="border-b border-linea-2 bg-gris-3">
           <div className={`${CONTAINER} flex items-stretch gap-[26px] w520:gap-3`}>
-            <div className="relative shrink-0">
+            <div className="relative shrink-0" ref={menuRef}>
               <button
                 aria-expanded={menu}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMenu(!menu);
-                }}
+                onClick={() => setMenu(!menu)}
                 className="flex h-[52px] items-center gap-3 border-none bg-azul px-[22px] text-[14.5px] font-bold text-white hover:bg-azul-osc w520:px-4 w520:text-[13.5px]"
               >
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" aria-hidden="true">
@@ -663,7 +666,7 @@ export default function Home() {
                     <div className="mt-8 flex flex-wrap gap-3.5">
                       <a
                         className={`${BTN_CTA} pointer-events-auto px-7 py-4 text-[16px] shadow-cta-lg`}
-                        {...wa(s.ctaMensaje, `hero_${i + 1}`)}
+                        {...wa(msgCotizar({ producto: s.ctaProducto }), `hero_${i + 1}`)}
                       >
                         {s.ctaTexto} <Arrow s={18} />
                       </a>
@@ -851,7 +854,7 @@ export default function Home() {
                     <Ph src={p.imagen} alt={p.nombre} />
                     <a
                       aria-label={`Cotizar ${p.nombre} por WhatsApp`}
-                      {...wa(`Hola VSI, quiero cotizar: ${p.nombre}`, "catalogo_card")}
+                      {...wa(msgCotizar({ producto: p.nombre }), "catalogo_card")}
                       className="group absolute left-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white shadow-icon hover:bg-wa"
                     >
                       <WaLine />
@@ -1036,7 +1039,7 @@ export default function Home() {
               <div className="mt-[30px] flex flex-wrap gap-3">
                 <a
                   className="inline-flex items-center gap-2.5 rounded-full bg-wa px-[22px] py-[13px] text-[15px] font-bold text-white hover:bg-wa-osc hover:text-white"
-                  {...wa("Hola VSI, quiero cotizar", "cotiza_bloque")}
+                  {...wa(msgCotizar(), "cotiza_bloque")}
                 >
                   <Wa s={19} /> WhatsApp directo
                 </a>
@@ -1127,16 +1130,6 @@ export default function Home() {
                 <textarea name="mensaje" rows={4} className={`${INPUT} resize-y`} />
               </label>
 
-              <label className={`${FIELD} mt-5 gap-2.5`}>
-                Adjunte la foto o PDF de su requerimiento (opcional):
-                <input
-                  type="file"
-                  name="archivo"
-                  accept="image/*,.pdf"
-                  className="text-[14px] font-normal text-texto-2"
-                />
-              </label>
-
               <label className="mt-[22px] flex cursor-pointer items-center gap-[11px] text-[15px] font-bold text-texto">
                 <input type="checkbox" name="terminos" required className="h-5 w-5 accent-naranja" />
                 Acepto términos y condiciones
@@ -1209,7 +1202,7 @@ export default function Home() {
             ¿Necesitas cotizar hoy? Escríbenos y te respondemos el mismo día hábil.
           </div>
           <a
-            {...wa("Hola VSI, quiero cotizar", "cta_band")}
+            {...wa(msgCotizar(), "cta_band")}
             className="inline-flex items-center gap-2.5 rounded-full border-2 border-white px-[34px] py-[13px] text-[15.5px] font-bold text-white hover:border-naranja hover:bg-naranja hover:text-white"
           >
             Cotizar ahora
@@ -1233,7 +1226,10 @@ export default function Home() {
                 <br />
                 <b className="font-bold text-white">Teléfono:</b> {site.phoneDisplay}
                 <br />
-                <b className="font-bold text-white">Email:</b> {site.email}
+                <b className="font-bold text-white">Email:</b>{" "}
+                <a href={`mailto:${site.emailLogistica}`} className="hover:text-white">
+                  {site.emailLogistica}
+                </a>
               </p>
             </div>
             <div className="mt-[22px]">
@@ -1288,7 +1284,7 @@ export default function Home() {
           <div>
             <h4 className={FOOTER_H4}>CHATEA CON NOSOTROS</h4>
             <div className="mt-4 flex gap-3">
-              <a aria-label="WhatsApp" {...wa("Hola VSI, quiero cotizar", "footer")} className={`${SOCIAL_A} bg-wa`}>
+              <a aria-label="WhatsApp" {...wa(msgCotizar(), "footer")} className={`${SOCIAL_A} bg-wa`}>
                 <Wa />
               </a>
               <a
@@ -1299,26 +1295,31 @@ export default function Home() {
               >
                 <Tel s={19} />
               </a>
-              <a aria-label="Correo" href={`mailto:${site.email}`} className={SOCIAL_A}>
+              <a aria-label="Correo" href={`mailto:${site.emailLogistica}`} className={SOCIAL_A}>
                 <Mail s={19} />
               </a>
             </div>
 
             <h4 className={`${FOOTER_H4} mt-[30px]`}>SÍGUENOS EN</h4>
             <div className="mt-4 flex gap-3">
-              <a href="#top" aria-label="Facebook" className={SOCIAL_A}>
+              <a
+                href={site.social.facebook}
+                target="_blank"
+                rel="noopener"
+                aria-label="Facebook"
+                className={SOCIAL_A}
+              >
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
                   <path d="M14 9h3V5.5h-3c-2.2 0-4 1.8-4 4V12H7.5v3.5H10V22h3.5v-6.5H16L16.5 12H13.5V9.5c0-.3.2-.5.5-.5z" />
                 </svg>
               </a>
-              <a href="#top" aria-label="Instagram" className={SOCIAL_A}>
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" aria-hidden="true">
-                  <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17" cy="7" r="1.2" fill="#fff" stroke="none" />
-                </svg>
-              </a>
-              <a href="#top" aria-label="LinkedIn" className={SOCIAL_A}>
+              <a
+                href={site.social.linkedin}
+                target="_blank"
+                rel="noopener"
+                aria-label="LinkedIn"
+                className={SOCIAL_A}
+              >
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
                   <path d="M5 4a2 2 0 100 4 2 2 0 000-4zM3.5 9.5h3V21h-3zM9 9.5h2.9v1.6c.5-.9 1.6-1.8 3.3-1.8 3 0 3.8 1.9 3.8 4.6V21h-3v-6.2c0-1.5-.5-2.4-1.8-2.4-1.1 0-1.8.8-2.1 1.5-.1.3-.1.7-.1 1V21H9z" />
                 </svg>
@@ -1431,7 +1432,7 @@ export default function Home() {
 
       <a
         aria-label="Escríbenos por WhatsApp"
-        {...wa("Hola VSI, quiero cotizar", "boton_flotante")}
+        {...wa(msgCotizar(), "boton_flotante")}
         className="fixed bottom-6 right-6 z-[80] flex h-[58px] w-[58px] animate-wa-pulse items-center justify-center rounded-full bg-wa shadow-wa-float"
       >
         <Wa s={30} />

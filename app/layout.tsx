@@ -82,6 +82,7 @@ const jsonLd = {
       foundingDate: String(site.foundingYear),
       taxID: site.ruc,
       areaServed: { "@type": "Country", name: "Perú" },
+      sameAs: [site.social.facebook, site.social.linkedin],
       contactPoint: [
         {
           "@type": "ContactPoint",

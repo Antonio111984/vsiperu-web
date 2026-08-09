@@ -6,7 +6,7 @@
       "imagen": "/portadas/portada1.png",
       "imagenAlt": "Imagen de fondo del slide 1 (diseño completo, ~1920x760)",
       "ctaTexto": "Cotiza ahora por WhatsApp",
-      "ctaMensaje": "Hola VSI, necesito una cotización"
+      "ctaProducto": ""
     },
     {
       "titulo": "Válvulas cuchilla que sí aguantan relaves, pulpas y lodos",
@@ -14,7 +14,7 @@
       "imagen": "/portadas/portada2.png",
       "imagenAlt": "Imagen de fondo del slide 2 (diseño completo, ~1920x760)",
       "ctaTexto": "Cotizar válvulas",
-      "ctaMensaje": "Hola VSI, quiero cotizar VÁLVULAS CUCHILLA"
+      "ctaProducto": "VÁLVULAS CUCHILLA"
     },
     {
       "titulo": "Tubería HDPE corrugada y accesorios, con stock listo en Lima",
@@ -22,7 +22,7 @@
       "imagen": "/portadas/portada3.png",
       "imagenAlt": "Imagen de fondo del slide 3 (diseño completo, ~1920x760)",
       "ctaTexto": "Cotizar tubería HDPE",
-      "ctaMensaje": "Hola VSI, quiero cotizar TUBERÍA HDPE"
+      "ctaProducto": "TUBERÍA HDPE"
     }
   ],
   "bento": [
