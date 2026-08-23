@@ -1,34 +1,66 @@
 {
   "hero": [
     {
-      "titulo": "Graseras, válvulas y suministros industriales para la industria más exigente",
-      "descripcion": "Tu aliado estratégico desde hace 10 años. Importación directa desde China, stock inmediato en Lima y despacho a todo el Perú — con precio de importador, no de intermediario.",
-      "imagen": "/portadas/portada1.png",
-      "imagenAlt": "Imagen de fondo del slide 1 (diseño completo, ~1920x760)",
-      "ctaTexto": "Cotiza ahora por WhatsApp",
-      "ctaProducto": ""
+      "titulo": "SELECCION DE GRASERAS EN ACERO INOXIDABLE, SOLUCIONES DE ACUERDO A TUS NECESIDADES",
+      "descripcion": "Contamos con stock inmediato para entrerga rapida y despacho a todo el pais.",
+      "imagen": "/portadas/GRASERAS.webp",
+      "imagenAlt": "Graseras industriales rectas, 45 y 90 grados",
+      "ctaTexto": "Cotizar graseras",
+      "ctaProducto": "Graseras industriales"
     },
     {
-      "titulo": "Válvulas cuchilla que sí aguantan relaves, pulpas y lodos",
-      "descripcion": "Unidireccionales y bidireccionales para cortar flujo con sólidos en suspensión. La elección de minería, pesca y agroindustria cuando una válvula convencional no resiste.",
-      "imagen": "/portadas/portada2.png",
-      "imagenAlt": "Imagen de fondo del slide 2 (diseño completo, ~1920x760)",
+      "titulo": "VÁLVULAS CUCHILLA PARA LÍNEAS INDUSTRIALES EXIGENTES",
+      "descripcion": "Soluciones unidireccionales y bidireccionales para manejo de sólidos, pulpas y fluidos industriales. Configuraciones manuales y neumáticas.",
+      "imagen": "/portadas/VALVULAS.webp",
+      "imagenAlt": "Válvulas cuchilla industriales",
       "ctaTexto": "Cotizar válvulas",
-      "ctaProducto": "VÁLVULAS CUCHILLA"
+      "ctaProducto": "Válvulas cuchilla"
     },
     {
-      "titulo": "Tubería HDPE corrugada y accesorios, con stock listo en Lima",
-      "descripcion": "Alta resistencia química y mecánica, ligera y de instalación rápida. Línea completa de accesorios para drenaje pluvial, agrícola y minero.",
-      "imagen": "/portadas/portada3.png",
-      "imagenAlt": "Imagen de fondo del slide 3 (diseño completo, ~1920x760)",
-      "ctaTexto": "Cotizar tubería HDPE",
-      "ctaProducto": "TUBERÍA HDPE"
+      "titulo": "TUBERIAS Y CONEXIONES DE HDPE IDEALES PARA LA INDUSTRIA",
+      "descripcion": "HDPE polietileno de alta densidad ideales para la industria por su gran resistencia a la corrosion, flexibilidad y larga vida util.",
+      "imagen": "/portadas/HDPE.webp",
+      "imagenAlt": "Tuberías y accesorios HDPE industriales",
+      "ctaTexto": "Cotizar HDPE",
+      "ctaProducto": "Tuberías y accesorios HDPE"
+    },
+    {
+      "titulo": "SOLUCIONES EN EMPAQUETADURAS Y SELLADO INDUSTRIAL",
+      "descripcion": "Garantiza el rendimiento optimo y evita fugas en tus equipos con nuestras empaquetduras de alta resistencia.",
+      "imagen": "/portadas/EMPAQUETADURAS.webp",
+      "imagenAlt": "Empaquetaduras para aplicaciones industriales",
+      "ctaTexto": "Cotizar empaquetaduras",
+      "ctaProducto": "Empaquetaduras industriales"
+    },
+    {
+      "titulo": "MANOMETROS E INSTRUMENTOS DE MEDICION IDELAES PARA LA INDUSTRIA",
+      "descripcion": "Productos que se utilizan determinar la presion de un fluido, como aire o agua.",
+      "imagen": "/portadas/MANOMETROS.webp",
+      "imagenAlt": "Manómetros para aplicaciones industriales",
+      "ctaTexto": "Cotizar manómetros",
+      "ctaProducto": "Manómetros industriales"
+    },
+    {
+      "titulo": "BRIDAS A105 IDEALES PARA CONEXIONES INDUSTRIALES",
+      "descripcion": "Soluciones para montaje, mantenimiento y conexión de tuberías industriales. Cotiza según diámetro, medida y especificaciones de tu proyecto.",
+      "imagen": "/portadas/BRIDAS A105.webp",
+      "imagenAlt": "Bridas A105 para tuberías industriales",
+      "ctaTexto": "Cotizar bridas",
+      "ctaProducto": "Bridas A105"
+    },
+    {
+      "titulo": "SOLUCIONES INTEGRALES PARA PERFILERIA INDUSTRIAL EN TODAS LAS CALIDADES",
+      "descripcion": "Optimice sus procesos operativos con inafraestructura solida flexible y de vanguardia.",
+      "imagen": "/portadas/PERFILES.webp",
+      "imagenAlt": "Perfiles metálicos para proyectos industriales",
+      "ctaTexto": "Cotizar perfiles",
+      "ctaProducto": "Perfiles metálicos"
     }
   ],
   "bento": [
     {
       "catIndex": 0,
-      "titulo": "GRASERAS",
+      "titulo": "GRASERAS INOX",
       "destacado": true,
       "nota": "MÁS VENDIDO",
       "imagen": "/categorias/graseras.png",
@@ -36,7 +68,7 @@
     },
     {
       "catIndex": 1,
-      "titulo": "VÁLVULAS",
+      "titulo": "VÁLVULAS HIERRO DUCTIL/INOX/BRONZE",
       "destacado": false,
       "nota": "",
       "imagen": "/categorias/valvulas.png",
@@ -44,7 +76,7 @@
     },
     {
       "catIndex": 2,
-      "titulo": "TUBOS HDPE",
+      "titulo": "TUBOS HDPE Y ACCESORIOS",
       "destacado": false,
       "nota": "",
       "imagen": "/categorias/tubos.png",
@@ -52,7 +84,7 @@
     },
     {
       "catIndex": 3,
-      "titulo": "PLANCHAS",
+      "titulo": "PLANCHAS Y PERFILES",
       "destacado": false,
       "nota": "",
       "imagen": "/categorias/planchas.png",
@@ -60,7 +92,7 @@
     },
     {
       "catIndex": 4,
-      "titulo": "ACCESORIOS",
+      "titulo": "CONEXIONES INOX, ACERO, OTROS",
       "destacado": false,
       "nota": "",
       "imagen": "/categorias/accesorios.png",

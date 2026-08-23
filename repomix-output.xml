@@ -1,3 +1,1393 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+app/
+  globals.css
+  layout.tsx
+  page.tsx
+  robots.ts
+  sitemap.ts
+data/
+  content.json
+lib/
+  analytics.ts
+  site.ts
+public/
+  categorias/
+    accesorios.png
+    graseras.png
+    planchas.png
+    tubos.jpg
+    tubos.png
+    valvulas.png
+  extras/
+    cotizar.png
+    persona1.png
+  portadas/
+    BRIDAS A105.webp
+    EMPAQUETADURAS.webp
+    GRASERAS.webp
+    HDPE.webp
+    MANOMETROS.webp
+    PERFILES.webp
+    VALVULAS.webp
+  productos/
+    a1.jpeg
+    a2.jpeg
+  servicios/
+    Arenado, granallado y galvanizado.png
+    Corte de tubos y fabricación de niples.png
+    Fabricación de bridas rompeagua.png
+    Pintado de tubos.png
+    Roscado y ranurado.png
+  testimonios/
+    genebre-logo.jpg
+    swagelok-logo.jpg
+  apple-touch-icon.png
+  favicon.ico
+  vsiperu-favicon.svg
+  vsiperu-logo.svg
+.gitignore
+next.config.mjs
+package.json
+postcss.config.mjs
+README.md
+tailwind.config.ts
+tsconfig.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="app/globals.css">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Solo lo que no puede vivir como utilidad: resets base, comportamiento de
+   scroll y el offset de las anclas (que cambia con el alto real del header).
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 overflow-x-hidden bg-white font-body text-texto antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply m-0 font-head font-extrabold tracking-[-0.02em] text-balance;
+  }
+
+  p {
+    @apply m-0 text-pretty;
+  }
+
+  img {
+    @apply block max-w-full;
+  }
+
+  svg,
+  iframe,
+  video {
+    @apply max-w-full;
+  }
+
+  a {
+    @apply text-azul no-underline;
+  }
+
+  a:hover {
+    @apply text-naranja;
+  }
+
+  ul {
+    @apply m-0 list-none p-0;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font-family: inherit;
+    font-size: 15px;
+  }
+
+  /* Offset de anclas = alto del header sticky. Cambia cuando el buscador
+     pasa a su propia línea (760px). */
+  section[id],
+  div[id] {
+    scroll-margin-top: 152px;
+  }
+
+  @media (max-width: 760px) {
+    section[id],
+    div[id] {
+      scroll-margin-top: 176px;
+    }
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    height: 0;
+  }
+}
+</file>
+
+<file path="app/robots.ts">
+import type { MetadataRoute } from "next";
+import { site } from "@/lib/site";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [{ userAgent: "*", allow: "/" }],
+    sitemap: `${site.url}/sitemap.xml`,
+    host: site.url,
+  };
+}
+</file>
+
+<file path="app/sitemap.ts">
+import type { MetadataRoute } from "next";
+import { site } from "@/lib/site";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: site.url,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+  ];
+}
+</file>
+
+<file path="lib/analytics.ts">
+"use client";
+
+import { site } from "./site";
+
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+/** Evento genérico al dataLayer (lo lee GTM → GA4 y Google Ads). */
+export function track(event: string, params: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event, ...params, ...getAttribution() });
+}
+
+/** Conversión directa de Google Ads (por si no usas GTM). */
+export function adsConversion(label: string, value?: number) {
+  if (typeof window === "undefined" || !window.gtag || !label) return;
+  window.gtag("event", "conversion", {
+    send_to: label,
+    value: value ?? 1,
+    currency: "PEN",
+  });
+}
+
+/** Conversión + evento GA4 en un solo llamado. */
+export function convert(
+  tipo: "whatsapp" | "llamada" | "formulario",
+  params: Record<string, unknown> = {},
+) {
+  track(`conv_${tipo}`, params);
+  adsConversion(site.adsConversionLabels[tipo]);
+}
+
+const KEYS = [
+  "gclid", "gbraid", "wbraid",
+  "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
+];
+
+/** Guarda gclid/UTM en la primera visita para adjuntarlos a cada lead. */
+export function captureAttribution() {
+  if (typeof window === "undefined") return;
+  const p = new URLSearchParams(window.location.search);
+  const found: Record<string, string> = {};
+  KEYS.forEach((k) => {
+    const v = p.get(k);
+    if (v) found[k] = v;
+  });
+  if (Object.keys(found).length) {
+    found["landing_page"] = window.location.pathname;
+    found["captured_at"] = new Date().toISOString();
+    try {
+      sessionStorage.setItem("vsi_attr", JSON.stringify(found));
+      if (!localStorage.getItem("vsi_attr_first")) {
+        localStorage.setItem("vsi_attr_first", JSON.stringify(found));
+      }
+    } catch {
+      /* almacenamiento no disponible */
+    }
+  }
+}
+
+export function getAttribution(): Record<string, string> {
+  if (typeof window === "undefined") return {};
+  try {
+    return JSON.parse(
+      sessionStorage.getItem("vsi_attr") ||
+        localStorage.getItem("vsi_attr_first") ||
+        "{}",
+    );
+  } catch {
+    return {};
+  }
+}
+
+export function attributionText(): string {
+  const a = getAttribution();
+  const parts = KEYS.filter((k) => a[k]).map((k) => `${k}=${a[k]}`);
+  return parts.join(" | ");
+}
+</file>
+
+<file path="public/vsiperu-favicon.svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" zoomAndPan="magnify" viewBox="0 0 48 48" height="64" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><filter x="0%" y="0%" width="100%" height="100%" id="a214d29365"><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" color-interpolation-filters="sRGB"/></filter><filter x="0%" y="0%" width="100%" height="100%" id="da476c6123"><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.2126 0.7152 0.0722 0 0" color-interpolation-filters="sRGB"/></filter><clipPath id="5480b169f0"><path d="M 3.203125 0.734375 L 45.078125 0.734375 L 45.078125 46.285156 L 3.203125 46.285156 Z M 3.203125 0.734375 " clip-rule="nonzero"/></clipPath><clipPath id="324b0994db"><path d="M 0.203125 0.734375 L 42.078125 0.734375 L 42.078125 46.285156 L 0.203125 46.285156 Z M 0.203125 0.734375 " clip-rule="nonzero"/></clipPath><clipPath id="5ca408cb78"><path d="M 0.203125 0.734375 L 42.078125 0.734375 L 42.078125 46.285156 L 0.203125 46.285156 Z M 0.203125 0.734375 " clip-rule="nonzero"/></clipPath><clipPath id="781c4eea96"><path d="M 0.203125 1 L 42 1 L 42 46 L 0.203125 46 Z M 0.203125 1 " clip-rule="nonzero"/></clipPath><mask id="c05a12f9a5"><g filter="url(#a214d29365)"><g filter="url(#da476c6123)" transform="matrix(0.235102, 0, 0, 0.235102, 0.0759181, 0.705308)"><image x="0" y="0" width="179" xlink:href="data:image/png;base64,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" height="194" preserveAspectRatio="xMidYMid meet"/></g></g></mask><clipPath id="00b56c34f7"><rect x="0" width="43" y="0" height="47"/></clipPath><clipPath id="a51f037601"><rect x="0" width="43" y="0" height="47"/></clipPath><mask id="244712f6f2"><g filter="url(#a214d29365)"><g transform="matrix(1, 0, 0, 1, -0.000000000000000888, 0.000000000000005107)"><g clip-path="url(#a51f037601)"><g clip-path="url(#5ca408cb78)"><g transform="matrix(1, 0, 0, 1, -0.000000000000000888, 0.000000000000005107)"><g clip-path="url(#00b56c34f7)"><g clip-path="url(#781c4eea96)"><g mask="url(#c05a12f9a5)"><g transform="matrix(0.235102, 0, 0, 0.235102, 0.0759181, 0.705308)"><image x="0" y="0" width="179" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALMAAADCCAIAAACNCGTAAAAABmJLR0QA/wD/AP+gvaeTAAAAfElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfgyXwwABj+vA4AAAAABJRU5ErkJggg==" height="194" preserveAspectRatio="xMidYMid meet"/></g></g></g></g></g></g></g></g></g></mask><clipPath id="6dcef9b6e1"><path d="M 0.203125 1 L 42 1 L 42 33 L 0.203125 33 Z M 0.203125 1 " clip-rule="nonzero"/></clipPath><clipPath id="85e6cfa784"><path d="M 0.203125 27 L 42 27 L 42 46 L 0.203125 46 Z M 0.203125 27 " clip-rule="nonzero"/></clipPath><clipPath id="7b77d158f9"><rect x="0" width="43" y="0" height="47"/></clipPath><clipPath id="e900ec92a5"><rect x="0" width="43" y="0" height="47"/></clipPath></defs><g clip-path="url(#5480b169f0)"><g transform="matrix(1, 0, 0, 1, 3, 0.000000000000005107)"><g clip-path="url(#e900ec92a5)"><g clip-path="url(#324b0994db)"><g mask="url(#244712f6f2)"><g transform="matrix(1, 0, 0, 1, -0.000000000000000888, 0.000000000000005107)"><g clip-path="url(#7b77d158f9)"><g clip-path="url(#6dcef9b6e1)"><path fill="#0c3c9a" d="M 0.566406 32.109375 L 0.566406 10.957031 C 0.566406 8.25 1.546875 5.914062 3.507812 3.949219 C 5.347656 2.101562 7.679688 1.117188 10.375 1.117188 L 41.273438 1.117188 L 41.273438 24.976562 L 40.90625 25.101562 C 35.511719 24.238281 30.730469 23.746094 26.4375 23.746094 C 17.855469 23.746094 9.640625 25.714844 0.566406 32.109375 Z M 0.566406 32.109375 " fill-opacity="1" fill-rule="nonzero"/></g><g clip-path="url(#85e6cfa784)"><path fill="#ff8616" d="M 0.566406 36.539062 C 9.761719 29.894531 18.347656 27.066406 29.011719 27.066406 C 32.9375 27.066406 36.984375 27.4375 41.273438 28.050781 L 41.273438 43.179688 C 36.125 42.316406 31.589844 41.949219 27.542969 41.949219 C 17.242188 41.949219 8.292969 44.039062 0.566406 45.882812 Z M 0.566406 36.539062 " fill-opacity="1" fill-rule="nonzero"/></g></g></g></g></g></g></g></g></svg>
+</file>
+
+<file path="public/vsiperu-logo.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1450 460" width="1450" height="460" fill="none">
+  <defs>
+    <style>
+      .topText { font: 900 112px 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 2px; }
+      .bottomText { font: 900 110px 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 1px; }
+      .iconText { font: 900 176px 'Arial Black', Arial, Helvetica, sans-serif; }
+    </style>
+    <mask id="vsiCutout" maskUnits="userSpaceOnUse" x="0" y="0" width="470" height="460">
+      <rect x="0" y="0" width="470" height="460" fill="white"/>
+      <text x="118" y="299" class="iconText" fill="black" letter-spacing="-18">VSI</text>
+    </mask>
+  </defs>
+
+  <!-- Ícono izquierdo con recorte transparente en VSI -->
+  <g mask="url(#vsiCutout)">
+    <path d="M92 298V126c0-22 8-41 24-57 15-15 34-23 56-23h252v194l-3 1c-44-7-83-11-118-11-70 0-137 16-211 68z" fill="#0C3C9A"/>
+    <path d="M92 334c75-54 145-77 232-77 32 0 65 3 100 8v123c-42-7-79-10-112-10-84 0-157 17-220 32V334z" fill="#FF8616"/>
+  </g>
+
+  <!-- Texto derecho -->
+  <text x="480" y="176" class="topText" fill="#0C3C9A">SUMINISTROS</text>
+  <text x="480" y="279" class="bottomText" fill="#FF8616">INDUSTRIALES</text>
+</svg>
+</file>
+
+<file path=".gitignore">
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+</file>
+
+<file path="next.config.mjs">
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  poweredByHeader: false,
+  compress: true,
+  images: { formats: ["image/avif", "image/webp"] },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+        ],
+      },
+    ];
+  },
+};
+
+export default nextConfig;
+</file>
+
+<file path="package.json">
+{
+  "name": "vsiperu-landing",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^15.3.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.0"
+  }
+}
+</file>
+
+<file path="postcss.config.mjs">
+const config = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+
+export default config;
+</file>
+
+<file path="README.md">
+# VSI Suministros Industriales — Landing (Next.js 15 + React 19 + Tailwind CSS)
+
+Una sola página, sin CMS, lista para producción y para Google Ads.
+Es el mismo diseño que ves en `VSI Landing.dc.html`, portado a Next.js con Tailwind.
+
+## Arrancar
+
+```bash
+cd nextjs
+npm install
+npm run dev      # http://localhost:3000
+npm run build && npm start
+```
+
+## Stack
+
+- **Next.js 15** (App Router) + **React 19** + **TypeScript**
+- **Tailwind CSS 3.4** — todo el estilo son utilidades; `globals.css` solo tiene los resets base
+- `next/font` para Manrope (títulos) y Plus Jakarta Sans (cuerpo), autoalojadas
+
+## Qué editar
+
+| Archivo | Qué contiene |
+|---|---|
+| **`lib/site.ts`** | Teléfono, WhatsApp, email, dirección, mapa, IDs de Google. Todo lo marcado `// TODO`. |
+| **`data/content.json`** | El contenido: slides del hero, tiles de líneas, catálogo por categoría, servicios, marcas y FAQ. |
+| `tailwind.config.ts` | Paleta, tipografías, sombras y breakpoints. |
+| `app/page.tsx` | La página completa. |
+| `app/globals.css` | Resets base y el offset de anclas. |
+| `app/layout.tsx` | SEO, metadata, JSON-LD y carga de GA4/GTM/Ads. |
+
+### La paleta vive en `tailwind.config.ts`
+
+```
+azul #083B7A · azul-osc #052B59 · azul-cl #0A4788
+naranja #E47A24 · naranja-osc #CF6A18
+wa #25D366 (solo WhatsApp)
+gris #F5F7FA · linea #E3E8EF · texto #12233B · texto-2 #55637A
+```
+
+Úsalas como `bg-azul`, `text-naranja`, `border-linea`. No metas hex sueltos.
+
+### Breakpoints
+
+Son **max-width**, replicando exactamente los cortes del diseño original:
+
+| Clase | Ancho | Qué cambia |
+|---|---|---|
+| `w1180:` | ≤1180 | franja de tipos 6 → 3 |
+| `w1024:` | ≤1024 | hero/cotiza/faq/footer a 1 columna, se oculta nav y topbar, catálogo 4 → 3 |
+| `w900:` | ≤900 | catálogo 3 → 2 |
+| `w760:` | ≤760 | buscador a su propia línea, servicios 2 → 1 |
+| `w640:` | ≤640 | bento a 1 columna, franja 2 columnas, formulario 1 columna |
+| `w520:` | ≤520 | footer 1 columna, logo más chico |
+| `w380:` | ≤380 | catálogo 1 columna |
+
+Los tamaños de texto y los paddings usan `clamp()`, así que escalan de forma continua entre cortes.
+
+### `data/content.json` en detalle
+
+- **`hero[]`** — carrusel: `titulo`, `descripcion`, `notaTitulo`, `notaTexto`, `imagen`, `ctaTexto`, `ctaMensaje`.
+- **`bento[]`** — tiles de "Líneas de producto"; `catIndex` apunta a la categoría que abre al hacer clic.
+- **`categorias[]`** — el catálogo. Cada una con `label`, `skuPrefijo` (genera el SKU), `medidas[]` (el selector del modal) y `productos[]` (`nombre`, `desc`, `imagen`).
+- **`servicios[]`** — 6 tarjetas; `alto` puede ser `"corto"` o `"alto"` (las dos últimas son verticales).
+- **`marcas[]`** — carrusel de logos.
+- **`faqs[]`** — pares `[pregunta, respuesta]`. Si agregas o quitas, actualiza también el bloque `FAQPage` en `app/layout.tsx` para que el schema coincida.
+
+## Imágenes
+
+Deja el archivo en `public/` y pon la ruta (`"/graseras-recta.jpg"`) en el campo `imagen` correspondiente. Mientras esté vacío se ve un placeholder gris con el nombre.
+
+Recomendado: **fotos de producto cuadradas 1:1 con fondo blanco**, ~800×800 px, JPG/WebP ≤200 KB. Para hero y servicios, horizontales de ~1600 px.
+
+Faltan y son obligatorios:
+- `public/og-vsi.jpg` (1200×630) — la miniatura al compartir en WhatsApp/Facebook/LinkedIn
+- `public/favicon.ico` y `public/apple-touch-icon.png`
+
+## SEO ya resuelto
+
+- `metadata` completo: title, description, keywords, canonical, Open Graph, Twitter, robots
+- `app/sitemap.ts` → `/sitemap.xml`, `app/robots.ts` → `/robots.txt`
+- JSON-LD: Organization, LocalBusiness (dirección, horarios, mapa), WebSite, ItemList de productos y **FAQPage**
+- `lang="es-PE"`, un solo `<h1>`, headings jerárquicos
+
+## Funcionalidad
+
+- Hero carrusel con auto-avance (7 s), flechas y puntos
+- Buscador con **debounce 350 ms**, sin tildes, sobre nombre + descripción + categoría
+- Menú "Todas las categorías" y tiles del bento → abren el catálogo en la pestaña correspondiente
+- Modal de producto con medida, cantidad y mensaje de WhatsApp prearmado (incluye SKU)
+- Formulario de cotización → arma el mensaje y abre WhatsApp, con `gclid`/UTM adjuntos
+- Eventos de conversión (`conv_whatsapp`, `conv_llamada`, `conv_formulario`) listos para GTM/Ads
+
+## Deploy
+
+Vercel es lo más simple: importa el repo, apunta `vsiperu.com.pe` y listo. Después del deploy: verifica el dominio en Search Console y envía `https://vsiperu.com.pe/sitemap.xml`.
+</file>
+
+<file path="tailwind.config.ts">
+import type { Config } from "tailwindcss";
+
+/**
+ * Paleta y escalas de VSI. Los breakpoints `w****` son max-width:
+ * replican exactamente los cortes del diseño original (1180 → 380).
+ */
+const config: Config = {
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        azul: "#083B7A",
+        "azul-osc": "#052B59",
+        "azul-cl": "#0A4788",
+        naranja: "#E47A24",
+        "naranja-osc": "#CF6A18",
+        wa: "#25D366",
+        "wa-osc": "#1EB857",
+        gris: "#F5F7FA",
+        "gris-2": "#F9FAFC",
+        "gris-3": "#F7F9FC",
+        linea: "#E3E8EF",
+        "linea-2": "#EDF1F6",
+        texto: "#12233B",
+        "texto-2": "#55637A",
+        "texto-3": "#8494AB",
+        "azul-tile": "#0A2F5C",
+      },
+      fontFamily: {
+        head: ["var(--font-head)", "system-ui", "sans-serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
+      },
+      maxWidth: {
+        page: "1240px",
+      },
+      screens: {
+        w1180: { max: "1180px" },
+        w1024: { max: "1024px" },
+        w900: { max: "900px" },
+        w760: { max: "760px" },
+        w640: { max: "640px" },
+        w520: { max: "520px" },
+        w380: { max: "380px" },
+      },
+      boxShadow: {
+        header: "0 2px 18px rgba(8,59,122,.09)",
+        cta: "0 8px 22px rgba(228,122,36,.28)",
+        "cta-lg": "0 10px 26px rgba(228,122,36,.34)",
+        "cta-sm": "0 6px 16px rgba(228,122,36,.28)",
+        "wa-btn": "0 10px 26px rgba(37,211,102,.3)",
+        "wa-modal": "0 10px 26px rgba(37,211,102,.32)",
+        "wa-float": "0 10px 26px rgba(37,211,102,.42)",
+        note: "0 18px 40px rgba(5,43,89,.32)",
+        icon: "0 4px 16px rgba(5,43,89,.16)",
+        menu: "0 18px 40px rgba(5,43,89,.18)",
+        card: "0 10px 34px rgba(5,43,89,.07)",
+        form: "0 30px 70px rgba(0,0,0,.28)",
+        modal: "0 30px 80px rgba(0,0,0,.4)",
+        avatar: "0 20px 50px rgba(0,0,0,.3)",
+        "form-btn": "0 10px 24px rgba(228,122,36,.3)",
+      },
+      keyframes: {
+        waPulse: {
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(37,211,102,.55)" },
+          "50%": { boxShadow: "0 0 0 14px rgba(37,211,102,0)" },
+        },
+      },
+      animation: {
+        "wa-pulse": "waPulse 2.6s infinite",
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    "paths": { "@/*": ["./*"] }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+</file>
+
+<file path="lib/site.ts">
+// ---------------------------------------------------------------------------
+// ÚNICO ARCHIVO QUE DEBES EDITAR PARA PONER LOS DATOS REALES.
+// Reemplaza los valores marcados con  // TODO
+// El contenido de la página (hero, productos, servicios, marcas, FAQ)
+// vive en  data/content.json
+// ---------------------------------------------------------------------------
+
+export const site = {
+  name: "VSI Suministros Industriales",
+  legalName: "Suministros Industriales VSI",
+  ruc: "20609295539",
+  url: "https://vsiperu.com.pe",
+  locale: "es_PE",
+
+  // Número en formato internacional SIN "+" ni espacios (para wa.me)
+  whatsapp: "51946685886",
+  whatsappDisplay: "+51 946 685 886",
+  phone: "+51946685886",
+  phoneDisplay: "+51 946 685 886",
+
+  email: "ventas@vsiperu.com.pe",
+  emailLogistica: "logistica@vsiperu.com.pe",
+
+  address: {
+    street: "Av. Guillermo Dansey 1369",
+    district: "Cercado de Lima",
+    city: "Lima",
+    region: "Lima",
+    postalCode: "15001",
+    country: "PE",
+  },
+  mapQuery: "Av. Guillermo Dansey 1369, Cercado de Lima, Lima, Perú",
+
+  social: {
+    facebook: "https://www.facebook.com/profile.php?id=61552539471982",
+    linkedin:
+      "https://pe.linkedin.com/in/vsi-per%C3%BA-20a117190?utm_source=share&utm_medium=member_mweb&utm_campaign=share_via&utm_content=profile",
+  },
+
+  hours: "Lun–Vie 8:00–18:00 · Sáb 9:00–13:00",
+  foundingYear: 2016,
+
+  // TODO: IDs de Google (ver GOOGLE-SETUP.md). Deja "" para desactivar.
+  gtmId: "", // GTM-XXXXXXX
+  ga4Id: "", // G-XXXXXXXXXX
+  adsId: "", // AW-XXXXXXXXX
+  adsConversionLabels: {
+    whatsapp: "", // AW-XXXXXXXXX/AbCdEfGhIjKl
+    llamada: "",
+    formulario: "",
+  },
+  // TODO: código de verificación de Google Search Console (meta tag)
+  googleSiteVerification: "",
+};
+
+export function waLink(mensaje: string) {
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensaje)}`;
+}
+
+/**
+ * Mensaje estándar de los botones de cotización.
+ * Los campos que no se conocen van vacíos para que el cliente los complete.
+ */
+export function msgCotizar(
+  datos: { producto?: string; medida?: string; cantidad?: number | string } = {},
+) {
+  return [
+    "Hola, deseo solicitar una cotización a VSIPERU.",
+    "RUC: ",
+    "RAZON SOCIAL: ",
+    `Producto: ${datos.producto ?? ""}`,
+    `Medida: ${datos.medida ?? ""}`,
+    `Cantidad: ${datos.cantidad ?? ""}`,
+    "Ciudad: ",
+  ].join("\n");
+}
+</file>
+
+<file path="app/layout.tsx">
+import type { Metadata, Viewport } from "next";
+import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
+import { site } from "@/lib/site";
+import "./globals.css";
+
+const head = Manrope({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-head",
+  display: "swap",
+});
+const body = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const TITLE =
+  "Graseras, Válvulas y Suministros Industriales en Perú | VSI";
+const DESC =
+  "Importadores directos de graseras (rectas, 45° y 90°) y válvulas cuchilla uni y bidireccionales. Stock inmediato en Lima, despacho a todo el Perú. Cotiza por WhatsApp.";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title: { default: TITLE, template: "%s | VSI Suministros Industriales" },
+  description: DESC,
+  keywords: [
+    "graseras", "graseras rectas", "graseras 45 grados", "graseras 90 grados",
+    "venta de graseras Lima", "graseras al por mayor Perú",
+    "válvulas cuchilla", "válvula cuchilla unidireccional", "válvula cuchilla bidireccional",
+    "tubería HDPE corrugada", "accesorios HDPE", "planchas de acero",
+    "suministros industriales Perú", "proveedor industrial Lima", "VSI Perú",
+  ],
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.legalName,
+  alternates: { canonical: site.url },
+  category: "Suministros industriales",
+  openGraph: {
+    type: "website",
+    locale: "es_PE",
+    url: site.url,
+    siteName: site.name,
+    title: TITLE,
+    description: DESC,
+    images: [
+      { url: "/og-vsi.jpg", width: 1200, height: 630, alt: site.name },
+    ],
+  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESC, images: ["/og-vsi.jpg"] },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
+  // Iconos servidos desde public/. El .ico y el .png se generan a partir de
+  // public/vsiperu-favicon.svg, que es la fuente de verdad.
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: "/vsiperu-favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+  },
+  verification: site.googleSiteVerification
+    ? { google: site.googleSiteVerification }
+    : undefined,
+  formatDetection: { telephone: true, email: true, address: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#083B7A",
+  width: "device-width",
+  initialScale: 1,
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${site.url}/#organization`,
+      name: site.name,
+      legalName: site.legalName,
+      url: site.url,
+      logo: `${site.url}/vsiperu-logo.svg`,
+      foundingDate: String(site.foundingYear),
+      taxID: site.ruc,
+      areaServed: { "@type": "Country", name: "Perú" },
+      sameAs: [site.social.facebook, site.social.linkedin],
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          telephone: site.phone,
+          contactType: "sales",
+          areaServed: "PE",
+          availableLanguage: ["Spanish"],
+        },
+      ],
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": `${site.url}/#business`,
+      name: site.name,
+      image: `${site.url}/og-vsi.jpg`,
+      url: site.url,
+      telephone: site.phone,
+      email: site.email,
+      priceRange: "$$",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: site.address.street,
+        addressLocality: site.address.district,
+        addressRegion: site.address.region,
+        postalCode: site.address.postalCode,
+        addressCountry: site.address.country,
+      },
+      openingHoursSpecification: [
+        { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "18:00" },
+        { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday"], opens: "09:00", closes: "13:00" },
+      ],
+      hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery)}`,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${site.url}/#website`,
+      url: site.url,
+      name: site.name,
+      inLanguage: "es-PE",
+      publisher: { "@id": `${site.url}/#organization` },
+    },
+    {
+      "@type": "ItemList",
+      name: "Líneas de producto",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Graseras rectas, 45° y 90°", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 2, name: "Válvulas cuchilla uni y bidireccionales", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 3, name: "Tubería HDPE corrugada y accesorios", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 4, name: "Planchas de acero", url: `${site.url}/#catalogo` },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${site.url}/#faq`,
+      mainEntity: [
+        ["¿Qué tipos de graseras manejan?", "Manejamos graseras rectas, de 45° y de 90°, en todas las medidas y grados. Somos importadores directos, por lo que atendemos tanto pedidos por unidad como volúmenes mayoristas."],
+        ["¿Cuál es la diferencia entre una válvula cuchilla unidireccional y una bidireccional?", "La unidireccional sella en un solo sentido del flujo y es la opción más económica para líneas de descarga. La bidireccional garantiza estanqueidad en ambos sentidos y se usa cuando la presión puede invertirse."],
+        ["¿Despachan a provincias?", "Sí. Despachamos a todo el Perú y coordinamos el envío a mina, planta u obra a través del operador logístico que prefieras."],
+        ["¿Venden a empresas con factura?", `Sí. Somos ${site.legalName}, RUC ${site.ruc}, y emitimos factura electrónica en todas nuestras ventas.`],
+        ["¿En cuánto tiempo responden una cotización?", "Dentro de las 24 horas hábiles. Por WhatsApp la respuesta suele ser el mismo día, en horario de oficina."],
+      ].map(([q, a]) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+    },
+  ],
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="es-PE" className={`${head.variable} ${body.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body>
+        {site.gtmId ? (
+          <>
+            <Script id="gtm" strategy="afterInteractive">
+              {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${site.gtmId}');`}
+            </Script>
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${site.gtmId}`}
+                height="0"
+                width="0"
+                style={{ display: "none", visibility: "hidden" }}
+              />
+            </noscript>
+          </>
+        ) : null}
+
+        {!site.gtmId && (site.ga4Id || site.adsId) ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id || site.adsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="gtag" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${site.ga4Id ? `gtag('config','${site.ga4Id}');` : ""}${site.adsId ? `gtag('config','${site.adsId}');` : ""}`}
+            </Script>
+          </>
+        ) : null}
+
+        {children}
+      </body>
+    </html>
+  );
+}
+</file>
+
+<file path="data/content.json">
+{
+  "hero": [
+    {
+      "titulo": "",
+      "descripcion": "",
+      "imagen": "/portadas/GRASERAS.webp",
+      "imagenAlt": "",
+      "ctaTexto": "",
+      "ctaProducto": ""
+    }, 
+    {
+      "titulo": "",
+      "descripcion": "",
+      "imagen": "/portadas/VALVULAS.webp",
+      "imagenAlt": "",
+      "ctaTexto": "",
+      "ctaProducto": ""
+    },
+    {
+      "titulo": "",
+      "descripcion": "",
+      "imagen": "/portadas/HDPE.webp",
+      "imagenAlt": "",
+      "ctaTexto": "",
+      "ctaProducto": ""
+    },
+    {
+      "titulo": "",
+      "descripcion": "",
+      "imagen": "/portadas/EMPAQUETADURAS.webp",
+      "imagenAlt": "",
+      "ctaTexto": "",
+      "ctaProducto": ""
+    },
+    {
+      "titulo": "",
+      "descripcion": "",
+      "imagen": "/portadas/MANOMETROS.webp",
+      "imagenAlt": "",
+      "ctaTexto": "",
+      "ctaProducto": ""
+    },    
+    {
+      "titulo": "",
+      "descripcion": "",
+      "imagen": "/portadas/BRIDAS A105.webp",
+      "imagenAlt": "",
+      "ctaTexto": "",
+      "ctaProducto": ""
+    },
+    {
+      "titulo": "",
+      "descripcion": "",
+      "imagen": "/portadas/EMPAQUETADURAS.webp",
+      "imagenAlt": "",
+      "ctaTexto": "",
+      "ctaProducto": ""
+    }
+
+  ],
+  "bento": [
+    {
+      "catIndex": 0,
+      "titulo": "GRASERAS",
+      "destacado": true,
+      "nota": "MÁS VENDIDO",
+      "imagen": "/categorias/graseras.png",
+      "imagenAlt": "Foto de graseras"
+    },
+    {
+      "catIndex": 1,
+      "titulo": "VÁLVULAS",
+      "destacado": false,
+      "nota": "",
+      "imagen": "/categorias/valvulas.png",
+      "imagenAlt": "Foto de válvulas"
+    },
+    {
+      "catIndex": 2,
+      "titulo": "TUBOS HDPE",
+      "destacado": false,
+      "nota": "",
+      "imagen": "/categorias/tubos.png",
+      "imagenAlt": "Foto de tubería HDPE"
+    },
+    {
+      "catIndex": 3,
+      "titulo": "PLANCHAS",
+      "destacado": false,
+      "nota": "",
+      "imagen": "/categorias/planchas.png",
+      "imagenAlt": "Foto de planchas"
+    },
+    {
+      "catIndex": 4,
+      "titulo": "ACCESORIOS",
+      "destacado": false,
+      "nota": "",
+      "imagen": "/categorias/accesorios.png",
+      "imagenAlt": "Foto de accesorios"
+    }
+  ],
+  "servicios": [
+    {
+      "titulo": "Fabricación de bridas rompeagua",
+      "mensaje": "Hola VSI, quiero consultar por bridas rompeagua",
+      "imagen": "/servicios/Fabricación de bridas rompeagua.png",
+      "imagenAlt": "Foto de bridas rompeagua",
+      "fila": 1
+    },
+    {
+      "titulo": "Arenado, granallado y galvanizado",
+      "mensaje": "Hola VSI, quiero consultar por arenado, granallado y galvanizado",
+      "imagen": "/servicios/Arenado, granallado y galvanizado.png",
+      "imagenAlt": "Foto de arenado, granallado y galvanizado",
+      "fila": 1
+    },
+    {
+      "titulo": "Corte de tubos y fabricación de niples",
+      "mensaje": "Hola VSI, quiero consultar por corte de tubos y fabricación de niples",
+      "imagen": "/servicios/Corte de tubos y fabricación de niples.png",
+      "imagenAlt": "Foto de corte de tubos y fabricación de niples",
+      "fila": 2
+    },
+    {
+      "titulo": "Pintado de tubos",
+      "mensaje": "Hola VSI, quiero consultar por pintado de tubos",
+      "imagen": "/servicios/Pintado de tubos.png",
+      "imagenAlt": "Foto de pintado de tubos",
+      "fila": 3
+    },
+    {
+      "titulo": "Outlets",
+      "mensaje": "Hola VSI, quiero consultar por outlets",
+      "imagen": "",
+      "imagenAlt": "Foto de outlets",
+      "fila": 3
+    },
+    {
+      "titulo": "Roscado y ranurado",
+      "mensaje": "Hola VSI, quiero consultar por roscado y ranurado",
+      "imagen": "/servicios/Roscado y ranurado.png",
+      "imagenAlt": "Foto de roscado y ranurado",
+      "fila": 3
+    }
+  ],
+  "marcas": [
+    {
+      "nombre": "Marca 1",
+      "imagen": "/testimonios/genebre-logo.jpg"
+    },
+    {
+      "nombre": "Marca 2",
+      "imagen": "/testimonios/swagelok-logo.jpg"
+    },
+    {
+      "nombre": "Marca 3",
+      "imagen": "/testimonios/genebre-logo.jpg"
+    },
+    {
+      "nombre": "Marca 4",
+      "imagen": "/testimonios/swagelok-logo.jpg"
+    },
+    {
+      "nombre": "Marca 5",
+      "imagen": "/testimonios/genebre-logo.jpg"
+    },
+    {
+      "nombre": "Marca 6",
+      "imagen": "/testimonios/swagelok-logo.jpg"
+    },
+    {
+      "nombre": "Marca 7",
+      "imagen": "/testimonios/genebre-logo.jpg"
+    },
+    {
+      "nombre": "Marca 8",
+      "imagen": "/testimonios/swagelok-logo.jpg"
+    }
+  ],
+  "faqs": [
+    [
+      "¿Qué tipos de graseras manejan?",
+      "Manejamos graseras rectas, de 45° y de 90°, en todas las medidas y grados. Somos importadores directos, por lo que podemos atender tanto pedidos por unidad como volúmenes mayoristas."
+    ],
+    [
+      "¿Cuál es la diferencia entre válvula cuchilla unidireccional y bidireccional?",
+      "La unidireccional sella en un solo sentido del flujo y es la opción más económica para líneas de descarga. La bidireccional garantiza estanqueidad en ambos sentidos y se usa cuando la presión puede invertirse."
+    ],
+    [
+      "¿Despachan a provincias?",
+      "Sí. Despachamos a todo el Perú y coordinamos el envío a mina, planta u obra a través del operador logístico que prefieras."
+    ],
+    [
+      "¿Venden a empresas con factura?",
+      "Sí. Somos Suministros Industriales VSI, RUC 20609295539, y emitimos factura electrónica en todas nuestras ventas."
+    ],
+    [
+      "¿En cuánto tiempo responden una cotización?",
+      "Dentro de las 24 horas hábiles. Por WhatsApp la respuesta suele ser el mismo día, en horario de oficina."
+    ]
+  ],
+  "categorias": [
+    {
+      "id": "graseras",
+      "label": "Graseras",
+      "skuPrefijo": "GRA",
+      "medidas": [
+        "1/8\" NPT",
+        "1/4\" NPT",
+        "M6 x 1",
+        "M8 x 1.25",
+        "M10 x 1",
+        "Otra medida"
+      ],
+      "productos": [
+        {
+          "nombre": "Grasera recta 1/8\" NPT",
+          "desc": "Grasera recta de acero zincado, rosca 1/8\" NPT. La medida de mayor rotación en mantenimiento industrial.",
+          "imagen": "/productos/a1.jpeg"
+        },
+        {
+          "nombre": "Grasera 45° 1/8\" NPT",
+          "desc": "Codo a 45° para puntos de engrase con acceso restringido, sin necesidad de desmontar el equipo.",
+          "imagen": "/productos/a2.jpeg"
+        },
+        {
+          "nombre": "Grasera 90° 1/8\" NPT",
+          "desc": "Codo a 90° para engrase lateral en chumaceras, pines y bocinas de difícil alcance.",
+          "imagen": "/productos/a1.jpeg"
+        },
+        {
+          "nombre": "Grasera recta 1/4\" NPT",
+          "desc": "Mayor caudal de grasa por bombeo, para equipos de gran porte y ciclos de mantenimiento cortos.",
+          "imagen": "/productos/a2.jpeg"
+        },
+        {
+          "nombre": "Grasera métrica M6 x 1",
+          "desc": "Rosca métrica fina para maquinaria importada europea y asiática.",
+          "imagen": "/productos/a1.jpeg"
+        },
+        {
+          "nombre": "Grasera métrica M8 x 1.25",
+          "desc": "Rosca métrica estándar, la más usada en equipos agrícolas y de construcción.",
+          "imagen": "/productos/a2.jpeg"
+        },
+        {
+          "nombre": "Grasera métrica M10 x 1",
+          "desc": "Para chumaceras y pines de gran porte con alta exigencia de lubricación.",
+          "imagen": "/productos/a1.jpeg"
+        },
+        {
+          "nombre": "Grasera inoxidable 304 / 316",
+          "desc": "Para ambientes corrosivos: plantas pesqueras, alimentos, químicos y entorno marino.",
+          "imagen": "/productos/a2.jpeg"
+        },
+        {
+          "nombre": "Grasera tipo botón",
+          "desc": "Perfil bajo para espacios reducidos donde una grasera convencional no entra.",
+          "imagen": "/productos/a1.jpeg"
+        }
+      ]
+    },
+    {
+      "id": "valvulas",
+      "label": "Válvulas",
+      "skuPrefijo": "VAL",
+      "medidas": [
+        "2\"",
+        "3\"",
+        "4\"",
+        "6\"",
+        "8\"",
+        "Otra medida"
+      ],
+      "productos": [
+        {
+          "nombre": "Válvula cuchilla unidireccional 2\"",
+          "desc": "Sello en un sentido de flujo. Solución económica para líneas de descarga con sólidos.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla unidireccional 4\"",
+          "desc": "Para pulpas y granulados de mediana densidad en planta.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla unidireccional 6\"",
+          "desc": "Alta capacidad de paso con corte limpio sobre material en suspensión.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla bidireccional 3\"",
+          "desc": "Estanqueidad en ambos sentidos del flujo, para líneas reversibles.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla bidireccional 6\"",
+          "desc": "Diseñada para líneas donde la presión puede invertirse sin aviso.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla bidireccional 8\"",
+          "desc": "Relaves y lodos de alta densidad, con cuerpo reforzado.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla con volante manual",
+          "desc": "Operación manual, sin requerir aire comprimido ni instalación eléctrica.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Válvula cuchilla con actuador neumático",
+          "desc": "Para automatización de planta e integración con el sistema de control.",
+          "imagen": ""
+        }
+      ]
+    },
+    {
+      "id": "tubos",
+      "label": "Tubos HDPE",
+      "skuPrefijo": "HDP",
+      "medidas": [
+        "4\"",
+        "6\"",
+        "8\"",
+        "12\"",
+        "Otra medida"
+      ],
+      "productos": [
+        {
+          "nombre": "Tubería HDPE corrugada 4\"",
+          "desc": "Drenaje agrícola y pluvial. Ligera, flexible y de instalación rápida.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tubería HDPE corrugada 6\"",
+          "desc": "Conducción de mediano caudal con alta resistencia química.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tubería HDPE corrugada 8\"",
+          "desc": "Obra civil y minería, con buena resistencia al aplastamiento.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tubería HDPE corrugada 12\"",
+          "desc": "Alto caudal para colectores principales y drenaje de gran escala.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Codo HDPE 90°",
+          "desc": "Cambio de dirección en línea corrugada sin pérdida de estanqueidad.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tee HDPE",
+          "desc": "Derivación de línea para ramales secundarios.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Unión / cople HDPE",
+          "desc": "Empalme de tramos con sello confiable.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tapón HDPE",
+          "desc": "Cierre de extremo de línea para pruebas o final de tramo.",
+          "imagen": ""
+        }
+      ]
+    },
+    {
+      "id": "planchas",
+      "label": "Planchas",
+      "skuPrefijo": "PLA",
+      "medidas": [
+        "1/8\"",
+        "3/16\"",
+        "1/4\"",
+        "3/8\"",
+        "1/2\"",
+        "Otro espesor"
+      ],
+      "productos": [
+        {
+          "nombre": "Plancha LAC (laminada en caliente)",
+          "desc": "Estructuras, bases de equipo y trabajos de metalmecánica pesada.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha LAF (laminada en frío)",
+          "desc": "Acabado fino para carpintería metálica y piezas a la vista.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha estriada",
+          "desc": "Pisos y plataformas antideslizantes en planta y escaleras.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha galvanizada",
+          "desc": "Resistencia a la corrosión en aplicaciones expuestas a intemperie.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha inoxidable 304",
+          "desc": "Alimentos, pesca y farmacéutica: superficie sanitaria y de fácil limpieza.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Plancha inoxidable 316",
+          "desc": "Ambientes salinos y químicos agresivos, con molibdeno para mayor resistencia.",
+          "imagen": ""
+        }
+      ]
+    },
+    {
+      "id": "accesorios",
+      "label": "Accesorios",
+      "skuPrefijo": "ACC",
+      "medidas": [
+        "Según requerimiento"
+      ],
+      "productos": [
+        {
+          "nombre": "Abrazaderas metálicas",
+          "desc": "Sujeción firme de mangueras y líneas en distintos diámetros.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Niples roscados",
+          "desc": "Empalmes cortos en las medidas más usadas en planta.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Conexiones roscadas",
+          "desc": "Codos, tees y uniones bajo pedido según tu especificación.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Bridas",
+          "desc": "Según norma y diámetro requerido para conexión de líneas.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Tapones y reducciones",
+          "desc": "Complemento de línea para cierres y cambios de diámetro.",
+          "imagen": ""
+        },
+        {
+          "nombre": "Suministro bajo pedido",
+          "desc": "¿No está en la lista? Lo importamos para ti con tu especificación exacta.",
+          "imagen": ""
+        }
+      ]
+    }
+  ]
+}
+</file>
+
+<file path="app/page.tsx">
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -653,7 +2043,7 @@ export default function Home() {
                 <div className="absolute inset-0 z-0">
                   <Ph src={s.imagen} alt={s.imagenAlt} dark />
                 </div>
-                <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(5,43,89,.94)_0%,rgba(5,43,89,.74)_34%,rgba(5,43,89,.20)_55%,rgba(5,43,89,.06)_72%,rgba(5,43,89,0)_100%)]" />
+                <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(5,43,89,.94)_0%,rgba(5,43,89,.8)_40%,rgba(5,43,89,.42)_70%,rgba(5,43,89,.14)_100%)]" />
                
                 <div className="pointer-events-none relative z-[2] mx-auto grid max-w-page grid-cols-[minmax(0,680px)] items-center px-6 pb-[clamp(72px,7.5vw,104px)] pt-[clamp(56px,7vw,96px)]">
                   <div>
@@ -1436,3 +2826,6 @@ export default function Home() {
     </>
   );
 }
+</file>
+
+</files>
