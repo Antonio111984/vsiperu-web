@@ -322,6 +322,28 @@ const CAT_ICONS: Record<string, React.ReactNode> = {
       <circle cx="17" cy="28" r="1.8" />
     </>
   ),
+
+  /* -------------------------
+     EMPAQUETADURA / GASKET
+  ------------------------- */
+  empaquetaduras: (
+    <>
+      {/* Anillo exterior */}
+      <circle cx="24" cy="24" r="18" />
+      {/* Anillo interior */}
+      <circle cx="24" cy="24" r="9" />
+
+      {/* Pernos */}
+      <circle cx="24" cy="6.5" r="1.6" />
+      <circle cx="24" cy="41.5" r="1.6" />
+      <circle cx="6.5" cy="24" r="1.6" />
+      <circle cx="41.5" cy="24" r="1.6" />
+      <circle cx="11.7" cy="11.7" r="1.6" />
+      <circle cx="36.3" cy="36.3" r="1.6" />
+      <circle cx="11.7" cy="36.3" r="1.6" />
+      <circle cx="36.3" cy="11.7" r="1.6" />
+    </>
+  ),
 };
 
 
@@ -360,7 +382,7 @@ const CatIcon = ({
 
 /* ------------------------------- datos derivados ---------------------------- */
 const CATS = content.categorias;
-const POR_PAGINA = 8;
+const POR_PAGINA = 6;
 const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 type Prod = {
@@ -386,6 +408,25 @@ const TODOS: Prod[] = CATS.flatMap((c, ci) =>
     busca: norm(`${p.nombre} ${p.desc} ${c.label}`),
   })),
 );
+
+/**
+ * Tarjeta "Otros tipos..." del catálogo: una entrada sintética por categoría.
+ * Título, subtítulo, descripción e imagen se editan en content.json, dentro de
+ * cada categoría, en el bloque `otros`. No forma parte de TODOS (no se lista ni
+ * se busca), pero usa el mismo tipo para abrir el mismo modal que un producto.
+ */
+const OTROS: (Prod & { subtitulo: string })[] = CATS.map((c, ci) => ({
+  nombre: c.otros.titulo,
+  subtitulo: c.otros.subtitulo,
+  desc: c.otros.desc,
+  imagen: c.otros.imagen,
+  catIndex: ci,
+  catId: c.id,
+  categoria: c.label,
+  medidas: c.medidas,
+  sku: `VSI-${c.skuPrefijo}-OTROS`,
+  busca: "",
+}));
 
 export default function Home() {
   const [hero, setHero] = useState(0);
@@ -457,10 +498,12 @@ export default function Home() {
     return TODOS.filter((p) => terms.every((t) => p.busca.includes(t)));
   }, [buscando, query, cat]);
 
-  const totalPages = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
-  const pageSafe = Math.min(page, totalPages - 1);
-  const items = lista.slice(pageSafe * POR_PAGINA, pageSafe * POR_PAGINA + POR_PAGINA);
-  const prod = modalSku ? TODOS.find((p) => p.sku === modalSku) ?? null : null;
+  /* Sin paginación: cada categoría muestra como máximo 6 productos (3 x 2) y el
+     resto queda cubierto por la tarjeta "Otros tipos...". La búsqueda sí lista
+     todos sus resultados. */
+  const items = buscando ? lista : lista.slice(0, POR_PAGINA);
+  const otros = OTROS[cat];
+  const prod = modalSku ? [...TODOS, ...OTROS].find((p) => p.sku === modalSku) ?? null : null;
 
   const wa = (mensaje: string, origen: string) => ({
     href: waLink(mensaje),
@@ -724,25 +767,6 @@ export default function Home() {
                 <span className="text-[13px] font-extrabold tracking-[.08em]">{c.label.toUpperCase()}</span>
               </button>
             ))}
-            <a
-              href="#contacto"
-              className="flex flex-col items-center gap-3.5 rounded-lg px-2 py-3.5 text-white hover:bg-white/[.08] hover:text-white"
-            >
-              <svg
-                width="52"
-                height="52"
-                viewBox="0 0 48 48"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="2"
-                aria-hidden="true"
-                className="w640:h-[42px] w640:w-[42px]"
-              >
-                <rect x="8" y="16" width="32" height="24" rx="2" />
-                <path d="M16 16v-4a8 8 0 0116 0v4M24 26v6" />
-              </svg>
-              <span className="text-[13px] font-extrabold tracking-[.08em]">BAJO PEDIDO</span>
-            </a>
           </div>
         </section>
 
@@ -846,23 +870,66 @@ export default function Home() {
               </div>
             ) : null}
 
-            {/* Productos */}
-            <div className="mt-9 grid grid-cols-4 gap-x-[26px] gap-y-[30px] w1024:grid-cols-3 w900:grid-cols-2 w640:gap-x-4 w640:gap-y-[26px] w380:grid-cols-1">
-              {items.map((p) => (
-                <article className="flex flex-col" key={p.sku}>
+            {/* Productos (3 columnas) + columna especial "Otros tipos..." */}
+            <div className="mt-9 grid grid-cols-4 gap-x-[26px] gap-y-[30px] w900:grid-cols-3 w640:grid-cols-2 w640:gap-x-4 w640:gap-y-[26px] w380:grid-cols-1">
+              {/* Columnas 1-3: solo productos reales (máx. 3 por fila) */}
+              <div className="col-span-3 grid grid-cols-3 gap-x-[26px] gap-y-[30px] w640:col-span-2 w640:grid-cols-2 w640:gap-x-4 w640:gap-y-[26px] w380:col-span-1 w380:grid-cols-1">
+                {items.map((p) => (
+                  <article className="flex flex-col" key={p.sku}>
+                    <div className="relative aspect-square overflow-hidden rounded-[10px] bg-white">
+                      <Ph src={p.imagen} alt={p.nombre} />
+                      <a
+                        aria-label={`Cotizar ${p.nombre} por WhatsApp`}
+                        {...wa(msgCotizar({ producto: p.nombre }), "catalogo_card")}
+                        className="group absolute left-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white shadow-icon hover:bg-wa"
+                      >
+                        <WaLine />
+                      </a>
+                      <button
+                        aria-label={`Ver detalle de ${p.nombre}`}
+                        onClick={() => {
+                          setModalSku(p.sku);
+                          setQty(1);
+                          setMedida("");
+                        }}
+                        className="group absolute right-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full border-none bg-white shadow-icon hover:bg-naranja"
+                      >
+                        <svg
+                          width="21"
+                          height="21"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          strokeWidth="2"
+                          aria-hidden="true"
+                          className="stroke-texto transition-colors group-hover:stroke-white"
+                        >
+                          <circle cx="11" cy="11" r="7" />
+                          <path d="M20 20l-4-4" />
+                        </svg>
+                      </button>
+                    </div>
+                    <h3 className="mt-4 text-[16.5px] font-bold leading-[1.35] text-texto w520:text-[15px]">{p.nombre}</h3>
+                    <div className="mt-[5px] text-[14px] text-texto-3">{p.categoria}</div>
+                  </article>
+                ))}
+              </div>
+
+              {/* Columna 4: NO es un producto. Siempre 1 sola tarjeta centrada vertical. */}
+              <div className="flex items-center w900:col-span-3 w900:justify-center w640:col-span-2 w380:col-span-1">
+                <article className="flex w-full flex-col w900:max-w-[340px]">
                   <div className="relative aspect-square overflow-hidden rounded-[10px] bg-white">
-                    <Ph src={p.imagen} alt={p.nombre} />
+                    <Ph src={otros.imagen} alt={otros.nombre} />
                     <a
-                      aria-label={`Cotizar ${p.nombre} por WhatsApp`}
-                      {...wa(msgCotizar({ producto: p.nombre }), "catalogo_card")}
+                      aria-label={`${otros.nombre} de ${otros.categoria.toLowerCase()} por WhatsApp`}
+                      {...wa(msgCotizar({ producto: `Otros tipos de ${otros.categoria}` }), "catalogo_otros_tipos")}
                       className="group absolute left-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white shadow-icon hover:bg-wa"
                     >
                       <WaLine />
                     </a>
                     <button
-                      aria-label={`Ver detalle de ${p.nombre}`}
+                      aria-label={`Ver detalle de ${otros.nombre} (${otros.categoria.toLowerCase()})`}
                       onClick={() => {
-                        setModalSku(p.sku);
+                        setModalSku(otros.sku);
                         setQty(1);
                         setMedida("");
                       }}
@@ -882,13 +949,19 @@ export default function Home() {
                       </svg>
                     </button>
                   </div>
-                  <h3 className="mt-4 text-[16.5px] font-bold leading-[1.35] text-texto w520:text-[15px]">{p.nombre}</h3>
-                  <div className="mt-[5px] text-[14px] text-texto-3">{p.categoria}</div>
+                  <h3 className="mt-4 text-[16.5px] font-bold leading-[1.35] text-texto w520:text-[15px]">
+                    {otros.nombre}
+                  </h3>
+                  <div className="mt-[5px] text-[14px] text-texto-3">{otros.subtitulo}</div>
                 </article>
-              ))}
+              </div>
             </div>
 
-              {/* Paginado */}
+            {/* ------------------------------------------------------------------
+               Paginado desactivado: cada categoría muestra hasta 6 productos
+               (3 x 2) más la tarjeta "Otros tipos...", así que ya no hay páginas.
+               Se conserva comentado por si se vuelve a necesitar.
+            ---------------------------------------------------------------------
             <div className="mt-11 flex flex-wrap items-center justify-center gap-2">
               <button
                 aria-label="Página anterior"
@@ -918,6 +991,7 @@ export default function Home() {
                 <Chevron dir="right" s={16} c="currentColor" />
               </button>
             </div>
+            ------------------------------------------------------------------ */}
           </div>
         </section>
 

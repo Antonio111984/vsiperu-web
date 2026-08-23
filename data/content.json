@@ -204,6 +204,12 @@
       "id": "graseras",
       "label": "Graseras",
       "skuPrefijo": "GRA",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más graseras",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos graseras en otras roscas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/productos/OTRAS GRASERAS.webp"
+      },
       "medidas": [
         "1/8\" NPT",
         "1/4\" NPT",
@@ -214,49 +220,34 @@
       ],
       "productos": [
         {
-          "nombre": "Grasera recta 1/8\" NPT",
-          "desc": "Grasera recta de acero zincado, rosca 1/8\" NPT. La medida de mayor rotación en mantenimiento industrial.",
-          "imagen": "/productos/a1.jpeg"
+          "nombre": "Graseras NPT",
+          "desc": "Grasera NPT",
+          "imagen": "/productos/GRASERA RECTA.webp"
         },
         {
-          "nombre": "Grasera 45° 1/8\" NPT",
-          "desc": "Codo a 45° para puntos de engrase con acceso restringido, sin necesidad de desmontar el equipo.",
-          "imagen": "/productos/a2.jpeg"
+          "nombre": "Graseras NPT",
+          "desc": "Grasera NPT",
+          "imagen": "/productos/GRASERA X 45.webp"
         },
         {
-          "nombre": "Grasera 90° 1/8\" NPT",
-          "desc": "Codo a 90° para engrase lateral en chumaceras, pines y bocinas de difícil alcance.",
-          "imagen": "/productos/a1.jpeg"
+          "nombre": "Graseras NPT",
+          "desc": "Grasera NPT",
+          "imagen": "/productos/GRASEAR X 90.webp"
         },
         {
-          "nombre": "Grasera recta 1/4\" NPT",
-          "desc": "Mayor caudal de grasa por bombeo, para equipos de gran porte y ciclos de mantenimiento cortos.",
-          "imagen": "/productos/a2.jpeg"
+          "nombre": "Graseras UNF",
+          "desc": "Graseras UNF",
+          "imagen": "/productos/GRASEAR X 90.webp"
         },
         {
-          "nombre": "Grasera métrica M6 x 1",
-          "desc": "Rosca métrica fina para maquinaria importada europea y asiática.",
-          "imagen": "/productos/a1.jpeg"
+          "nombre": "Graseras UNF",
+          "desc": "Graseras UNF",
+          "imagen": "/productos/GRASERA X 45.webp"
         },
         {
-          "nombre": "Grasera métrica M8 x 1.25",
-          "desc": "Rosca métrica estándar, la más usada en equipos agrícolas y de construcción.",
-          "imagen": "/productos/a2.jpeg"
-        },
-        {
-          "nombre": "Grasera métrica M10 x 1",
-          "desc": "Para chumaceras y pines de gran porte con alta exigencia de lubricación.",
-          "imagen": "/productos/a1.jpeg"
-        },
-        {
-          "nombre": "Grasera inoxidable 304 / 316",
-          "desc": "Para ambientes corrosivos: plantas pesqueras, alimentos, químicos y entorno marino.",
-          "imagen": "/productos/a2.jpeg"
-        },
-        {
-          "nombre": "Grasera tipo botón",
-          "desc": "Perfil bajo para espacios reducidos donde una grasera convencional no entra.",
-          "imagen": "/productos/a1.jpeg"
+          "nombre": "Graseras UNF",
+          "desc": "Graseras UNF",
+          "imagen": "/productos/GRASERA RECTA.webp"
         }
       ]
     },
@@ -264,6 +255,12 @@
       "id": "valvulas",
       "label": "Válvulas",
       "skuPrefijo": "VAL",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más válvulas",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos válvulas en otros diámetros, materiales y presiones de trabajo bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": ""
+      },
       "medidas": [
         "2\"",
         "3\"",
@@ -274,44 +271,84 @@
       ],
       "productos": [
         {
-          "nombre": "Válvula cuchilla unidireccional 2\"",
-          "desc": "Sello en un sentido de flujo. Solución económica para líneas de descarga con sólidos.",
-          "imagen": ""
+          "nombre": "Válvula compuerta",
+          "desc": "Válvula compuerta",
+          "imagen": "/productos/VALVULA COMPUERTA.webp"
         },
         {
-          "nombre": "Válvula cuchilla unidireccional 4\"",
-          "desc": "Para pulpas y granulados de mediana densidad en planta.",
-          "imagen": ""
+          "nombre": "Válvula de retencio",
+          "desc": "Válvula de retencio",
+          "imagen": "/productos/VALVULA DE RETENCIO.webp"
         },
         {
-          "nombre": "Válvula cuchilla unidireccional 6\"",
-          "desc": "Alta capacidad de paso con corte limpio sobre material en suspensión.",
-          "imagen": ""
+          "nombre": "Válvula esferica",
+          "desc": "Válvula esferica",
+          "imagen": "/productos/VALVULA ESFERICA.webp"
         },
         {
-          "nombre": "Válvula cuchilla bidireccional 3\"",
-          "desc": "Estanqueidad en ambos sentidos del flujo, para líneas reversibles.",
-          "imagen": ""
+          "nombre": "Válvula globo",
+          "desc": "Válvula globo",
+          "imagen": "/productos/VALVULA GLOBO.webp"
         },
         {
-          "nombre": "Válvula cuchilla bidireccional 6\"",
-          "desc": "Diseñada para líneas donde la presión puede invertirse sin aviso.",
-          "imagen": ""
+          "nombre": "Válvula mariposa",
+          "desc": "Válvula mariposa",
+          "imagen": "/productos/VALVULA MARIPOSA .webp"
         },
         {
-          "nombre": "Válvula cuchilla bidireccional 8\"",
-          "desc": "Relaves y lodos de alta densidad, con cuerpo reforzado.",
-          "imagen": ""
+          "nombre": "Válvula tipo Y",
+          "desc": "Válvula tipo Y",
+          "imagen": "/productos/VALVULA TIPO Y.webp"
+        }
+      ]
+    },
+    {
+      "id": "empaquetaduras",
+      "label": "Empaquetaduras",
+      "skuPrefijo": "EMP",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más empaquetaduras",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos empaquetaduras en otros espesores, materiales y dimensiones bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/productos/OTRAS EMPAQUETADURAS.webp"
+      },
+      "medidas": [
+        "1/8\" espesor",
+        "3/16\" espesor",
+        "1/4\" espesor",
+        "3/8\" espesor",
+        "Otro espesor"
+      ],
+      "productos": [
+        {
+          "nombre": "Empaquetadura de asbesto",
+          "desc": "Empaquetadura de asbesto",
+          "imagen": "/productos/EMPAQUETADURA DE ASBESTO.webp"
         },
         {
-          "nombre": "Válvula cuchilla con volante manual",
-          "desc": "Operación manual, sin requerir aire comprimido ni instalación eléctrica.",
-          "imagen": ""
+          "nombre": "Empaquetadura de caucho",
+          "desc": "Empaquetadura de caucho",
+          "imagen": "/productos/EMPAQUETADURA DE CAUCHO.webp"
         },
         {
-          "nombre": "Válvula cuchilla con actuador neumático",
-          "desc": "Para automatización de planta e integración con el sistema de control.",
-          "imagen": ""
+          "nombre": "Empaquetadura de no asbesto",
+          "desc": "Empaquetadura de no asbesto",
+          "imagen": "/productos/EMPAQUETADURA DE NO ASBESTO.webp"
+        },
+        {
+          "nombre": "Empaquetadura en plancha",
+          "desc": "Empaquetadura en plancha",
+          "imagen": "/productos/EMPAQUETADURA EN PLANCHA .webp"
+        },
+        {
+          "nombre": "Empaquetadura trenzada",
+          "desc": "Empaquetadura trenzada",
+          "imagen": "/productos/EMPAQUETADURA TRENZADA.webp"
+        },
+        {
+          "nombre": "Empaquetadura espirometalico",
+          "desc": "Empaquetadura espirometalico",
+          "imagen": "/productos/ESPIROMETALICO.webp"
         }
       ]
     },
@@ -319,6 +356,12 @@
       "id": "tubos",
       "label": "Tubos HDPE",
       "skuPrefijo": "HDP",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más tubos",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos tubos y conduit en otros diámetros, espesores y materiales bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/categorias/tubos.png"
+      },
       "medidas": [
         "4\"",
         "6\"",
@@ -373,6 +416,12 @@
       "id": "planchas",
       "label": "Planchas",
       "skuPrefijo": "PLA",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más planchas",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos planchas y empaquetaduras en otros espesores, materiales y dimensiones bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/categorias/planchas.png"
+      },
       "medidas": [
         "1/8\"",
         "3/16\"",
@@ -418,6 +467,12 @@
       "id": "accesorios",
       "label": "Accesorios",
       "skuPrefijo": "ACC",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más accesorios",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos accesorios en otras medidas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/categorias/accesorios.png"
+      },
       "medidas": [
         "Según requerimiento"
       ],
