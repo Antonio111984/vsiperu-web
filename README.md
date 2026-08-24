@@ -6,7 +6,6 @@ Es el mismo diseño que ves en `VSI Landing.dc.html`, portado a Next.js con Tail
 ## Arrancar
 
 ```bash
-cd nextjs
 npm install
 npm run dev      # http://localhost:3000
 npm run build && npm start
@@ -22,12 +21,14 @@ npm run build && npm start
 
 | Archivo | Qué contiene |
 |---|---|
-| **`lib/site.ts`** | Teléfono, WhatsApp, email, dirección, mapa, IDs de Google. Todo lo marcado `// TODO`. |
+| **`lib/site.ts`** | Teléfono, WhatsApp, email, dirección y mapa. Los IDs de Google **ya no van aquí**: son variables de entorno. |
+| **`.env.local`** | IDs de Google (GTM, GA4, Ads). Copia `.env.example`. En producción se administran desde Vercel. |
 | **`data/content.json`** | El contenido: slides del hero, tiles de líneas, catálogo por categoría, servicios, marcas y FAQ. |
 | `tailwind.config.ts` | Paleta, tipografías, sombras y breakpoints. |
 | `app/page.tsx` | La página completa. |
 | `app/globals.css` | Resets base y el offset de anclas. |
-| `app/layout.tsx` | SEO, metadata, JSON-LD y carga de GA4/GTM/Ads. |
+| `app/layout.tsx` | SEO, metadata, JSON-LD y carga de GTM/GA4/Ads. |
+| `lib/analytics.ts` | Eventos de conversión, atribución (gclid/UTM) y modo campaña `?focus=`. |
 
 ### La paleta vive en `tailwind.config.ts`
 
@@ -58,12 +59,13 @@ Los tamaños de texto y los paddings usan `clamp()`, así que escalan de forma c
 
 ### `data/content.json` en detalle
 
-- **`hero[]`** — carrusel: `titulo`, `descripcion`, `notaTitulo`, `notaTexto`, `imagen`, `ctaTexto`, `ctaMensaje`.
-- **`bento[]`** — tiles de "Líneas de producto"; `catIndex` apunta a la categoría que abre al hacer clic.
+- **`hero[]`** — carrusel: `titulo`, `descripcion`, `imagen`, `imagenAlt`, `ctaTexto`, `ctaProducto`, más `catId` (categoría que etiqueta la conversión, `""` si no aplica) y `focus` (qué valor de `?focus=` abre ese slide, `""` si ninguno). **El primer slide es el que lleva el `<h1>`**; los demás usan `<h2>`.
+- **`bento[]`** — tiles de "Líneas de producto"; `catId` apunta por **id** a la categoría que abre al hacer clic.
+- **`privacidad`** — texto del modal de política de privacidad: `titulo`, `actualizado` y `bloques[]` (pares `[titulo, texto]`).
 - **`categorias[]`** — el catálogo. Cada una con `label`, `skuPrefijo` (genera el SKU), `medidas[]` (el selector del modal) y `productos[]` (`nombre`, `desc`, `imagen`).
 - **`servicios[]`** — 6 tarjetas; `alto` puede ser `"corto"` o `"alto"` (las dos últimas son verticales).
 - **`marcas[]`** — carrusel de logos.
-- **`faqs[]`** — pares `[pregunta, respuesta]`. Si agregas o quitas, actualiza también el bloque `FAQPage` en `app/layout.tsx` para que el schema coincida.
+- **`faqs[]`** — pares `[pregunta, respuesta]`. El schema `FAQPage` de `app/layout.tsx` los lee de aquí, así que basta con editarlos en un sitio.
 
 ## Imágenes
 
@@ -78,6 +80,7 @@ Faltan y son obligatorios:
 ## SEO ya resuelto
 
 - `metadata` completo: title, description, keywords, canonical, Open Graph, Twitter, robots
+- El `canonical` apunta siempre a `https://vsiperu.com.pe`, así que `?focus=graseras` no genera contenido duplicado
 - `app/sitemap.ts` → `/sitemap.xml`, `app/robots.ts` → `/robots.txt`
 - JSON-LD: Organization, LocalBusiness (dirección, horarios, mapa), WebSite, ItemList de productos y **FAQPage**
 - `lang="es-PE"`, un solo `<h1>`, headings jerárquicos
@@ -89,7 +92,43 @@ Faltan y son obligatorios:
 - Menú "Todas las categorías" y tiles del bento → abren el catálogo en la pestaña correspondiente
 - Modal de producto con medida, cantidad y mensaje de WhatsApp prearmado (incluye SKU)
 - Formulario de cotización → arma el mensaje y abre WhatsApp, con `gclid`/UTM adjuntos
+- Modal de política de privacidad, accesible desde el checkbox del formulario y desde el footer
 - Eventos de conversión (`conv_whatsapp`, `conv_llamada`, `conv_formulario`) listos para GTM/Ads
+
+## Medición
+
+**Google Tag Manager es la fuente principal.** La web empuja los eventos al
+`dataLayer` y el contenedor decide qué mandar a GA4 y a Google Ads. Con GTM
+configurado, `gtag.js` **no** se carga: los dos modos son mutuamente
+excluyentes por código (`analyticsMode` en `lib/site.ts`), que es como se evita
+que una misma conversión se cuente dos veces.
+
+Configúralo con estas variables de entorno (todas opcionales; copia
+`.env.example` a `.env.local` para desarrollo y créalas en Vercel para
+producción):
+
+```env
+NEXT_PUBLIC_GTM_ID=
+NEXT_PUBLIC_GA4_ID=
+NEXT_PUBLIC_GOOGLE_ADS_ID=
+NEXT_PUBLIC_ADS_CONVERSION_WHATSAPP=
+NEXT_PUBLIC_ADS_CONVERSION_FORMULARIO=
+NEXT_PUBLIC_ADS_CONVERSION_LLAMADA=
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=
+```
+
+Con GTM basta `NEXT_PUBLIC_GTM_ID`; las de GA4/Ads son el fallback para operar
+sin contenedor. Next.js inyecta estos valores en **build time**: tras cambiarlos
+en Vercel hay que hacer **Redeploy**.
+
+**La guía completa (activadores, variables de capa de datos, conversiones de
+Ads y cómo no duplicar) está en [`GOOGLE-ADS-SETUP.md`](GOOGLE-ADS-SETUP.md).**
+
+### Modo campaña: `?focus=graseras`
+
+`https://vsiperu.com.pe/?focus=graseras` abre la landing con el hero y la
+categoría de Graseras ya seleccionados, y añade `focus=graseras` a todos los
+eventos de esa sesión. Es la misma página `/`: no hay ruta aparte.
 
 ## Deploy
 

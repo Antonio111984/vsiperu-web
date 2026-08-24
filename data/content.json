@@ -1,14 +1,18 @@
 {
   "hero": [
     {
-      "titulo": "SELECCION DE GRASERAS EN ACERO INOXIDABLE, SOLUCIONES DE ACUERDO A TUS NECESIDADES",
-      "descripcion": "Contamos con stock inmediato para entrerga rapida y despacho a todo el pais.",
+      "focus": "graseras",
+      "catId": "graseras",
+      "titulo": "GRASERAS DE ACERO INOXIDABLE PARA APLICACIONES INDUSTRIALES",
+      "descripcion": "Graseras rectas, de 45° y de 90°, en roscas NPT y UNF. Importadores directos, con stock en Lima y despacho a todo el Perú. Atendemos por unidad y en volúmenes mayoristas.",
       "imagen": "/portadas/GRASERAS.webp",
-      "imagenAlt": "Graseras industriales rectas, 45 y 90 grados",
+      "imagenAlt": "Graseras de acero inoxidable rectas, de 45° y de 90°",
       "ctaTexto": "Cotizar graseras",
-      "ctaProducto": "Graseras industriales"
+      "ctaProducto": "Graseras de acero inoxidable"
     },
     {
+      "focus": "",
+      "catId": "valvulas",
       "titulo": "VÁLVULAS CUCHILLA PARA LÍNEAS INDUSTRIALES EXIGENTES",
       "descripcion": "Soluciones unidireccionales y bidireccionales para manejo de sólidos, pulpas y fluidos industriales. Configuraciones manuales y neumáticas.",
       "imagen": "/portadas/VALVULAS.webp",
@@ -17,30 +21,38 @@
       "ctaProducto": "Válvulas cuchilla"
     },
     {
-      "titulo": "TUBERIAS Y CONEXIONES DE HDPE IDEALES PARA LA INDUSTRIA",
-      "descripcion": "HDPE polietileno de alta densidad ideales para la industria por su gran resistencia a la corrosion, flexibilidad y larga vida util.",
+      "focus": "",
+      "catId": "tubos",
+      "titulo": "TUBERÍAS Y CONEXIONES DE HDPE IDEALES PARA LA INDUSTRIA",
+      "descripcion": "Polietileno de alta densidad (HDPE), ideal para la industria por su resistencia a la corrosión, flexibilidad y larga vida útil.",
       "imagen": "/portadas/HDPE.webp",
       "imagenAlt": "Tuberías y accesorios HDPE industriales",
       "ctaTexto": "Cotizar HDPE",
       "ctaProducto": "Tuberías y accesorios HDPE"
     },
     {
+      "focus": "",
+      "catId": "empaquetaduras",
       "titulo": "SOLUCIONES EN EMPAQUETADURAS Y SELLADO INDUSTRIAL",
-      "descripcion": "Garantiza el rendimiento optimo y evita fugas en tus equipos con nuestras empaquetduras de alta resistencia.",
+      "descripcion": "Garantiza el rendimiento óptimo y evita fugas en tus equipos con nuestras empaquetaduras de alta resistencia.",
       "imagen": "/portadas/EMPAQUETADURAS.webp",
       "imagenAlt": "Empaquetaduras para aplicaciones industriales",
       "ctaTexto": "Cotizar empaquetaduras",
       "ctaProducto": "Empaquetaduras industriales"
     },
     {
-      "titulo": "MANOMETROS E INSTRUMENTOS DE MEDICION IDELAES PARA LA INDUSTRIA",
-      "descripcion": "Productos que se utilizan determinar la presion de un fluido, como aire o agua.",
+      "focus": "",
+      "catId": "",
+      "titulo": "MANÓMETROS E INSTRUMENTOS DE MEDICIÓN IDEALES PARA LA INDUSTRIA",
+      "descripcion": "Instrumentos para determinar la presión de un fluido, como aire o agua.",
       "imagen": "/portadas/MANOMETROS.webp",
       "imagenAlt": "Manómetros para aplicaciones industriales",
       "ctaTexto": "Cotizar manómetros",
       "ctaProducto": "Manómetros industriales"
     },
     {
+      "focus": "",
+      "catId": "",
       "titulo": "BRIDAS A105 IDEALES PARA CONEXIONES INDUSTRIALES",
       "descripcion": "Soluciones para montaje, mantenimiento y conexión de tuberías industriales. Cotiza según diámetro, medida y especificaciones de tu proyecto.",
       "imagen": "/portadas/BRIDAS A105.webp",
@@ -49,8 +61,10 @@
       "ctaProducto": "Bridas A105"
     },
     {
-      "titulo": "SOLUCIONES INTEGRALES PARA PERFILERIA INDUSTRIAL EN TODAS LAS CALIDADES",
-      "descripcion": "Optimice sus procesos operativos con inafraestructura solida flexible y de vanguardia.",
+      "focus": "",
+      "catId": "",
+      "titulo": "SOLUCIONES INTEGRALES PARA PERFILERÍA INDUSTRIAL EN TODAS LAS CALIDADES",
+      "descripcion": "Optimiza tus procesos operativos con infraestructura sólida, flexible y de vanguardia.",
       "imagen": "/portadas/PERFILES.webp",
       "imagenAlt": "Perfiles metálicos para proyectos industriales",
       "ctaTexto": "Cotizar perfiles",
@@ -59,7 +73,7 @@
   ],
   "bento": [
     {
-      "catIndex": 0,
+      "catId": "graseras",
       "titulo": "GRASERAS INOX",
       "destacado": true,
       "nota": "MÁS VENDIDO",
@@ -67,7 +81,7 @@
       "imagenAlt": "Foto de graseras"
     },
     {
-      "catIndex": 1,
+      "catId": "valvulas",
       "titulo": "VÁLVULAS HIERRO DUCTIL/INOX/BRONZE",
       "destacado": false,
       "nota": "",
@@ -75,7 +89,7 @@
       "imagenAlt": "Foto de válvulas"
     },
     {
-      "catIndex": 2,
+      "catId": "tubos",
       "titulo": "TUBOS HDPE Y ACCESORIOS",
       "destacado": false,
       "nota": "",
@@ -83,7 +97,7 @@
       "imagenAlt": "Foto de tubería HDPE"
     },
     {
-      "catIndex": 3,
+      "catId": "planchas",
       "titulo": "PLANCHAS Y PERFILES",
       "destacado": false,
       "nota": "",
@@ -91,7 +105,7 @@
       "imagenAlt": "Foto de planchas"
     },
     {
-      "catIndex": 4,
+      "catId": "accesorios",
       "titulo": "CONEXIONES INOX, ACERO, OTROS",
       "destacado": false,
       "nota": "",
@@ -110,7 +124,7 @@
     {
       "titulo": "Arenado, granallado y galvanizado",
       "mensaje": "Hola VSI, quiero consultar por arenado, granallado y galvanizado",
-      "imagen": "/servicios/Arenado, granallado y galvanizado.png",
+      "imagen": "/servicios/Arenado granallado y galvanizado.png",
       "imagenAlt": "Foto de arenado, granallado y galvanizado",
       "fila": 1
     },
@@ -180,7 +194,7 @@
   "faqs": [
     [
       "¿Qué tipos de graseras manejan?",
-      "Manejamos graseras rectas, de 45° y de 90°, en todas las medidas y grados. Somos importadores directos, por lo que podemos atender tanto pedidos por unidad como volúmenes mayoristas."
+      "Manejamos graseras de acero inoxidable rectas, de 45° y de 90°, en roscas NPT y UNF, en distintas medidas. Somos importadores directos, por lo que podemos atender tanto pedidos por unidad como volúmenes mayoristas."
     ],
     [
       "¿Cuál es la diferencia entre válvula cuchilla unidireccional y bidireccional?",
@@ -207,7 +221,7 @@
       "otros": {
         "titulo": "Otros tipos...",
         "subtitulo": "Descubre más graseras",
-        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos graseras en otras roscas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "desc": "¿No encuentras el tipo, la rosca o la medida que necesitas? Trabajamos graseras en otras roscas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
         "imagen": "/productos/OTRAS GRASERAS.webp"
       },
       "medidas": [
@@ -220,34 +234,34 @@
       ],
       "productos": [
         {
-          "nombre": "Graseras NPT",
-          "desc": "Grasera NPT",
+          "nombre": "Grasera NPT recta",
+          "desc": "Grasera de acero inoxidable con rosca NPT y salida recta. Es el formato estándar para puntos de engrase con acceso frontal libre.",
           "imagen": "/productos/GRASERA RECTA.webp"
         },
         {
-          "nombre": "Graseras NPT",
-          "desc": "Grasera NPT",
+          "nombre": "Grasera NPT 45°",
+          "desc": "Grasera de acero inoxidable con rosca NPT y cuerpo a 45°. Permite engrasar cuando la pistola no entra de frente al punto.",
           "imagen": "/productos/GRASERA X 45.webp"
         },
         {
-          "nombre": "Graseras NPT",
-          "desc": "Grasera NPT",
+          "nombre": "Grasera NPT 90°",
+          "desc": "Grasera de acero inoxidable con rosca NPT y cuerpo a 90°. Pensada para puntos de engrase con espacio reducido o acceso lateral.",
           "imagen": "/productos/GRASEAR X 90.webp"
         },
         {
-          "nombre": "Graseras UNF",
-          "desc": "Graseras UNF",
-          "imagen": "/productos/GRASEAR X 90.webp"
-        },
-        {
-          "nombre": "Graseras UNF",
-          "desc": "Graseras UNF",
-          "imagen": "/productos/GRASERA X 45.webp"
-        },
-        {
-          "nombre": "Graseras UNF",
-          "desc": "Graseras UNF",
+          "nombre": "Grasera UNF recta",
+          "desc": "Grasera de acero inoxidable con rosca UNF y salida recta, para equipos que trabajan con rosca fina en pulgadas.",
           "imagen": "/productos/GRASERA RECTA.webp"
+        },
+        {
+          "nombre": "Grasera UNF 45°",
+          "desc": "Grasera de acero inoxidable con rosca UNF y cuerpo a 45°, para puntos de engrase que no admiten acceso frontal.",
+          "imagen": "/productos/GRASERA X 45.webp"
+        },
+        {
+          "nombre": "Grasera UNF 90°",
+          "desc": "Grasera de acero inoxidable con rosca UNF y cuerpo a 90°, para trabajar en espacios reducidos o de acceso lateral.",
+          "imagen": "/productos/GRASEAR X 90.webp"
         }
       ]
     },
@@ -509,5 +523,31 @@
         }
       ]
     }
-  ]
+  ],
+  "privacidad": {
+    "titulo": "Política de privacidad",
+    "actualizado": "Agosto 2026",
+    "bloques": [
+      [
+        "Responsable del tratamiento",
+        "Suministros Industriales VSI (RUC 20609295539), con domicilio en Av. Guillermo Dansey 1369, Cercado de Lima, Lima, Perú."
+      ],
+      [
+        "Qué datos recogemos",
+        "Únicamente los que tú escribes en el formulario de cotización: nombre y apellido, número de celular, ciudad, tipo de documento y su número, y el detalle de tu requerimiento."
+      ],
+      [
+        "Para qué los usamos",
+        "Para atender tu solicitud de cotización o contacto y responder a tu requerimiento comercial. No los usamos para ninguna otra finalidad."
+      ],
+      [
+        "Con quién los compartimos",
+        "No vendemos ni cedemos tus datos. Tus datos personales no se envían a herramientas de analítica ni de publicidad: las mediciones de la web registran solo el hecho de que se envió una solicitud, nunca su contenido."
+      ],
+      [
+        "Tus derechos",
+        "Puedes solicitar el acceso, la actualización o la eliminación de tus datos escribiendo a ventas@vsiperu.com.pe."
+      ]
+    ]
+  }
 }

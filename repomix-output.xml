@@ -71,10 +71,36 @@ public/
     PERFILES.webp
     VALVULAS.webp
   productos/
+    01_Tubo_Conduit_PVC_SCH40_UL651.webp
+    02_Tubo_Conduit_PVC_SCH80.webp
+    03_Tubo_Conduit_Flexible_UL.webp
+    04_Tubo_Conduit_Flexible_PVC.webp
+    05_Union_Conduit_PVC_SCH40_UL.webp
+    06_Conector_Hembra_PVC_SCH40_UL.webp
+    07_Conector_Macho_PVC_SCH40_UL.webp
+    08_Curva_Conduit_PVC_SCH40_90.webp
+    09_Conector_a_Caja_PVC_SCH40_UL.webp
     a1.jpeg
     a2.jpeg
+    EMPAQUETADURA DE ASBESTO.webp
+    EMPAQUETADURA DE CAUCHO.webp
+    EMPAQUETADURA DE NO ASBESTO.webp
+    EMPAQUETADURA EN PLANCHA .webp
+    EMPAQUETADURA TRENZADA.webp
+    ESPIROMETALICO.webp
+    GRASEAR X 90.webp
+    GRASERA RECTA.webp
+    GRASERA X 45.webp
+    OTRAS EMPAQUETADURAS.webp
+    OTRAS GRASERAS.webp
+    VALVULA COMPUERTA.webp
+    VALVULA DE RETENCIO.webp
+    VALVULA ESFERICA.webp
+    VALVULA GLOBO.webp
+    VALVULA MARIPOSA .webp
+    VALVULA TIPO Y.webp
   servicios/
-    Arenado, granallado y galvanizado.png
+    Arenado granallado y galvanizado.png
     Corte de tubos y fabricación de niples.png
     Fabricación de bridas rompeagua.png
     Pintado de tubos.png
@@ -86,7 +112,10 @@ public/
   favicon.ico
   vsiperu-favicon.svg
   vsiperu-logo.svg
+.env.example
 .gitignore
+CAMBIOS-CAMPANA-GRASERAS.md
+GOOGLE-ADS-SETUP.md
 next.config.mjs
 package.json
 postcss.config.mjs
@@ -97,6 +126,819 @@ tsconfig.json
 
 <files>
 This section contains the contents of the repository's files.
+
+<file path=".env.example">
+# ---------------------------------------------------------------------------
+# VSI — Variables de medición.
+#
+# Copia este archivo a `.env.local` para desarrollo, y crea las mismas
+# variables en Vercel → Project → Settings → Environment Variables.
+#
+# Todas son NEXT_PUBLIC_* porque se ejecutan en el navegador: NO son secretos.
+# Todas son OPCIONALES: si están vacías la web funciona igual, simplemente sin
+# enviar datos a Google (útil en desarrollo).
+#
+# ⚠️ Next.js inyecta estos valores en tiempo de BUILD. Después de cambiar una
+#    variable en Vercel hay que volver a desplegar (Redeploy) para que aplique.
+#
+# Guía completa de configuración: GOOGLE-ADS-SETUP.md
+# ---------------------------------------------------------------------------
+
+# --- FUENTE PRINCIPAL DE ETIQUETADO ----------------------------------------
+# Contenedor de Google Tag Manager. Es la única variable que necesitas para el
+# esquema recomendado (GTM → GA4 + Google Ads).
+# Si está definida, gtag.js NO se carga y las conversiones las dispara solo GTM.
+NEXT_PUBLIC_GTM_ID=
+
+# --- FALLBACK SIN GTM ------------------------------------------------------
+# Solo se usan si NEXT_PUBLIC_GTM_ID está VACÍA. Sirven para medir sin
+# contenedor. Nunca conviven con GTM (ahí nacen las conversiones duplicadas).
+NEXT_PUBLIC_GA4_ID=
+NEXT_PUBLIC_GOOGLE_ADS_ID=
+
+# Etiquetas de conversión de Google Ads, formato completo `AW-XXXXXXXXX/AbCdEfGhIjKl`.
+# Solo aplican en el modo fallback anterior. Con GTM configurado se ignoran.
+NEXT_PUBLIC_ADS_CONVERSION_WHATSAPP=
+NEXT_PUBLIC_ADS_CONVERSION_FORMULARIO=
+NEXT_PUBLIC_ADS_CONVERSION_LLAMADA=
+
+# --- SEARCH CONSOLE --------------------------------------------------------
+# Solo el valor del atributo content de la meta tag, sin las comillas ni el HTML.
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=
+</file>
+
+<file path="CAMBIOS-CAMPANA-GRASERAS.md">
+# Preparación de la landing para la campaña de Graseras — informe de cambios
+
+**Fecha:** 23 de agosto de 2026
+**Alcance:** medición profesional (GTM · GA4 · Google Ads), modo campaña
+`?focus=graseras`, relevancia de Graseras, privacidad y correcciones de SEO
+técnico.
+
+No se rediseñó la página, no se crearon rutas nuevas, no se convirtió en
+ecommerce. Todo sigue ocurriendo dentro de `/`.
+
+---
+
+## 1. Archivos modificados
+
+| Archivo | Qué cambió |
+|---|---|
+| `lib/site.ts` | Los IDs de Google salen de variables de entorno. Nueva constante `analyticsMode` (`"gtm" \| "gtag" \| "off"`) como fuente única de verdad del sistema de etiquetado. |
+| `lib/analytics.ts` | Reescrito. GTM como fuente principal, `gtag` solo como fallback excluyente, metadata tipada en las conversiones, limpieza de valores vacíos, reset del dataLayer entre eventos, soporte de `?focus=`, `value` de conversión ahora opcional. |
+| `app/layout.tsx` | Carga de scripts gobernada por `analyticsMode`. `dataLayer` inicializado antes que cualquier script. Metadata y JSON-LD actualizados. El schema `FAQPage` ahora lee de `data/content.json`. |
+| `app/page.tsx` | Un solo `<h1>`. Soporte de `?focus=graseras`. Metadata de negocio en los 11 CTAs de WhatsApp. Conversión del formulario con `origen`/`categoría`. Modal de política de privacidad. Tiles del bento apuntan por `catId`. |
+| `data/content.json` | Copy del hero de Graseras, ortografía de los otros slides, 6 productos de graseras diferenciados, FAQ de graseras, bloque `privacidad`, campos `focus`/`catId` en el hero y `catId` en el bento. |
+| `README.md` | Sección de medición, variables de entorno, modo campaña y notas de contenido actualizadas. |
+| `public/servicios/Arenado, granallado y galvanizado.png` | Renombrado sin la coma: el archivo devolvía 404 (ver §6). |
+
+### Archivos nuevos
+
+| Archivo | Para qué |
+|---|---|
+| `GOOGLE-ADS-SETUP.md` | Guía paso a paso de GTM, GA4 y Google Ads, con la política anti-duplicados. |
+| `.env.example` | Plantilla de las variables de entorno, comentada. |
+| `CAMBIOS-CAMPANA-GRASERAS.md` | Este documento. |
+
+---
+
+## 2. Variables `.env` que debes crear en Vercel
+
+`Vercel → Project → Settings → Environment Variables` (Production **y** Preview):
+
+```env
+NEXT_PUBLIC_GTM_ID=
+NEXT_PUBLIC_GA4_ID=
+NEXT_PUBLIC_GOOGLE_ADS_ID=
+NEXT_PUBLIC_ADS_CONVERSION_WHATSAPP=
+NEXT_PUBLIC_ADS_CONVERSION_FORMULARIO=
+NEXT_PUBLIC_ADS_CONVERSION_LLAMADA=
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=
+```
+
+**Con GTM (recomendado) basta con `NEXT_PUBLIC_GTM_ID`.** Las de GA4/Ads y las
+tres etiquetas de conversión son el fallback para operar sin contenedor, y el
+código las ignora por completo cuando GTM está activo.
+
+Todas son opcionales: vacías, la web funciona igual y no envía nada a Google
+(útil en desarrollo). Next.js las inyecta en **tiempo de build**: después de
+cambiarlas en Vercel hay que hacer **Redeploy**.
+
+---
+
+## 3. Decisión de arquitectura: por qué no habrá conversiones duplicadas
+
+El problema de la implementación anterior era que la decisión estaba implícita:
+`layout.tsx` cargaba GTM si existía `gtmId`, mientras `adsConversion()`
+dependía de `window.gtag`, que en ese escenario nunca existía. Funcionaba por
+casualidad, y cualquier cambio en la carga de scripts habría empezado a contar
+doble en silencio.
+
+Ahora hay una sola constante, `analyticsMode`, evaluada igual en servidor y
+cliente, que gobierna las dos cosas:
+
+| `analyticsMode` | Scripts que carga `layout.tsx` | Qué hace `convert()` |
+|---|---|---|
+| `"gtm"` (hay `NEXT_PUBLIC_GTM_ID`) | Solo GTM | Solo `dataLayer.push` |
+| `"gtag"` (hay GA4/Ads, no GTM) | Solo `gtag.js` | `dataLayer.push` + `gtag('event','conversion')` |
+| `"off"` (sin IDs) | Ninguno | Solo `dataLayer.push` |
+
+Es **imposible** por construcción que GTM y `gtag` estén activos a la vez.
+`adsConversion()` empieza con `if (analyticsMode !== "gtag") return;`.
+
+Se conservó el envío directo por `gtag` porque permite medir sin contenedor,
+pero **no es el camino recomendado**: con GTM se ignora.
+
+Las otras dos fuentes de doble conteo:
+
+- **El formulario dispara solo `conv_formulario`**, nunca además
+  `conv_whatsapp`, aunque el flujo termine abriendo WhatsApp. Es un lead.
+- **No importar estas conversiones desde GA4 a Google Ads** si ya se miden con
+  GTM → Ads. Esto vive en la configuración, no en el código: está documentado
+  en `GOOGLE-ADS-SETUP.md` §7 y repetido en el checklist.
+
+---
+
+## 4. Acciones manuales que tienes que hacer
+
+La guía detallada, con cada campo, está en **`GOOGLE-ADS-SETUP.md`**. Resumen:
+
+### 4.1 Vercel
+1. Crear `NEXT_PUBLIC_GTM_ID` con tu contenedor `GTM-XXXXXXX`.
+2. (Opcional) `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` para Search Console.
+3. **Redeploy.**
+4. Verificar en el HTML publicado: aparece `gtm.js?id=GTM-XXXXXXX` y **no**
+   aparece `gtag/js?id=`.
+
+### 4.2 Google Tag Manager
+1. Crear **13 variables de capa de datos** (Versión 2): `origen`, `producto`,
+   `categoria`, `sku`, `medida`, `cantidad`, `focus`, `gclid`, `utm_source`,
+   `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`.
+2. **Google Tag / GA4 base** (`G-XXXXXXXXXX`) con activador
+   `Initialization - All Pages`.
+3. **Conversion Linker** con activador `Initialization - All Pages`.
+   *Imprescindible*: sin él el `gclid` no se guarda en cookie y Ads no atribuye.
+4. **3 activadores de evento personalizado**: `conv_formulario`,
+   `conv_whatsapp`, `conv_llamada`.
+5. **3 etiquetas de conversión de Google Ads**, una por activador, con el ID y
+   la etiqueta que te da Ads. **Dejar el campo de valor VACÍO.**
+6. **3 etiquetas de evento de GA4**, una por activador, con los parámetros
+   `origen`, `producto`, `categoria`, `sku`, `medida`, `cantidad`, `focus`.
+7. Probar en **Preview** con `https://vsiperu.com.pe/?focus=graseras` y
+   **Publicar**.
+
+### 4.3 Google Analytics 4
+1. Marcar **`conv_formulario`** como **evento clave**.
+2. Crear **dimensiones personalizadas** de ámbito Evento para `origen`,
+   `producto`, `categoria`, `sku`, `medida`, `cantidad`, `focus`. Sin esto los
+   parámetros llegan pero no se pueden usar en informes.
+
+### 4.4 Google Ads
+1. Crear **3 acciones de conversión manuales** (*no* importadas de GA4):
+
+   | Acción | Categoría | Recuento | Tipo |
+   |---|---|---|---|
+   | Formulario de cotización | Enviar formulario de contacto | Una | **Primary** |
+   | Clic WhatsApp | Contacto | Una | Secondary |
+   | Clic Llamada | Llamada telefónica | Una | Secondary |
+
+   En las tres: **Valor → No usar un valor**. **Recuento = "Una"**, no "Todas".
+2. Copiar el ID (`AW-XXXXXXXXX`) y la etiqueta de cada una a las etiquetas de GTM.
+3. Confirmar que el **etiquetado automático (auto-tagging)** está activo.
+4. **URL final de la campaña:** `https://vsiperu.com.pe/?focus=graseras`
+5. **Verificar que NO existan conversiones importadas desde GA4** con estos
+   mismos nombres marcadas como Primary.
+
+---
+
+## 5. Eventos y parámetros que verás en GTM
+
+Tres eventos personalizados, contrato estable:
+
+| Evento | Se dispara cuando | En Ads |
+|---|---|---|
+| `conv_formulario` | El formulario pasa la validación y el usuario envía | **PRIMARY** |
+| `conv_whatsapp` | Clic en cualquier CTA de WhatsApp | SECONDARY |
+| `conv_llamada` | Clic en un enlace `tel:` | SECONDARY |
+
+Parámetros. **Nunca se envían `undefined`, `null` ni strings vacíos**, y antes
+de cada evento se empuja un objeto de reset para que ninguno herede los
+parámetros del anterior:
+
+| Parámetro | Ejemplo | Cuándo aparece |
+|---|---|---|
+| `origen` | `catalogo_card` | siempre |
+| `producto` | `Grasera NPT recta` | si el CTA conoce el producto |
+| `categoria` | `graseras` | si el CTA conoce la categoría |
+| `sku` | `VSI-GRA-01` | catálogo y modal |
+| `medida` | `1/4" NPT` | modal, si se eligió |
+| `cantidad` | `3` | modal |
+| `focus` | `graseras` | si entró por `?focus=graseras` |
+| `landing_page` | `/` | siempre |
+| `gclid` · `gbraid` · `wbraid` | `Cj0ABC123…` | si vino de Google Ads |
+| `utm_source` · `utm_medium` · `utm_campaign` · `utm_term` · `utm_content` | `google`, `cpc`… | si la URL traía UTMs |
+| `ciudad` | `Lima` | solo `conv_formulario` |
+
+Ejemplo real capturado en la validación:
+
+```json
+{
+  "event": "conv_whatsapp",
+  "gclid": "Cj0TEST999",
+  "utm_source": "google", "utm_medium": "cpc",
+  "utm_campaign": "graseras_peru", "utm_term": "graseras inoxidables",
+  "landing_page": "/", "focus": "graseras",
+  "origen": "modal_producto", "producto": "Grasera NPT 90°",
+  "categoria": "graseras", "sku": "VSI-GRA-03",
+  "medida": "1/4\" NPT", "cantidad": 3
+}
+```
+
+**Valores de `origen` disponibles:** `topbar` · `header` · `hero_1`…`hero_7` ·
+`catalogo_card` · `catalogo_otros_tipos` · `modal_producto` ·
+`servicio_<nombre>` · `servicios_cta` · `cotiza_bloque` ·
+`formulario_cotizacion` · `cta_band` · `footer` · `boton_flotante`
+
+---
+
+## 6. Qué se cambió, punto por punto
+
+### Medición
+- **Metadata en todos los CTAs de WhatsApp.** `convert("whatsapp", { origen })`
+  pasó a aceptar un objeto tipado (`ConvMeta`). Los 11 CTAs (hero, header,
+  catálogo, tarjeta de producto, "otros tipos", modal, servicios, botón
+  flotante, formulario, CTA final, footer) envían ahora lo que saben:
+  `producto`, `categoria`, `sku`, `medida`, `cantidad`. **Ningún enlace de
+  WhatsApp cambió de destino.**
+- **Reset del dataLayer entre eventos.** El dataLayer es persistente: sin
+  reset, un clic en el footer arrastraba el `producto` del último modal
+  abierto. Ahora cada evento empieza limpio.
+- **`value: 1, currency: "PEN"` eliminado.** Asignaba un valor comercial
+  ficticio de S/ 1 a cada lead y habría contaminado cualquier estrategia futura
+  de ROAS. `value` quedó como parámetro opcional de `convert()`, para cuando
+  exista un valor real.
+- **`captured_at` ya no se empuja** al dataLayer: es control interno del
+  almacenamiento, no parte del contrato con GTM.
+- **Atribución conservada** tal cual estaba: `sessionStorage` para la sesión y
+  `localStorage` para el *first touch*, de modo que un usuario que vuelve días
+  después sin `gclid` sigue acreditando el clic original del anuncio.
+
+### Modo campaña `?focus=graseras`
+- Abre la landing con el **hero de Graseras** y la **categoría Graseras**
+  seleccionada. El resto de la landing queda idéntico.
+- El valor se persiste en `sessionStorage` y acompaña a todos los eventos de
+  esa sesión, aunque el usuario navegue por anclas y el query se pierda.
+- Se resuelve dentro de un `useEffect`, no en el estado inicial: leer
+  `window.location` durante el render habría provocado un error de hidratación.
+- El valor se valida contra una lista blanca (`["graseras"]`), así que un
+  `?focus=` arbitrario no inyecta nada al dataLayer.
+
+### Formulario
+- `conv_formulario` se dispara **solo tras pasar la validación** del navegador
+  (si falta un campo `required`, el `submit` ni siquiera se ejecuta) y **solo
+  una vez** — no dispara además `conv_whatsapp`.
+- Envía `origen: "formulario_cotizacion"` y `categoria: "graseras"` cuando el
+  usuario llegó por `?focus=graseras`.
+- **No se envía ningún dato personal a analítica**: nombre, apellido, celular,
+  DNI/RUC y el texto del requerimiento viajan únicamente en el mensaje de
+  WhatsApp que el propio usuario envía al asesor. Solo `ciudad` acompaña al
+  evento, y es un dato geográfico que no identifica a la persona.
+
+### Relevancia de Graseras
+- **Hero corregido.** Antes: *"SELECCIÓN DE GRASERAS EN ACERO INOXIDABLE,
+  SOLUCIONES DE ACUERDO A TUS NECESIDADES"* con *"entrega rapida … todo el
+  pais"* sin tildes. Ahora:
+
+  > **GRASERAS DE ACERO INOXIDABLE PARA APLICACIONES INDUSTRIALES**
+  > Graseras rectas, de 45° y de 90°, en roscas NPT y UNF. Importadores
+  > directos, con stock en Lima y despacho a todo el Perú. Atendemos por unidad
+  > y en volúmenes mayoristas.
+
+  Cubre de forma natural *graseras inoxidables*, *graseras industriales*,
+  *graseras de acero inoxidable*, *grasera recta / 45° / 90°*, *graseras NPT* y
+  *graseras UNF*, sin repetición forzada. Los argumentos (*importadores
+  directos · stock en Lima · despacho a todo el Perú*) son los que el sitio ya
+  declaraba.
+- **Ortografía corregida** en los otros seis slides (*TUBERIAS*, *corrosion*,
+  *util*, *optimo*, *empaquetduras*, *MANOMETROS*, *IDELAES*, *presion*,
+  *PERFILERIA*, *inafraestructura solida*).
+- **Los 6 productos genéricos se diferenciaron** según la imagen que ya tenía
+  cada uno:
+
+  | Antes | Ahora |
+  |---|---|
+  | Graseras NPT ×3 | Grasera NPT recta · Grasera NPT 45° · Grasera NPT 90° |
+  | Graseras UNF ×3 | Grasera UNF recta · Grasera UNF 45° · Grasera UNF 90° |
+
+  Con descripciones útiles para B2B (cuándo usar cada geometría) y **sin
+  inventar medidas, materiales, certificaciones ni stock**. Las medidas del
+  selector no se tocaron.
+- Las descripciones alimentan el buscador, así que buscar *"grasera 90"* ahora
+  devuelve exactamente las dos de 90°.
+
+### H1 y SEO técnico
+- **De 7 `<h1>` a 1.** Cada slide del carrusel emitía su propio `<h1>` aunque
+  estuviera oculto. Ahora el slide de Graseras — el contenido principal de esta
+  landing — lleva el `<h1>` y los otros seis usan `<h2>`, con la **misma clase
+  de estilo**: el carrusel no cambió visualmente ni un píxel.
+- Metadata actualizada para destacar Graseras **sin volverla exclusiva de
+  Graseras**: el título y la descripción siguen cubriendo válvulas,
+  empaquetaduras y HDPE, porque VSI comercializa más líneas.
+- `ItemList` del schema ampliado a las 5 líneas reales (antes omitía
+  Empaquetaduras).
+- El schema `FAQPage` ahora se genera desde `data/content.json` en vez de tener
+  el texto duplicado en `layout.tsx`: no se pueden volver a desincronizar, que
+  es lo que Google exige para el rich result.
+- `canonical` sigue apuntando a `https://vsiperu.com.pe`, así que
+  `?focus=graseras` no genera contenido duplicado. `robots` y `sitemap` sin
+  cambios: la web sigue indexable.
+
+### Privacidad
+- Modal de **Política de privacidad** accesible desde el checkbox del
+  formulario y desde el footer. Sin páginas nuevas.
+- Declara responsable (*Suministros Industriales VSI*, RUC, domicilio),
+  finalidad (*atender solicitudes de cotización/contacto*), qué datos se
+  recogen, que no se comparten y cómo solicitar acceso o eliminación. Texto
+  editable en `data/content.json` → `privacidad`. **Sin cláusulas legales
+  inventadas.**
+- El checkbox pasó de *"Acepto términos y condiciones"* a *"Acepto los términos
+  y la **política de privacidad**"*, con el enlace al modal.
+
+### Corrección de un bug encontrado durante la auditoría
+Los tiles de "Líneas de producto" apuntaban a la categoría por índice numérico
+(`catIndex`), y tres de los cinco habían quedado desfasados al insertarse
+"Empaquetaduras" en el arreglo de categorías:
+
+| Tile | Abría antes | Abre ahora |
+|---|---|---|
+| TUBOS HDPE Y ACCESORIOS | Empaquetaduras ❌ | Tubos HDPE ✅ |
+| PLANCHAS Y PERFILES | Tubos HDPE ❌ | Planchas ✅ |
+| CONEXIONES INOX, ACERO, OTROS | Planchas ❌ | Accesorios ✅ |
+
+Ahora apuntan por `catId`, que no se puede desincronizar al reordenar
+categorías.
+
+### Segundo bug encontrado: una imagen de Servicios devolvía 404
+
+La tarjeta **"Arenado, granallado y galvanizado"** mostraba el placeholder gris
+en vez de su foto. La causa: la **coma** en el nombre del archivo. El navegador
+la envía literal en la URL y Next.js no la resuelve así (solo funciona
+percent-codificada como `%2C`, que ningún navegador genera por su cuenta).
+
+Se renombró el archivo quitando la coma y se actualizó la ruta en
+`data/content.json`. Se comprobaron **las 36 imágenes** que referencia el sitio:
+ahora todas devuelven `200`. También es un problema previo, no introducido por
+estos cambios, pero la sección de Servicios es parte de la landing a la que
+llegará el tráfico de la campaña.
+
+---
+
+## 7. Validación
+
+### `npm install` — ✅ correcto
+
+```
+up to date, audited 107 packages in 1s
+3 high severity vulnerabilities
+```
+
+Las 3 vulnerabilidades son **previas y ajenas a estos cambios**: vienen de
+`sharp <0.35.0` (dependencia opcional de Next.js para optimización de imágenes)
+y sus CVE heredadas de `libvips`. `npm audit fix --force` las resuelve
+instalando **Next.js 16**, que es un cambio de versión mayor con roturas: queda
+fuera del alcance de este trabajo y conviene planificarlo aparte. No afectan al
+build ni a la campaña.
+
+### `npm run build` — ✅ correcto
+
+```
+▲ Next.js 15.5.23
+
+✓ Compiled successfully in 2.2s
+  Linting and checking validity of types ...
+✓ Generating static pages (6/6)
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    17.8 kB         120 kB
+├ ○ /_not-found                            996 B         104 kB
+├ ○ /robots.txt                            124 B         103 kB
+└ ○ /sitemap.xml                           124 B         103 kB
++ First Load JS shared by all             103 kB
+
+○  (Static)  prerendered as static content
+```
+
+Sin errores de TypeScript, sin warnings. La página sigue siendo estática
+(`○ Static`), como antes.
+
+### Pruebas en navegador real (Chrome headless)
+
+Se ejecutó la landing compilada y se verificó interactivamente:
+
+| Comprobación | Resultado |
+|---|---|
+| Exactamente un `<h1>`, y es el de Graseras | ✅ |
+| `?focus=graseras` abre el hero y la categoría de Graseras | ✅ |
+| `focus` persiste y acompaña a todos los eventos | ✅ |
+| 6 graseras diferenciadas en el catálogo | ✅ |
+| `conv_whatsapp` desde el catálogo lleva `origen`/`producto`/`categoria`/`sku` | ✅ |
+| Modal: medida y cantidad llegan al evento (`1/4" NPT`, `3`) | ✅ |
+| Ningún evento hereda parámetros del anterior | ✅ |
+| Buscador: *"grasera 90"* → las dos de 90° | ✅ |
+| Los 5 tiles del bento abren la categoría correcta | ✅ |
+| **Enviar el formulario dispara UN solo evento y es `conv_formulario`** | ✅ |
+| El formulario sigue abriendo WhatsApp con el mensaje completo | ✅ |
+| El evento NO contiene nombre, celular, RUC ni el requerimiento | ✅ |
+| Formulario incompleto → ninguna conversión | ✅ |
+| Modal de privacidad abre, cierra y no marca el checkbox | ✅ |
+| El scroll del `body` se restaura al cerrar los modales | ✅ |
+| Carrusel, categorías, llamada desde el footer | ✅ |
+| Sesión limpia sin `?focus=`: ni `focus` ni `gclid` inventados | ✅ |
+| Visita posterior sin `gclid` conserva el del primer clic (*first touch*) | ✅ |
+| Ningún parámetro `undefined`, `null` ni vacío en el dataLayer | ✅ |
+| Sin errores de hidratación ni de consola | ✅ |
+| Sin recursos 404 (las 36 imágenes referenciadas devuelven `200`) | ✅ |
+| Móvil 390×844: sin scroll horizontal, modal cabe en pantalla | ✅ |
+
+### Modos de etiquetado, verificados en el HTML publicado
+
+| Configuración | GTM cargado | `gtag.js` cargado |
+|---|---|---|
+| `NEXT_PUBLIC_GTM_ID=GTM-TEST123` (+ GA4 y Ads definidos) | ✅ sí | ✅ **no** |
+| Solo `NEXT_PUBLIC_GA4_ID` + `NEXT_PUBLIC_GOOGLE_ADS_ID` | ✅ no | ✅ sí, con ambos `config` |
+| Sin variables | ✅ no | ✅ no |
+
+Nota del primer caso: aun teniendo GA4 y Ads definidos, con GTM presente
+`gtag.js` **no** se carga. Ahí es donde se corta la posibilidad de doble conteo.
+
+### Revisión específica pedida
+
+- **Eventos duplicados:** ninguno. Un clic = un push.
+- **Errores de hidratación:** ninguno. `?focus=` se resuelve en `useEffect`.
+- **`window` durante SSR:** todos los accesos están dentro de `useEffect` o de
+  manejadores de eventos, y las funciones de `analytics.ts` guardan con
+  `typeof window === "undefined"`.
+- **Timers sin limpiar:** el `setInterval` del carrusel y el `setTimeout` del
+  buscador se limpian en el cleanup del `useEffect`, igual que antes. No se
+  añadieron timers nuevos.
+- **Parámetros `undefined` en el dataLayer:** filtrados por `limpiar()`.
+- **Cambios visuales accidentales:** ninguno. El `<h1>`/`<h2>` del hero comparte
+  la constante de estilo `HERO_TITULO`. Lo único nuevo que se ve es el enlace
+  a la política de privacidad (checkbox y footer) y su modal.
+
+---
+
+## 8. Pendiente, fuera de este alcance
+
+**`public/og-vsi.jpg` no existe** (devuelve 404). Es un problema previo, no
+introducido por estos cambios, pero conviene resolverlo antes de la campaña:
+está referenciado en el Open Graph, en Twitter Card y en `LocalBusiness.image`
+del schema. Sin ese archivo, compartir el enlace en WhatsApp, Facebook o
+LinkedIn muestra una vista previa rota — justamente el canal por el que se
+cierran los leads.
+
+Basta con dejar una imagen de **1200×630** en `public/og-vsi.jpg`. No requiere
+tocar código.
+</file>
+
+<file path="GOOGLE-ADS-SETUP.md">
+# Configuración de medición — GTM · GA4 · Google Ads
+
+Guía operativa para la campaña de **Graseras de acero inoxidable**.
+Todo lo que está en este documento se hace **fuera del código**, en las
+interfaces de Google. El sitio ya empuja los eventos; falta conectarlos.
+
+> Los IDs que aparecen aquí son **placeholders**. Reemplázalos por los reales
+> de tu cuenta: `GTM-XXXXXXX`, `G-XXXXXXXXXX`, `AW-XXXXXXXXX`.
+
+---
+
+## 0. Arquitectura elegida y por qué
+
+```
+Web (Next.js)
+   └── window.dataLayer.push({ event: "conv_formulario", ... })
+          └── Google Tag Manager        ← ÚNICO sistema de etiquetado
+                 ├── GA4  (evento)
+                 └── Google Ads (conversión)
+```
+
+**Google Tag Manager es la fuente principal.** Cuando `NEXT_PUBLIC_GTM_ID`
+está definida:
+
+- todos los eventos van al `dataLayer` y a ningún otro lado;
+- **no se carga `gtag.js`** y **no se llama a `window.gtag()`** para registrar
+  conversiones — el contenedor es el único que dispara la etiqueta de Ads;
+- resultado: **una acción del usuario = un push = una conversión**.
+
+El envío directo por `gtag` se conservó **solo como fallback** para el caso de
+no tener contenedor (variables `NEXT_PUBLIC_GA4_ID` /
+`NEXT_PUBLIC_GOOGLE_ADS_ID` sin `NEXT_PUBLIC_GTM_ID`). Los dos modos son
+**mutuamente excluyentes por código** (`analyticsMode` en `lib/site.ts`): no
+existe ninguna configuración en la que ambos estén activos a la vez, que es
+justamente donde se originan las conversiones duplicadas.
+
+---
+
+## 1. Variables de entorno (Vercel)
+
+`Vercel → Project → Settings → Environment Variables` (Production + Preview):
+
+| Variable | Ejemplo | ¿Obligatoria? |
+|---|---|---|
+| `NEXT_PUBLIC_GTM_ID` | `GTM-XXXXXXX` | **Sí** — es el modo recomendado |
+| `NEXT_PUBLIC_GA4_ID` | `G-XXXXXXXXXX` | No — solo modo fallback sin GTM |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | `AW-XXXXXXXXX` | No — solo modo fallback sin GTM |
+| `NEXT_PUBLIC_ADS_CONVERSION_WHATSAPP` | `AW-XXXXXXXXX/AbCdEfGhIjKl` | No — solo modo fallback |
+| `NEXT_PUBLIC_ADS_CONVERSION_FORMULARIO` | `AW-XXXXXXXXX/AbCdEfGhIjKl` | No — solo modo fallback |
+| `NEXT_PUBLIC_ADS_CONVERSION_LLAMADA` | `AW-XXXXXXXXX/AbCdEfGhIjKl` | No — solo modo fallback |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | `abc123...` | No — verificación de Search Console |
+
+**Si usas GTM (recomendado): define solo `NEXT_PUBLIC_GTM_ID`.** Con GA4 y Ads
+configurados dentro del contenedor, las otras variables no hacen falta.
+
+> Next.js inyecta estas variables en **tiempo de build**. Después de cambiarlas
+> en Vercel hay que hacer **Redeploy**.
+
+---
+
+## 2. Eventos que emite la web
+
+Contrato estable. Estos tres nombres no cambian:
+
+| Evento | Cuándo se dispara | En Google Ads |
+|---|---|---|
+| `conv_formulario` | Envío del formulario de cotización, **después** de pasar la validación | **PRIMARY** |
+| `conv_whatsapp` | Clic en cualquier botón/enlace de WhatsApp | SECONDARY |
+| `conv_llamada` | Clic en un enlace `tel:` | SECONDARY |
+
+**`conv_formulario` es el lead más calificado**: el usuario dejó nombre,
+celular y su requerimiento antes de que se abriera WhatsApp.
+
+⚠️ El envío del formulario dispara **únicamente** `conv_formulario`. Aunque el
+flujo termine abriendo WhatsApp, **no** se dispara además `conv_whatsapp`: es
+un solo lead y contarlo dos veces inflaría las conversiones.
+
+### Parámetros que acompañan a cada evento
+
+Solo se envían los que existen en ese momento — **nunca `undefined`, `null` ni
+strings vacíos**. Antes de cada evento se empuja un objeto de reset, así que un
+evento nunca hereda los parámetros del anterior.
+
+| Parámetro | Ejemplo | Presente en |
+|---|---|---|
+| `origen` | `catalogo_card`, `hero_1`, `modal_producto`, `footer` | todos |
+| `producto` | `Grasera NPT recta` | cuando el CTA conoce el producto |
+| `categoria` | `graseras` | cuando el CTA conoce la categoría |
+| `sku` | `VSI-GRA-01` | catálogo y modal |
+| `medida` | `1/4" NPT` | modal, si el usuario eligió una |
+| `cantidad` | `3` | modal |
+| `focus` | `graseras` | si entró por `?focus=graseras` |
+| `landing_page` | `/` | todos |
+| `gclid` / `gbraid` / `wbraid` | `Cj0ABC123…` | si vino de Google Ads |
+| `utm_source` / `utm_medium` / `utm_campaign` / `utm_term` / `utm_content` | `google` / `cpc` / … | si la URL traía UTMs |
+| `ciudad` | `Lima` | solo en `conv_formulario` |
+
+**Privacidad:** nombre, apellido, celular, DNI/RUC y el texto del requerimiento
+**no se envían nunca** a analítica. Solo viajan en el mensaje de WhatsApp que
+el propio usuario envía. `ciudad` es un dato geográfico y no identifica a la
+persona.
+
+### Valores de `origen` disponibles
+
+`topbar` · `header` · `hero_1` … `hero_7` · `catalogo_card` ·
+`catalogo_otros_tipos` · `modal_producto` · `servicio_<nombre>` ·
+`servicios_cta` · `cotiza_bloque` · `formulario_cotizacion` · `cta_band` ·
+`footer` · `boton_flotante`
+
+---
+
+## 3. Google Tag Manager — paso a paso
+
+### 3.1 Variables de capa de datos
+
+`Variables → Nueva → Variable de capa de datos`. Crea **una por cada nombre**,
+usando exactamente el mismo nombre en el campo *Nombre de la variable de capa
+de datos*. Se recomienda nombrarlas `dlv - <nombre>`:
+
+| Nombre de la variable en GTM | Nombre de la variable de capa de datos |
+|---|---|
+| `dlv - origen` | `origen` |
+| `dlv - producto` | `producto` |
+| `dlv - categoria` | `categoria` |
+| `dlv - sku` | `sku` |
+| `dlv - medida` | `medida` |
+| `dlv - cantidad` | `cantidad` |
+| `dlv - focus` | `focus` |
+| `dlv - gclid` | `gclid` |
+| `dlv - utm_source` | `utm_source` |
+| `dlv - utm_medium` | `utm_medium` |
+| `dlv - utm_campaign` | `utm_campaign` |
+| `dlv - utm_term` | `utm_term` |
+| `dlv - utm_content` | `utm_content` |
+
+En todas: *Versión de la variable de capa de datos* = **Versión 2**.
+Deja *Valor predeterminado* vacío (los parámetros ausentes simplemente no se
+envían).
+
+### 3.2 Etiqueta base de GA4
+
+`Etiquetas → Nueva → Google Tag`
+
+- **ID de etiqueta:** `G-XXXXXXXXXX`
+- **Activador:** `Initialization - All Pages`
+
+### 3.3 Conversion Linker
+
+`Etiquetas → Nueva → Conversion Linker`
+
+- **Habilitar la vinculación en todos los dominios:** sin marcar
+- **Activador:** `Initialization - All Pages`
+
+Es **imprescindible**: sin él el `gclid` no se guarda en cookie y Google Ads no
+puede atribuir la conversión al clic del anuncio.
+
+### 3.4 Activadores (Custom Event)
+
+`Activadores → Nuevo → Evento personalizado`. Crea **tres**, y en cada uno
+escribe el nombre del evento **exactamente igual**, con *Se activa en: Todos
+los eventos personalizados*:
+
+| Nombre del activador | Nombre del evento |
+|---|---|
+| `CE - conv_formulario` | `conv_formulario` |
+| `CE - conv_whatsapp` | `conv_whatsapp` |
+| `CE - conv_llamada` | `conv_llamada` |
+
+### 3.5 Etiquetas de conversión de Google Ads
+
+`Etiquetas → Nueva → Seguimiento de conversiones de Google Ads`. Una por cada
+activador. El **ID** y la **etiqueta** los da Google Ads en el paso 5.
+
+| Etiqueta | ID de conversión | Etiqueta de conversión | Activador |
+|---|---|---|---|
+| `Ads - Conv Formulario` | `AW-XXXXXXXXX` | `AbCdEfGhIjKl` | `CE - conv_formulario` |
+| `Ads - Conv WhatsApp` | `AW-XXXXXXXXX` | `MnOpQrStUvWx` | `CE - conv_whatsapp` |
+| `Ads - Conv Llamada` | `AW-XXXXXXXXX` | `YzAbCdEfGhIj` | `CE - conv_llamada` |
+
+**Deja el campo `Valor de conversión` VACÍO** en las tres. La web no envía un
+valor monetario a propósito (ver sección 6).
+
+### 3.6 Etiquetas de evento de GA4
+
+`Etiquetas → Nueva → Evento de Google Analytics`. Una por cada activador, con
+la etiqueta de configuración de GA4:
+
+| Etiqueta | Nombre del evento | Activador |
+|---|---|---|
+| `GA4 - conv_formulario` | `conv_formulario` | `CE - conv_formulario` |
+| `GA4 - conv_whatsapp` | `conv_whatsapp` | `CE - conv_whatsapp` |
+| `GA4 - conv_llamada` | `conv_llamada` | `CE - conv_llamada` |
+
+En *Parámetros del evento* de cada una, añade los que quieras analizar:
+
+| Nombre del parámetro | Valor |
+|---|---|
+| `origen` | `{{dlv - origen}}` |
+| `producto` | `{{dlv - producto}}` |
+| `categoria` | `{{dlv - categoria}}` |
+| `sku` | `{{dlv - sku}}` |
+| `medida` | `{{dlv - medida}}` |
+| `cantidad` | `{{dlv - cantidad}}` |
+| `focus` | `{{dlv - focus}}` |
+
+### 3.7 Probar y publicar
+
+1. **Vista previa (Preview)** con la URL `https://vsiperu.com.pe/?focus=graseras`.
+2. Haz clic en un botón de WhatsApp del catálogo → debe aparecer
+   `conv_whatsapp` con `origen=catalogo_card`, `producto`, `categoria=graseras`,
+   `sku` y `focus=graseras`.
+3. Envía el formulario → debe aparecer **solo** `conv_formulario`,
+   **nunca también** `conv_whatsapp`.
+4. **Enviar → Publicar.**
+
+---
+
+## 4. Google Analytics 4
+
+1. `Administrar → Flujos de datos` → confirma que la propiedad `G-XXXXXXXXXX`
+   recibe datos.
+2. `Administrar → Eventos` → tras registrar tráfico real aparecerán
+   `conv_formulario`, `conv_whatsapp` y `conv_llamada`.
+3. `Administrar → Eventos clave` → marca **`conv_formulario`** como evento
+   clave. (`conv_whatsapp` y `conv_llamada` son opcionales.)
+4. `Administrar → Definiciones personalizadas → Crear dimensión personalizada`.
+   Ámbito **Evento**, una por cada parámetro que quieras segmentar:
+   `origen`, `producto`, `categoria`, `sku`, `medida`, `cantidad`, `focus`.
+   Sin esto los parámetros llegan pero no se pueden usar en informes.
+
+---
+
+## 5. Google Ads
+
+### 5.1 Crear las conversiones
+
+`Objetivos → Conversiones → Nueva acción de conversión → Sitio web →
+Añadir manualmente` (**no** uses "Importar desde GA4", ver sección 7).
+
+| Acción de conversión | Categoría | Recuento | Acción principal/secundaria |
+|---|---|---|---|
+| `Formulario de cotización` | Enviar formulario de contacto | **Una** | **Principal (Primary)** |
+| `Clic WhatsApp` | Contacto | **Una** | **Secundaria (Secondary)** |
+| `Clic Llamada` | Llamada telefónica | **Una** | **Secundaria (Secondary)** |
+
+En las tres: **Valor → No usar un valor** (ver sección 6).
+**Recuento = "Una"**, no "Todas": un mismo usuario que hace cinco clics en
+WhatsApp es un lead, no cinco.
+
+Al terminar, Google Ads muestra el **ID de conversión** (`AW-XXXXXXXXX`) y la
+**etiqueta** de cada acción. Cópialos a las etiquetas de GTM del paso 3.5.
+
+### 5.2 Campaña de Graseras
+
+- **URL final:** `https://vsiperu.com.pe/?focus=graseras`
+- Deja activado el **etiquetado automático** (auto-tagging) en
+  `Configuración de la cuenta` — es lo que genera el `gclid`.
+- Añade UTMs en el *sufijo de URL final* si además quieres verlas en GA4:
+  `utm_source=google&utm_medium=cpc&utm_campaign=graseras&utm_term={keyword}`
+
+Con `?focus=graseras` la landing abre directamente con el hero y la categoría
+de Graseras, y todas las conversiones de esa sesión llevan `focus=graseras`.
+
+---
+
+## 6. Valor de conversión
+
+La web **no envía** ningún valor monetario. Antes se enviaba `value: 1,
+currency: "PEN"` en todas las conversiones, lo que asigna un valor comercial
+ficticio de S/ 1 a cada lead y contamina cualquier estrategia futura de ROAS o
+"Maximizar valor de conversión".
+
+Si más adelante conoces el valor real de un lead (por ejemplo, el ticket
+promedio de una cotización cerrada), la función `convert()` ya acepta `value`
+como parámetro opcional, y en GTM basta con rellenar el campo *Valor de
+conversión*. Mientras tanto: **sin valor** es mejor que **con valor inventado**.
+
+---
+
+## 7. Cómo evitar el doble conteo
+
+Tres reglas. Las tres importan.
+
+**1. Un solo sistema de etiquetado.**
+Con `NEXT_PUBLIC_GTM_ID` definida, la web no carga `gtag.js` ni llama a
+`gtag()`. Está garantizado por código.
+
+**2. NO importar estas conversiones desde GA4 a Google Ads.**
+Si las conversiones ya se miden con **GTM → Google Ads**, **no** las importes
+además desde GA4 (`Objetivos → Importar → Google Analytics 4`) como
+conversiones **Primary**. El mismo lead se contaría dos veces: una por la
+etiqueta de Ads y otra por el evento importado.
+
+Elige **uno** de los dos caminos:
+
+| Camino | Cómo | Estado |
+|---|---|---|
+| **A — GTM → Ads** | Etiquetas de conversión de Ads en GTM (sección 3.5) | ✅ **El que documenta esta guía** |
+| **B — GA4 → Ads** | Importar los eventos clave de GA4 en Ads | ❌ No usar junto con A |
+
+Si alguna vez importas eventos de GA4 con fines de análisis, déjalos como
+**Secondary** y **fuera** de la columna "Conversiones" (`Incluir en
+"Conversiones" = No`), para que no alimenten la puja.
+
+**3. El formulario no dispara `conv_whatsapp`.**
+Garantizado por código en `app/page.tsx`.
+
+### Configuración final esperada en Google Ads
+
+| Acción | Origen | Tipo | En "Conversiones" |
+|---|---|---|---|
+| Formulario de cotización | GTM (etiqueta de Ads) | **Primary** | Sí |
+| Clic WhatsApp | GTM (etiqueta de Ads) | Secondary | No |
+| Clic Llamada | GTM (etiqueta de Ads) | Secondary | No |
+
+Así la puja optimiza hacia el lead calificado (`conv_formulario`), y los clics
+de WhatsApp y llamada quedan disponibles como señal de observación sin
+distorsionar el CPA.
+
+---
+
+## 8. Checklist de validación
+
+- [ ] `NEXT_PUBLIC_GTM_ID` en Vercel + **Redeploy**.
+- [ ] En el HTML publicado aparece `gtm.js?id=GTM-XXXXXXX` y **no** aparece
+      `gtag/js?id=`.
+- [ ] Conversion Linker publicado.
+- [ ] En Preview de GTM, `conv_whatsapp` desde el catálogo trae `origen`,
+      `producto`, `categoria` y `sku`.
+- [ ] En Preview, enviar el formulario dispara **solo** `conv_formulario`.
+- [ ] Entrando por `?focus=graseras`, todos los eventos traen `focus=graseras`.
+- [ ] Entrando por una URL con `gclid`, los eventos traen `gclid`.
+- [ ] En Google Ads, `Formulario de cotización` = Primary; WhatsApp y Llamada
+      = Secondary.
+- [ ] En Google Ads **no** existen conversiones importadas desde GA4 con los
+      mismos nombres marcadas como Primary.
+</file>
 
 <file path="app/globals.css">
 @tailwind base;
@@ -222,7 +1064,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 <file path="lib/analytics.ts">
 "use client";
 
-import { site } from "./site";
+import { site, analyticsMode } from "./site";
 
 declare global {
   interface Window {
@@ -231,36 +1073,142 @@ declare global {
   }
 }
 
-/** Evento genérico al dataLayer (lo lee GTM → GA4 y Google Ads). */
-export function track(event: string, params: Record<string, unknown> = {}) {
-  if (typeof window === "undefined") return;
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event, ...params, ...getAttribution() });
-}
+/* ==========================================================================
+   ARQUITECTURA DE MEDICIÓN — decisión explícita
+   --------------------------------------------------------------------------
+   FUENTE PRINCIPAL: Google Tag Manager.
+   Web → dataLayer → GTM → (GA4 + Google Ads)
 
-/** Conversión directa de Google Ads (por si no usas GTM). */
-export function adsConversion(label: string, value?: number) {
-  if (typeof window === "undefined" || !window.gtag || !label) return;
-  window.gtag("event", "conversion", {
-    send_to: label,
-    value: value ?? 1,
-    currency: "PEN",
-  });
-}
+   Con NEXT_PUBLIC_GTM_ID definido (`analyticsMode === "gtm"`):
+     · TODO evento se empuja al dataLayer y nada más.
+     · NO se carga gtag.js y NO se llama a window.gtag() para conversiones.
+       El contenedor es el único que dispara la etiqueta de Google Ads.
+     · Resultado: una acción del usuario = un push = una conversión.
 
-/** Conversión + evento GA4 en un solo llamado. */
-export function convert(
-  tipo: "whatsapp" | "llamada" | "formulario",
-  params: Record<string, unknown> = {},
-) {
-  track(`conv_${tipo}`, params);
-  adsConversion(site.adsConversionLabels[tipo]);
-}
+   Sin GTM pero con GA4/Ads (`analyticsMode === "gtag"`):
+     · Fallback: se carga gtag.js desde layout.tsx y la conversión se envía
+       directo con las etiquetas de site.adsConversionLabels.
+     · Se conserva porque permite medir sin contenedor, pero NO es el camino
+       recomendado y jamás convive con GTM.
 
+   Sin IDs (`analyticsMode === "off"`, desarrollo):
+     · Solo se empuja al dataLayer para poder inspeccionarlo en consola.
+
+   ⚠️ Regla operativa que acompaña a este código (ver GOOGLE-ADS-SETUP.md):
+      si estas conversiones ya se miden con GTM → Google Ads, NO importarlas
+      además desde GA4 como conversiones Primary de Ads. Ese es el otro origen
+      clásico de doble conteo, y vive en la configuración, no en el código.
+   ========================================================================== */
+
+/** Los tres eventos son el contrato estable con GTM. No renombrar. */
+export type ConvTipo = "whatsapp" | "llamada" | "formulario";
+
+/** Parámetros de negocio que acompañan a una conversión. Todos opcionales. */
+export type ConvMeta = {
+  /** Dónde hizo clic: hero_1, header, catalogo_card, modal_producto, … */
+  origen?: string;
+  producto?: string;
+  categoria?: string;
+  sku?: string;
+  medida?: string;
+  cantidad?: number | string;
+  /** Cualquier extra puntual y NO personal. */
+  [k: string]: unknown;
+};
+
+/** Claves de atribución capturadas de la URL de entrada. */
 const KEYS = [
   "gclid", "gbraid", "wbraid",
   "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
 ];
+
+/**
+ * Parámetros de negocio que GTM puede leer como variables de Data Layer.
+ * Se limpian antes de cada push para que un evento no herede los valores del
+ * anterior (el dataLayer es persistente: sin este reset, un clic en el footer
+ * arrastraría el `producto` del último modal abierto).
+ */
+const RESET_KEYS = [
+  "origen", "producto", "categoria", "sku", "medida", "cantidad", "focus",
+];
+
+const STORE_ATTR = "vsi_attr";
+const STORE_ATTR_FIRST = "vsi_attr_first";
+const STORE_FOCUS = "vsi_focus";
+
+/** Quita undefined, null y strings vacíos: al dataLayer no entra basura. */
+function limpiar(obj: Record<string, unknown>): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (v === undefined || v === null) continue;
+    if (typeof v === "string" && v.trim() === "") continue;
+    out[k] = v;
+  }
+  return out;
+}
+
+/** Evento genérico al dataLayer (lo lee GTM → GA4 y Google Ads). */
+export function track(event: string, params: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+
+  // 1) Reset: anula los parámetros de negocio del evento anterior.
+  const reset: Record<string, unknown> = {};
+  RESET_KEYS.forEach((k) => (reset[k] = undefined));
+  window.dataLayer.push(reset);
+
+  // 2) Push real. La atribución va primero para que un parámetro explícito
+  //    del llamador siempre pueda sobrescribirla. `captured_at` se excluye:
+  //    es control interno del almacenamiento, no parte del contrato con GTM.
+  const { captured_at: _omit, ...attr } = getAttribution();
+  window.dataLayer.push({
+    event,
+    ...limpiar(attr),
+    ...limpiar({ focus: getFocus(), landing_page: getLandingPage() }),
+    ...limpiar(params),
+  });
+}
+
+/**
+ * Conversión directa de Google Ads. SOLO en modo fallback (sin GTM).
+ *
+ * `value` es opcional a propósito: antes se enviaba `value: 1, currency: PEN`
+ * en todas las conversiones, lo que inventa un valor comercial de S/1 por lead
+ * y contamina cualquier estrategia futura de ROAS. Si no hay un valor real,
+ * no se envía ninguno.
+ */
+export function adsConversion(
+  label: string,
+  value?: number,
+  currency = "PEN",
+) {
+  if (analyticsMode !== "gtag") return; // con GTM, la conversión es del contenedor
+  if (typeof window === "undefined" || !window.gtag || !label) return;
+
+  const payload: Record<string, unknown> = { send_to: label };
+  if (typeof value === "number" && Number.isFinite(value)) {
+    payload.value = value;
+    payload.currency = currency;
+  }
+  window.gtag("event", "conversion", payload);
+}
+
+/**
+ * Registra una conversión: `conv_whatsapp` | `conv_llamada` | `conv_formulario`.
+ *
+ * Un solo llamado por acción del usuario. En particular, el envío del
+ * formulario dispara ÚNICAMENTE `conv_formulario`, nunca también
+ * `conv_whatsapp`, aunque el flujo termine abriendo WhatsApp.
+ */
+export function convert(tipo: ConvTipo, meta: ConvMeta = {}) {
+  track(`conv_${tipo}`, meta);
+  // No-op cuando GTM está activo (ver adsConversion).
+  adsConversion(site.adsConversionLabels[tipo], meta.value as number | undefined);
+}
+
+/* -------------------------------------------------------------------------
+   ATRIBUCIÓN (gclid / UTM) y MODO CAMPAÑA (?focus=)
+------------------------------------------------------------------------- */
 
 /** Guarda gclid/UTM en la primera visita para adjuntarlos a cada lead. */
 export function captureAttribution() {
@@ -275,9 +1223,9 @@ export function captureAttribution() {
     found["landing_page"] = window.location.pathname;
     found["captured_at"] = new Date().toISOString();
     try {
-      sessionStorage.setItem("vsi_attr", JSON.stringify(found));
-      if (!localStorage.getItem("vsi_attr_first")) {
-        localStorage.setItem("vsi_attr_first", JSON.stringify(found));
+      sessionStorage.setItem(STORE_ATTR, JSON.stringify(found));
+      if (!localStorage.getItem(STORE_ATTR_FIRST)) {
+        localStorage.setItem(STORE_ATTR_FIRST, JSON.stringify(found));
       }
     } catch {
       /* almacenamiento no disponible */
@@ -289,8 +1237,8 @@ export function getAttribution(): Record<string, string> {
   if (typeof window === "undefined") return {};
   try {
     return JSON.parse(
-      sessionStorage.getItem("vsi_attr") ||
-        localStorage.getItem("vsi_attr_first") ||
+      sessionStorage.getItem(STORE_ATTR) ||
+        localStorage.getItem(STORE_ATTR_FIRST) ||
         "{}",
     );
   } catch {
@@ -302,6 +1250,48 @@ export function attributionText(): string {
   const a = getAttribution();
   const parts = KEYS.filter((k) => a[k]).map((k) => `${k}=${a[k]}`);
   return parts.join(" | ");
+}
+
+/** Valores admitidos en `?focus=`. Hoy la campaña activa es solo graseras. */
+const FOCUS_VALIDOS = ["graseras"] as const;
+export type Focus = (typeof FOCUS_VALIDOS)[number];
+
+/**
+ * Lee `?focus=graseras` de la URL y lo persiste en la sesión, para que el
+ * parámetro siga acompañando a los eventos aunque el usuario navegue por
+ * anclas y el query se pierda.
+ */
+export function captureFocus(): Focus | "" {
+  if (typeof window === "undefined") return "";
+  const v = (new URLSearchParams(window.location.search).get("focus") || "")
+    .trim()
+    .toLowerCase();
+  const valido = (FOCUS_VALIDOS as readonly string[]).includes(v)
+    ? (v as Focus)
+    : "";
+  if (valido) {
+    try {
+      sessionStorage.setItem(STORE_FOCUS, valido);
+    } catch {
+      /* almacenamiento no disponible */
+    }
+  }
+  return valido;
+}
+
+export function getFocus(): string {
+  if (typeof window === "undefined") return "";
+  try {
+    return sessionStorage.getItem(STORE_FOCUS) || "";
+  } catch {
+    return "";
+  }
+}
+
+/** Página de aterrizaje real; cae a la guardada en la atribución si existe. */
+function getLandingPage(): string {
+  if (typeof window === "undefined") return "";
+  return getAttribution().landing_page || window.location.pathname;
 }
 </file>
 
@@ -444,7 +1434,6 @@ Es el mismo diseño que ves en `VSI Landing.dc.html`, portado a Next.js con Tail
 ## Arrancar
 
 ```bash
-cd nextjs
 npm install
 npm run dev      # http://localhost:3000
 npm run build && npm start
@@ -460,12 +1449,14 @@ npm run build && npm start
 
 | Archivo | Qué contiene |
 |---|---|
-| **`lib/site.ts`** | Teléfono, WhatsApp, email, dirección, mapa, IDs de Google. Todo lo marcado `// TODO`. |
+| **`lib/site.ts`** | Teléfono, WhatsApp, email, dirección y mapa. Los IDs de Google **ya no van aquí**: son variables de entorno. |
+| **`.env.local`** | IDs de Google (GTM, GA4, Ads). Copia `.env.example`. En producción se administran desde Vercel. |
 | **`data/content.json`** | El contenido: slides del hero, tiles de líneas, catálogo por categoría, servicios, marcas y FAQ. |
 | `tailwind.config.ts` | Paleta, tipografías, sombras y breakpoints. |
 | `app/page.tsx` | La página completa. |
 | `app/globals.css` | Resets base y el offset de anclas. |
-| `app/layout.tsx` | SEO, metadata, JSON-LD y carga de GA4/GTM/Ads. |
+| `app/layout.tsx` | SEO, metadata, JSON-LD y carga de GTM/GA4/Ads. |
+| `lib/analytics.ts` | Eventos de conversión, atribución (gclid/UTM) y modo campaña `?focus=`. |
 
 ### La paleta vive en `tailwind.config.ts`
 
@@ -496,12 +1487,13 @@ Los tamaños de texto y los paddings usan `clamp()`, así que escalan de forma c
 
 ### `data/content.json` en detalle
 
-- **`hero[]`** — carrusel: `titulo`, `descripcion`, `notaTitulo`, `notaTexto`, `imagen`, `ctaTexto`, `ctaMensaje`.
-- **`bento[]`** — tiles de "Líneas de producto"; `catIndex` apunta a la categoría que abre al hacer clic.
+- **`hero[]`** — carrusel: `titulo`, `descripcion`, `imagen`, `imagenAlt`, `ctaTexto`, `ctaProducto`, más `catId` (categoría que etiqueta la conversión, `""` si no aplica) y `focus` (qué valor de `?focus=` abre ese slide, `""` si ninguno). **El primer slide es el que lleva el `<h1>`**; los demás usan `<h2>`.
+- **`bento[]`** — tiles de "Líneas de producto"; `catId` apunta por **id** a la categoría que abre al hacer clic.
+- **`privacidad`** — texto del modal de política de privacidad: `titulo`, `actualizado` y `bloques[]` (pares `[titulo, texto]`).
 - **`categorias[]`** — el catálogo. Cada una con `label`, `skuPrefijo` (genera el SKU), `medidas[]` (el selector del modal) y `productos[]` (`nombre`, `desc`, `imagen`).
 - **`servicios[]`** — 6 tarjetas; `alto` puede ser `"corto"` o `"alto"` (las dos últimas son verticales).
 - **`marcas[]`** — carrusel de logos.
-- **`faqs[]`** — pares `[pregunta, respuesta]`. Si agregas o quitas, actualiza también el bloque `FAQPage` en `app/layout.tsx` para que el schema coincida.
+- **`faqs[]`** — pares `[pregunta, respuesta]`. El schema `FAQPage` de `app/layout.tsx` los lee de aquí, así que basta con editarlos en un sitio.
 
 ## Imágenes
 
@@ -516,6 +1508,7 @@ Faltan y son obligatorios:
 ## SEO ya resuelto
 
 - `metadata` completo: title, description, keywords, canonical, Open Graph, Twitter, robots
+- El `canonical` apunta siempre a `https://vsiperu.com.pe`, así que `?focus=graseras` no genera contenido duplicado
 - `app/sitemap.ts` → `/sitemap.xml`, `app/robots.ts` → `/robots.txt`
 - JSON-LD: Organization, LocalBusiness (dirección, horarios, mapa), WebSite, ItemList de productos y **FAQPage**
 - `lang="es-PE"`, un solo `<h1>`, headings jerárquicos
@@ -527,7 +1520,43 @@ Faltan y son obligatorios:
 - Menú "Todas las categorías" y tiles del bento → abren el catálogo en la pestaña correspondiente
 - Modal de producto con medida, cantidad y mensaje de WhatsApp prearmado (incluye SKU)
 - Formulario de cotización → arma el mensaje y abre WhatsApp, con `gclid`/UTM adjuntos
+- Modal de política de privacidad, accesible desde el checkbox del formulario y desde el footer
 - Eventos de conversión (`conv_whatsapp`, `conv_llamada`, `conv_formulario`) listos para GTM/Ads
+
+## Medición
+
+**Google Tag Manager es la fuente principal.** La web empuja los eventos al
+`dataLayer` y el contenedor decide qué mandar a GA4 y a Google Ads. Con GTM
+configurado, `gtag.js` **no** se carga: los dos modos son mutuamente
+excluyentes por código (`analyticsMode` en `lib/site.ts`), que es como se evita
+que una misma conversión se cuente dos veces.
+
+Configúralo con estas variables de entorno (todas opcionales; copia
+`.env.example` a `.env.local` para desarrollo y créalas en Vercel para
+producción):
+
+```env
+NEXT_PUBLIC_GTM_ID=
+NEXT_PUBLIC_GA4_ID=
+NEXT_PUBLIC_GOOGLE_ADS_ID=
+NEXT_PUBLIC_ADS_CONVERSION_WHATSAPP=
+NEXT_PUBLIC_ADS_CONVERSION_FORMULARIO=
+NEXT_PUBLIC_ADS_CONVERSION_LLAMADA=
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=
+```
+
+Con GTM basta `NEXT_PUBLIC_GTM_ID`; las de GA4/Ads son el fallback para operar
+sin contenedor. Next.js inyecta estos valores en **build time**: tras cambiarlos
+en Vercel hay que hacer **Redeploy**.
+
+**La guía completa (activadores, variables de capa de datos, conversiones de
+Ads y cómo no duplicar) está en [`GOOGLE-ADS-SETUP.md`](GOOGLE-ADS-SETUP.md).**
+
+### Modo campaña: `?focus=graseras`
+
+`https://vsiperu.com.pe/?focus=graseras` abre la landing con el hero y la
+categoría de Graseras ya seleccionados, y añade `focus=graseras` a todos los
+eventos de esa sesión. Es la misma página `/`: no hay ruta aparte.
 
 ## Deploy
 
@@ -639,11 +1668,25 @@ export default config;
 
 <file path="lib/site.ts">
 // ---------------------------------------------------------------------------
-// ÚNICO ARCHIVO QUE DEBES EDITAR PARA PONER LOS DATOS REALES.
-// Reemplaza los valores marcados con  // TODO
+// DATOS DE LA EMPRESA + CONFIGURACIÓN DE MEDICIÓN.
+//
+// Los IDs de Google YA NO se editan aquí: vienen de variables de entorno
+// (ver .env.example y GOOGLE-ADS-SETUP.md). Así se administran desde Vercel
+// sin tocar código. Todas son NEXT_PUBLIC_* porque se ejecutan en el navegador
+// y no son secretos (viajan en el HTML de cualquier forma).
+//
 // El contenido de la página (hero, productos, servicios, marcas, FAQ)
 // vive en  data/content.json
 // ---------------------------------------------------------------------------
+
+/** Lee una env pública y normaliza vacíos/espacios a "". */
+const env = (v: string | undefined) => (v ?? "").trim();
+
+// Next.js reemplaza `process.env.NEXT_PUBLIC_*` en build time, por lo que hay
+// que escribir el nombre completo y literal de cada variable (no indexar).
+const GTM_ID = env(process.env.NEXT_PUBLIC_GTM_ID);
+const GA4_ID = env(process.env.NEXT_PUBLIC_GA4_ID);
+const ADS_ID = env(process.env.NEXT_PUBLIC_GOOGLE_ADS_ID);
 
 export const site = {
   name: "VSI Suministros Industriales",
@@ -680,18 +1723,47 @@ export const site = {
   hours: "Lun–Vie 8:00–18:00 · Sáb 9:00–13:00",
   foundingYear: 2016,
 
-  // TODO: IDs de Google (ver GOOGLE-SETUP.md). Deja "" para desactivar.
-  gtmId: "", // GTM-XXXXXXX
-  ga4Id: "", // G-XXXXXXXXXX
-  adsId: "", // AW-XXXXXXXXX
+  // --- Medición (todo desde .env / Vercel) ---------------------------------
+  gtmId: GTM_ID, // NEXT_PUBLIC_GTM_ID          → GTM-XXXXXXX
+  ga4Id: GA4_ID, // NEXT_PUBLIC_GA4_ID          → G-XXXXXXXXXX
+  adsId: ADS_ID, // NEXT_PUBLIC_GOOGLE_ADS_ID   → AW-XXXXXXXXX
+
+  /**
+   * Etiquetas de conversión de Google Ads en formato `AW-XXXXXXXXX/AbCdEfGhIjKl`.
+   * SOLO se usan en modo fallback (sin GTM). Con GTM configurado, la conversión
+   * la dispara el contenedor y estas variables se ignoran por completo.
+   */
   adsConversionLabels: {
-    whatsapp: "", // AW-XXXXXXXXX/AbCdEfGhIjKl
-    llamada: "",
-    formulario: "",
+    whatsapp: env(process.env.NEXT_PUBLIC_ADS_CONVERSION_WHATSAPP),
+    llamada: env(process.env.NEXT_PUBLIC_ADS_CONVERSION_LLAMADA),
+    formulario: env(process.env.NEXT_PUBLIC_ADS_CONVERSION_FORMULARIO),
   },
-  // TODO: código de verificación de Google Search Console (meta tag)
-  googleSiteVerification: "",
+
+  // Código de verificación de Google Search Console (meta tag)
+  googleSiteVerification: env(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION),
 };
+
+/**
+ * Modo de etiquetado ACTIVO. Es una sola fuente de verdad, evaluada igual en
+ * servidor y cliente, para que `layout.tsx` (qué scripts cargar) y
+ * `analytics.ts` (cómo registrar la conversión) nunca se contradigan.
+ *
+ *  - "gtm"  → GTM es el único sistema de etiquetado. Todo va al dataLayer.
+ *             NO se carga gtag.js ni se llama a gtag() para conversiones.
+ *  - "gtag" → No hay GTM. Se carga gtag.js con GA4 y/o Ads y las conversiones
+ *             se envían directo con las etiquetas de `adsConversionLabels`.
+ *  - "off"  → Sin IDs configurados (desarrollo). Los eventos se siguen
+ *             empujando al dataLayer para poder depurarlos, sin red.
+ *
+ * Nunca puede ser "gtm" y "gtag" a la vez: ahí es donde nacen las conversiones
+ * duplicadas.
+ */
+export type AnalyticsMode = "gtm" | "gtag" | "off";
+export const analyticsMode: AnalyticsMode = site.gtmId
+  ? "gtm"
+  : site.ga4Id || site.adsId
+    ? "gtag"
+    : "off";
 
 export function waLink(mensaje: string) {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensaje)}`;
@@ -720,7 +1792,8 @@ export function msgCotizar(
 import type { Metadata, Viewport } from "next";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
-import { site } from "@/lib/site";
+import { site, analyticsMode } from "@/lib/site";
+import content from "@/data/content.json";
 import "./globals.css";
 
 const head = Manrope({
@@ -737,16 +1810,18 @@ const body = Plus_Jakarta_Sans({
 });
 
 const TITLE =
-  "Graseras, Válvulas y Suministros Industriales en Perú | VSI";
+  "Graseras de Acero Inoxidable y Suministros Industriales | VSI Perú";
 const DESC =
-  "Importadores directos de graseras (rectas, 45° y 90°) y válvulas cuchilla uni y bidireccionales. Stock inmediato en Lima, despacho a todo el Perú. Cotiza por WhatsApp.";
+  "Importadores directos de graseras de acero inoxidable: rectas, 45° y 90°, en roscas NPT y UNF. También válvulas, empaquetaduras y tubería HDPE. Stock en Lima y despacho a todo el Perú.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: { default: TITLE, template: "%s | VSI Suministros Industriales" },
   description: DESC,
   keywords: [
-    "graseras", "graseras rectas", "graseras 45 grados", "graseras 90 grados",
+    "graseras", "graseras de acero inoxidable", "graseras inoxidables",
+    "graseras industriales", "grasera recta", "grasera 45 grados", "grasera 90 grados",
+    "graseras NPT", "graseras UNF",
     "venta de graseras Lima", "graseras al por mayor Perú",
     "válvulas cuchilla", "válvula cuchilla unidireccional", "válvula cuchilla bidireccional",
     "tubería HDPE corrugada", "accesorios HDPE", "planchas de acero",
@@ -855,22 +1930,19 @@ const jsonLd = {
       "@type": "ItemList",
       name: "Líneas de producto",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Graseras rectas, 45° y 90°", url: `${site.url}/#catalogo` },
-        { "@type": "ListItem", position: 2, name: "Válvulas cuchilla uni y bidireccionales", url: `${site.url}/#catalogo` },
-        { "@type": "ListItem", position: 3, name: "Tubería HDPE corrugada y accesorios", url: `${site.url}/#catalogo` },
-        { "@type": "ListItem", position: 4, name: "Planchas de acero", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 1, name: "Graseras de acero inoxidable rectas, 45° y 90° (roscas NPT y UNF)", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 2, name: "Válvulas industriales", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 3, name: "Empaquetaduras y sellado industrial", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 4, name: "Tubería HDPE y accesorios", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 5, name: "Planchas y perfiles", url: `${site.url}/#catalogo` },
       ],
     },
     {
       "@type": "FAQPage",
       "@id": `${site.url}/#faq`,
-      mainEntity: [
-        ["¿Qué tipos de graseras manejan?", "Manejamos graseras rectas, de 45° y de 90°, en todas las medidas y grados. Somos importadores directos, por lo que atendemos tanto pedidos por unidad como volúmenes mayoristas."],
-        ["¿Cuál es la diferencia entre una válvula cuchilla unidireccional y una bidireccional?", "La unidireccional sella en un solo sentido del flujo y es la opción más económica para líneas de descarga. La bidireccional garantiza estanqueidad en ambos sentidos y se usa cuando la presión puede invertirse."],
-        ["¿Despachan a provincias?", "Sí. Despachamos a todo el Perú y coordinamos el envío a mina, planta u obra a través del operador logístico que prefieras."],
-        ["¿Venden a empresas con factura?", `Sí. Somos ${site.legalName}, RUC ${site.ruc}, y emitimos factura electrónica en todas nuestras ventas.`],
-        ["¿En cuánto tiempo responden una cotización?", "Dentro de las 24 horas hábiles. Por WhatsApp la respuesta suele ser el mismo día, en horario de oficina."],
-      ].map(([q, a]) => ({
+      // Fuente única: data/content.json. Así el schema nunca se desincroniza
+      // del acordeón visible, que es lo que Google exige para el rich result.
+      mainEntity: content.faqs.map(([q, a]) => ({
         "@type": "Question",
         name: q,
         acceptedAnswer: { "@type": "Answer", text: a },
@@ -890,7 +1962,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        {site.gtmId ? (
+        {/* ------------------------------------------------------------------
+           MEDICIÓN — un solo sistema activo a la vez (ver lib/analytics.ts).
+
+           analyticsMode === "gtm"  → solo el contenedor de GTM. Es el modo
+             recomendado y el que documenta GOOGLE-ADS-SETUP.md. gtag.js NO se
+             carga: si conviviera con GTM, la misma conversión podría contarse
+             dos veces (una por el contenedor y otra por la etiqueta directa).
+
+           analyticsMode === "gtag" → fallback sin contenedor.
+           analyticsMode === "off"  → desarrollo: sin scripts de Google.
+        ------------------------------------------------------------------ */}
+
+        {/* El dataLayer existe antes que cualquier script para que ningún
+            evento temprano se pierda. */}
+        <Script id="dl-init" strategy="beforeInteractive">
+          {`window.dataLayer=window.dataLayer||[];`}
+        </Script>
+
+        {analyticsMode === "gtm" ? (
           <>
             <Script id="gtm" strategy="afterInteractive">
               {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${site.gtmId}');`}
@@ -906,7 +1996,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </>
         ) : null}
 
-        {!site.gtmId && (site.ga4Id || site.adsId) ? (
+        {analyticsMode === "gtag" ? (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id || site.adsId}`}
@@ -929,99 +2019,112 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 {
   "hero": [
     {
-      "titulo": "",
-      "descripcion": "",
+      "focus": "graseras",
+      "catId": "graseras",
+      "titulo": "GRASERAS DE ACERO INOXIDABLE PARA APLICACIONES INDUSTRIALES",
+      "descripcion": "Graseras rectas, de 45° y de 90°, en roscas NPT y UNF. Importadores directos, con stock en Lima y despacho a todo el Perú. Atendemos por unidad y en volúmenes mayoristas.",
       "imagen": "/portadas/GRASERAS.webp",
-      "imagenAlt": "",
-      "ctaTexto": "",
-      "ctaProducto": ""
-    }, 
+      "imagenAlt": "Graseras de acero inoxidable rectas, de 45° y de 90°",
+      "ctaTexto": "Cotizar graseras",
+      "ctaProducto": "Graseras de acero inoxidable"
+    },
     {
-      "titulo": "",
-      "descripcion": "",
+      "focus": "",
+      "catId": "valvulas",
+      "titulo": "VÁLVULAS CUCHILLA PARA LÍNEAS INDUSTRIALES EXIGENTES",
+      "descripcion": "Soluciones unidireccionales y bidireccionales para manejo de sólidos, pulpas y fluidos industriales. Configuraciones manuales y neumáticas.",
       "imagen": "/portadas/VALVULAS.webp",
-      "imagenAlt": "",
-      "ctaTexto": "",
-      "ctaProducto": ""
+      "imagenAlt": "Válvulas cuchilla industriales",
+      "ctaTexto": "Cotizar válvulas",
+      "ctaProducto": "Válvulas cuchilla"
     },
     {
-      "titulo": "",
-      "descripcion": "",
+      "focus": "",
+      "catId": "tubos",
+      "titulo": "TUBERÍAS Y CONEXIONES DE HDPE IDEALES PARA LA INDUSTRIA",
+      "descripcion": "Polietileno de alta densidad (HDPE), ideal para la industria por su resistencia a la corrosión, flexibilidad y larga vida útil.",
       "imagen": "/portadas/HDPE.webp",
-      "imagenAlt": "",
-      "ctaTexto": "",
-      "ctaProducto": ""
+      "imagenAlt": "Tuberías y accesorios HDPE industriales",
+      "ctaTexto": "Cotizar HDPE",
+      "ctaProducto": "Tuberías y accesorios HDPE"
     },
     {
-      "titulo": "",
-      "descripcion": "",
+      "focus": "",
+      "catId": "empaquetaduras",
+      "titulo": "SOLUCIONES EN EMPAQUETADURAS Y SELLADO INDUSTRIAL",
+      "descripcion": "Garantiza el rendimiento óptimo y evita fugas en tus equipos con nuestras empaquetaduras de alta resistencia.",
       "imagen": "/portadas/EMPAQUETADURAS.webp",
-      "imagenAlt": "",
-      "ctaTexto": "",
-      "ctaProducto": ""
+      "imagenAlt": "Empaquetaduras para aplicaciones industriales",
+      "ctaTexto": "Cotizar empaquetaduras",
+      "ctaProducto": "Empaquetaduras industriales"
     },
     {
-      "titulo": "",
-      "descripcion": "",
+      "focus": "",
+      "catId": "",
+      "titulo": "MANÓMETROS E INSTRUMENTOS DE MEDICIÓN IDEALES PARA LA INDUSTRIA",
+      "descripcion": "Instrumentos para determinar la presión de un fluido, como aire o agua.",
       "imagen": "/portadas/MANOMETROS.webp",
-      "imagenAlt": "",
-      "ctaTexto": "",
-      "ctaProducto": ""
-    },    
-    {
-      "titulo": "",
-      "descripcion": "",
-      "imagen": "/portadas/BRIDAS A105.webp",
-      "imagenAlt": "",
-      "ctaTexto": "",
-      "ctaProducto": ""
+      "imagenAlt": "Manómetros para aplicaciones industriales",
+      "ctaTexto": "Cotizar manómetros",
+      "ctaProducto": "Manómetros industriales"
     },
     {
-      "titulo": "",
-      "descripcion": "",
-      "imagen": "/portadas/EMPAQUETADURAS.webp",
-      "imagenAlt": "",
-      "ctaTexto": "",
-      "ctaProducto": ""
+      "focus": "",
+      "catId": "",
+      "titulo": "BRIDAS A105 IDEALES PARA CONEXIONES INDUSTRIALES",
+      "descripcion": "Soluciones para montaje, mantenimiento y conexión de tuberías industriales. Cotiza según diámetro, medida y especificaciones de tu proyecto.",
+      "imagen": "/portadas/BRIDAS A105.webp",
+      "imagenAlt": "Bridas A105 para tuberías industriales",
+      "ctaTexto": "Cotizar bridas",
+      "ctaProducto": "Bridas A105"
+    },
+    {
+      "focus": "",
+      "catId": "",
+      "titulo": "SOLUCIONES INTEGRALES PARA PERFILERÍA INDUSTRIAL EN TODAS LAS CALIDADES",
+      "descripcion": "Optimiza tus procesos operativos con infraestructura sólida, flexible y de vanguardia.",
+      "imagen": "/portadas/PERFILES.webp",
+      "imagenAlt": "Perfiles metálicos para proyectos industriales",
+      "ctaTexto": "Cotizar perfiles",
+      "ctaProducto": "Perfiles metálicos"
     }
-
   ],
   "bento": [
     {
-      "catIndex": 0,
-      "titulo": "GRASERAS",
+      "catId": "graseras",
+      "titulo": "GRASERAS INOX",
       "destacado": true,
       "nota": "MÁS VENDIDO",
       "imagen": "/categorias/graseras.png",
       "imagenAlt": "Foto de graseras"
     },
     {
-      "catIndex": 1,
-      "titulo": "VÁLVULAS",
+      "catId": "valvulas",
+      "titulo": "VÁLVULAS HIERRO DUCTIL/INOX/BRONZE",
       "destacado": false,
       "nota": "",
       "imagen": "/categorias/valvulas.png",
       "imagenAlt": "Foto de válvulas"
     },
     {
-      "catIndex": 2,
-      "titulo": "TUBOS HDPE",
+      "catId": "tubos",
+      "titulo": "TUBOS HDPE Y ACCESORIOS",
       "destacado": false,
       "nota": "",
       "imagen": "/categorias/tubos.png",
       "imagenAlt": "Foto de tubería HDPE"
     },
     {
-      "catIndex": 3,
-      "titulo": "PLANCHAS",
+      "catId": "planchas",
+      "titulo": "PLANCHAS Y PERFILES",
       "destacado": false,
       "nota": "",
       "imagen": "/categorias/planchas.png",
       "imagenAlt": "Foto de planchas"
     },
     {
-      "catIndex": 4,
-      "titulo": "ACCESORIOS",
+      "catId": "accesorios",
+      "titulo": "CONEXIONES INOX, ACERO, OTROS",
       "destacado": false,
       "nota": "",
       "imagen": "/categorias/accesorios.png",
@@ -1039,7 +2142,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     {
       "titulo": "Arenado, granallado y galvanizado",
       "mensaje": "Hola VSI, quiero consultar por arenado, granallado y galvanizado",
-      "imagen": "/servicios/Arenado, granallado y galvanizado.png",
+      "imagen": "/servicios/Arenado granallado y galvanizado.png",
       "imagenAlt": "Foto de arenado, granallado y galvanizado",
       "fila": 1
     },
@@ -1109,7 +2212,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   "faqs": [
     [
       "¿Qué tipos de graseras manejan?",
-      "Manejamos graseras rectas, de 45° y de 90°, en todas las medidas y grados. Somos importadores directos, por lo que podemos atender tanto pedidos por unidad como volúmenes mayoristas."
+      "Manejamos graseras de acero inoxidable rectas, de 45° y de 90°, en roscas NPT y UNF, en distintas medidas. Somos importadores directos, por lo que podemos atender tanto pedidos por unidad como volúmenes mayoristas."
     ],
     [
       "¿Cuál es la diferencia entre válvula cuchilla unidireccional y bidireccional?",
@@ -1133,6 +2236,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       "id": "graseras",
       "label": "Graseras",
       "skuPrefijo": "GRA",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más graseras",
+        "desc": "¿No encuentras el tipo, la rosca o la medida que necesitas? Trabajamos graseras en otras roscas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/productos/OTRAS GRASERAS.webp"
+      },
       "medidas": [
         "1/8\" NPT",
         "1/4\" NPT",
@@ -1143,49 +2252,34 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       ],
       "productos": [
         {
-          "nombre": "Grasera recta 1/8\" NPT",
-          "desc": "Grasera recta de acero zincado, rosca 1/8\" NPT. La medida de mayor rotación en mantenimiento industrial.",
-          "imagen": "/productos/a1.jpeg"
+          "nombre": "Grasera NPT recta",
+          "desc": "Grasera de acero inoxidable con rosca NPT y salida recta. Es el formato estándar para puntos de engrase con acceso frontal libre.",
+          "imagen": "/productos/GRASERA RECTA.webp"
         },
         {
-          "nombre": "Grasera 45° 1/8\" NPT",
-          "desc": "Codo a 45° para puntos de engrase con acceso restringido, sin necesidad de desmontar el equipo.",
-          "imagen": "/productos/a2.jpeg"
+          "nombre": "Grasera NPT 45°",
+          "desc": "Grasera de acero inoxidable con rosca NPT y cuerpo a 45°. Permite engrasar cuando la pistola no entra de frente al punto.",
+          "imagen": "/productos/GRASERA X 45.webp"
         },
         {
-          "nombre": "Grasera 90° 1/8\" NPT",
-          "desc": "Codo a 90° para engrase lateral en chumaceras, pines y bocinas de difícil alcance.",
-          "imagen": "/productos/a1.jpeg"
+          "nombre": "Grasera NPT 90°",
+          "desc": "Grasera de acero inoxidable con rosca NPT y cuerpo a 90°. Pensada para puntos de engrase con espacio reducido o acceso lateral.",
+          "imagen": "/productos/GRASEAR X 90.webp"
         },
         {
-          "nombre": "Grasera recta 1/4\" NPT",
-          "desc": "Mayor caudal de grasa por bombeo, para equipos de gran porte y ciclos de mantenimiento cortos.",
-          "imagen": "/productos/a2.jpeg"
+          "nombre": "Grasera UNF recta",
+          "desc": "Grasera de acero inoxidable con rosca UNF y salida recta, para equipos que trabajan con rosca fina en pulgadas.",
+          "imagen": "/productos/GRASERA RECTA.webp"
         },
         {
-          "nombre": "Grasera métrica M6 x 1",
-          "desc": "Rosca métrica fina para maquinaria importada europea y asiática.",
-          "imagen": "/productos/a1.jpeg"
+          "nombre": "Grasera UNF 45°",
+          "desc": "Grasera de acero inoxidable con rosca UNF y cuerpo a 45°, para puntos de engrase que no admiten acceso frontal.",
+          "imagen": "/productos/GRASERA X 45.webp"
         },
         {
-          "nombre": "Grasera métrica M8 x 1.25",
-          "desc": "Rosca métrica estándar, la más usada en equipos agrícolas y de construcción.",
-          "imagen": "/productos/a2.jpeg"
-        },
-        {
-          "nombre": "Grasera métrica M10 x 1",
-          "desc": "Para chumaceras y pines de gran porte con alta exigencia de lubricación.",
-          "imagen": "/productos/a1.jpeg"
-        },
-        {
-          "nombre": "Grasera inoxidable 304 / 316",
-          "desc": "Para ambientes corrosivos: plantas pesqueras, alimentos, químicos y entorno marino.",
-          "imagen": "/productos/a2.jpeg"
-        },
-        {
-          "nombre": "Grasera tipo botón",
-          "desc": "Perfil bajo para espacios reducidos donde una grasera convencional no entra.",
-          "imagen": "/productos/a1.jpeg"
+          "nombre": "Grasera UNF 90°",
+          "desc": "Grasera de acero inoxidable con rosca UNF y cuerpo a 90°, para trabajar en espacios reducidos o de acceso lateral.",
+          "imagen": "/productos/GRASEAR X 90.webp"
         }
       ]
     },
@@ -1193,6 +2287,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       "id": "valvulas",
       "label": "Válvulas",
       "skuPrefijo": "VAL",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más válvulas",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos válvulas en otros diámetros, materiales y presiones de trabajo bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": ""
+      },
       "medidas": [
         "2\"",
         "3\"",
@@ -1203,44 +2303,84 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       ],
       "productos": [
         {
-          "nombre": "Válvula cuchilla unidireccional 2\"",
-          "desc": "Sello en un sentido de flujo. Solución económica para líneas de descarga con sólidos.",
-          "imagen": ""
+          "nombre": "Válvula compuerta",
+          "desc": "Válvula compuerta",
+          "imagen": "/productos/VALVULA COMPUERTA.webp"
         },
         {
-          "nombre": "Válvula cuchilla unidireccional 4\"",
-          "desc": "Para pulpas y granulados de mediana densidad en planta.",
-          "imagen": ""
+          "nombre": "Válvula de retencio",
+          "desc": "Válvula de retencio",
+          "imagen": "/productos/VALVULA DE RETENCIO.webp"
         },
         {
-          "nombre": "Válvula cuchilla unidireccional 6\"",
-          "desc": "Alta capacidad de paso con corte limpio sobre material en suspensión.",
-          "imagen": ""
+          "nombre": "Válvula esferica",
+          "desc": "Válvula esferica",
+          "imagen": "/productos/VALVULA ESFERICA.webp"
         },
         {
-          "nombre": "Válvula cuchilla bidireccional 3\"",
-          "desc": "Estanqueidad en ambos sentidos del flujo, para líneas reversibles.",
-          "imagen": ""
+          "nombre": "Válvula globo",
+          "desc": "Válvula globo",
+          "imagen": "/productos/VALVULA GLOBO.webp"
         },
         {
-          "nombre": "Válvula cuchilla bidireccional 6\"",
-          "desc": "Diseñada para líneas donde la presión puede invertirse sin aviso.",
-          "imagen": ""
+          "nombre": "Válvula mariposa",
+          "desc": "Válvula mariposa",
+          "imagen": "/productos/VALVULA MARIPOSA .webp"
         },
         {
-          "nombre": "Válvula cuchilla bidireccional 8\"",
-          "desc": "Relaves y lodos de alta densidad, con cuerpo reforzado.",
-          "imagen": ""
+          "nombre": "Válvula tipo Y",
+          "desc": "Válvula tipo Y",
+          "imagen": "/productos/VALVULA TIPO Y.webp"
+        }
+      ]
+    },
+    {
+      "id": "empaquetaduras",
+      "label": "Empaquetaduras",
+      "skuPrefijo": "EMP",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más empaquetaduras",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos empaquetaduras en otros espesores, materiales y dimensiones bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/productos/OTRAS EMPAQUETADURAS.webp"
+      },
+      "medidas": [
+        "1/8\" espesor",
+        "3/16\" espesor",
+        "1/4\" espesor",
+        "3/8\" espesor",
+        "Otro espesor"
+      ],
+      "productos": [
+        {
+          "nombre": "Empaquetadura de asbesto",
+          "desc": "Empaquetadura de asbesto",
+          "imagen": "/productos/EMPAQUETADURA DE ASBESTO.webp"
         },
         {
-          "nombre": "Válvula cuchilla con volante manual",
-          "desc": "Operación manual, sin requerir aire comprimido ni instalación eléctrica.",
-          "imagen": ""
+          "nombre": "Empaquetadura de caucho",
+          "desc": "Empaquetadura de caucho",
+          "imagen": "/productos/EMPAQUETADURA DE CAUCHO.webp"
         },
         {
-          "nombre": "Válvula cuchilla con actuador neumático",
-          "desc": "Para automatización de planta e integración con el sistema de control.",
-          "imagen": ""
+          "nombre": "Empaquetadura de no asbesto",
+          "desc": "Empaquetadura de no asbesto",
+          "imagen": "/productos/EMPAQUETADURA DE NO ASBESTO.webp"
+        },
+        {
+          "nombre": "Empaquetadura en plancha",
+          "desc": "Empaquetadura en plancha",
+          "imagen": "/productos/EMPAQUETADURA EN PLANCHA .webp"
+        },
+        {
+          "nombre": "Empaquetadura trenzada",
+          "desc": "Empaquetadura trenzada",
+          "imagen": "/productos/EMPAQUETADURA TRENZADA.webp"
+        },
+        {
+          "nombre": "Empaquetadura espirometalico",
+          "desc": "Empaquetadura espirometalico",
+          "imagen": "/productos/ESPIROMETALICO.webp"
         }
       ]
     },
@@ -1248,6 +2388,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       "id": "tubos",
       "label": "Tubos HDPE",
       "skuPrefijo": "HDP",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más tubos",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos tubos y conduit en otros diámetros, espesores y materiales bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/categorias/tubos.png"
+      },
       "medidas": [
         "4\"",
         "6\"",
@@ -1302,6 +2448,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       "id": "planchas",
       "label": "Planchas",
       "skuPrefijo": "PLA",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más planchas",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos planchas y empaquetaduras en otros espesores, materiales y dimensiones bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/categorias/planchas.png"
+      },
       "medidas": [
         "1/8\"",
         "3/16\"",
@@ -1347,6 +2499,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       "id": "accesorios",
       "label": "Accesorios",
       "skuPrefijo": "ACC",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más accesorios",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos accesorios en otras medidas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/categorias/accesorios.png"
+      },
       "medidas": [
         "Según requerimiento"
       ],
@@ -1383,7 +2541,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         }
       ]
     }
-  ]
+  ],
+  "privacidad": {
+    "titulo": "Política de privacidad",
+    "actualizado": "Agosto 2026",
+    "bloques": [
+      [
+        "Responsable del tratamiento",
+        "Suministros Industriales VSI (RUC 20609295539), con domicilio en Av. Guillermo Dansey 1369, Cercado de Lima, Lima, Perú."
+      ],
+      [
+        "Qué datos recogemos",
+        "Únicamente los que tú escribes en el formulario de cotización: nombre y apellido, número de celular, ciudad, tipo de documento y su número, y el detalle de tu requerimiento."
+      ],
+      [
+        "Para qué los usamos",
+        "Para atender tu solicitud de cotización o contacto y responder a tu requerimiento comercial. No los usamos para ninguna otra finalidad."
+      ],
+      [
+        "Con quién los compartimos",
+        "No vendemos ni cedemos tus datos. Tus datos personales no se envían a herramientas de analítica ni de publicidad: las mediciones de la web registran solo el hecho de que se envió una solicitud, nunca su contenido."
+      ],
+      [
+        "Tus derechos",
+        "Puedes solicitar el acceso, la actualización o la eliminación de tus datos escribiendo a ventas@vsiperu.com.pe."
+      ]
+    ]
+  }
 }
 </file>
 
@@ -1392,7 +2576,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { site, waLink, msgCotizar } from "@/lib/site";
-import { captureAttribution, convert, attributionText } from "@/lib/analytics";
+import {
+  captureAttribution,
+  captureFocus,
+  convert,
+  attributionText,
+  type ConvMeta,
+} from "@/lib/analytics";
 import content from "@/data/content.json";
 
 /* ==========================================================================
@@ -1446,6 +2636,9 @@ const FILAS_SERVICIOS = [
       "bg-[linear-gradient(180deg,rgba(5,43,89,.05)_0%,rgba(5,43,89,.26)_22%,rgba(5,43,89,.95)_100%)]",
   },
 ] as const;
+
+/** Título del hero. Mismo estilo para el H1 y para los H2 de los otros slides. */
+const HERO_TITULO = "mt-[22px] text-[clamp(27px,4.9vw,52px)] leading-[1.08] text-white";
 
 const SOCIAL_A =
   "flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white/[.12]";
@@ -1712,6 +2905,28 @@ const CAT_ICONS: Record<string, React.ReactNode> = {
       <circle cx="17" cy="28" r="1.8" />
     </>
   ),
+
+  /* -------------------------
+     EMPAQUETADURA / GASKET
+  ------------------------- */
+  empaquetaduras: (
+    <>
+      {/* Anillo exterior */}
+      <circle cx="24" cy="24" r="18" />
+      {/* Anillo interior */}
+      <circle cx="24" cy="24" r="9" />
+
+      {/* Pernos */}
+      <circle cx="24" cy="6.5" r="1.6" />
+      <circle cx="24" cy="41.5" r="1.6" />
+      <circle cx="6.5" cy="24" r="1.6" />
+      <circle cx="41.5" cy="24" r="1.6" />
+      <circle cx="11.7" cy="11.7" r="1.6" />
+      <circle cx="36.3" cy="36.3" r="1.6" />
+      <circle cx="11.7" cy="36.3" r="1.6" />
+      <circle cx="36.3" cy="11.7" r="1.6" />
+    </>
+  ),
 };
 
 
@@ -1750,7 +2965,15 @@ const CatIcon = ({
 
 /* ------------------------------- datos derivados ---------------------------- */
 const CATS = content.categorias;
-const POR_PAGINA = 8;
+const POR_PAGINA = 6;
+/** id de categoría → posición en CATS. Evita índices numéricos a mano. */
+const CAT_INDEX: Record<string, number> = Object.fromEntries(
+  CATS.map((c, i) => [c.id, i]),
+);
+/** Índice del slide del hero que corresponde a un `?focus=`. */
+const HERO_POR_FOCUS: Record<string, number> = Object.fromEntries(
+  content.hero.flatMap((h, i) => (h.focus ? [[h.focus, i] as const] : [])),
+);
 const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 type Prod = {
@@ -1777,6 +3000,25 @@ const TODOS: Prod[] = CATS.flatMap((c, ci) =>
   })),
 );
 
+/**
+ * Tarjeta "Otros tipos..." del catálogo: una entrada sintética por categoría.
+ * Título, subtítulo, descripción e imagen se editan en content.json, dentro de
+ * cada categoría, en el bloque `otros`. No forma parte de TODOS (no se lista ni
+ * se busca), pero usa el mismo tipo para abrir el mismo modal que un producto.
+ */
+const OTROS: (Prod & { subtitulo: string })[] = CATS.map((c, ci) => ({
+  nombre: c.otros.titulo,
+  subtitulo: c.otros.subtitulo,
+  desc: c.otros.desc,
+  imagen: c.otros.imagen,
+  catIndex: ci,
+  catId: c.id,
+  categoria: c.label,
+  medidas: c.medidas,
+  sku: `VSI-${c.skuPrefijo}-OTROS`,
+  busca: "",
+}));
+
 export default function Home() {
   const [hero, setHero] = useState(0);
   const [cat, setCat] = useState(0);
@@ -1786,6 +3028,9 @@ export default function Home() {
   const [modalSku, setModalSku] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
   const [medida, setMedida] = useState("");
+  /** `?focus=graseras` de Google Ads. "" en tráfico orgánico. */
+  const [focus, setFocus] = useState("");
+  const [privacidad, setPrivacidad] = useState(false);
 
   const heroTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1795,6 +3040,20 @@ export default function Home() {
 
   useEffect(() => {
     captureAttribution();
+
+    // Modo campaña: ?focus=graseras abre la landing con el hero y la categoría
+    // de Graseras ya seleccionados. Se resuelve aquí (no en el estado inicial)
+    // para que el HTML del servidor y el del cliente coincidan: leer
+    // window.location durante el render provocaría un error de hidratación.
+    const f = captureFocus();
+    if (f) {
+      setFocus(f);
+      const h = HERO_POR_FOCUS[f];
+      if (h !== undefined) setHero(h);
+      const c = CAT_INDEX[f];
+      if (c !== undefined) setCat(c);
+    }
+
     heroTimer.current = setInterval(() => setHero((h) => (h + 1) % content.hero.length), 7000);
     // Solo cierra si el clic ocurrió fuera del menú: en el App Router React
     // delega los eventos en `document`, así que este listener corre siempre
@@ -1812,11 +3071,11 @@ export default function Home() {
 
   // Bloquea el scroll del fondo mientras el modal está abierto.
   useEffect(() => {
-    document.body.style.overflow = modalSku ? "hidden" : "";
+    document.body.style.overflow = modalSku || privacidad ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [modalSku]);
+  }, [modalSku, privacidad]);
 
   function goHero(i: number) {
     if (heroTimer.current) clearInterval(heroTimer.current);
@@ -1847,16 +3106,24 @@ export default function Home() {
     return TODOS.filter((p) => terms.every((t) => p.busca.includes(t)));
   }, [buscando, query, cat]);
 
-  const totalPages = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
-  const pageSafe = Math.min(page, totalPages - 1);
-  const items = lista.slice(pageSafe * POR_PAGINA, pageSafe * POR_PAGINA + POR_PAGINA);
-  const prod = modalSku ? TODOS.find((p) => p.sku === modalSku) ?? null : null;
+  /* Sin paginación: cada categoría muestra como máximo 6 productos (3 x 2) y el
+     resto queda cubierto por la tarjeta "Otros tipos...". La búsqueda sí lista
+     todos sus resultados. */
+  const items = buscando ? lista : lista.slice(0, POR_PAGINA);
+  const otros = OTROS[cat];
+  const prod = modalSku ? [...TODOS, ...OTROS].find((p) => p.sku === modalSku) ?? null : null;
 
-  const wa = (mensaje: string, origen: string) => ({
+  /**
+   * Props de un enlace a WhatsApp + su conversión.
+   * `meta` viaja tal cual al dataLayer (origen, producto, categoria, sku,
+   * medida, cantidad). `focus`, `landing_page`, `gclid` y las UTM los agrega
+   * `track()` automáticamente, así que no hay que repetirlos en cada CTA.
+   */
+  const wa = (mensaje: string, meta: ConvMeta) => ({
     href: waLink(mensaje),
     target: "_blank",
     rel: "noopener",
-    onClick: () => convert("whatsapp", { origen }),
+    onClick: () => convert("whatsapp", meta),
   });
 
   function onSearch(e: React.ChangeEvent<HTMLInputElement>) {
@@ -1886,7 +3153,19 @@ export default function Home() {
     ]
       .filter(Boolean)
       .join("\n");
-    convert("formulario", { ciudad: g("ciudad") });
+    // Conversión PRINCIPAL. Se dispara solo aquí, después de que el navegador
+    // validó los campos required (si faltara alguno, `submit` ni se ejecuta).
+    // A propósito NO se dispara además `conv_whatsapp`: el flujo termina
+    // abriendo WhatsApp, pero es un único lead y contarlo dos veces inflaría
+    // las conversiones de Google Ads.
+    //
+    // Solo van parámetros de campaña y de negocio: nombre, apellido, celular,
+    // DNI/RUC y el texto del requerimiento NO se envían a analítica.
+    convert("formulario", {
+      origen: "formulario_cotizacion",
+      categoria: focus === "graseras" ? "graseras" : CATS[cat].id,
+      ciudad: g("ciudad"), // dato geográfico, no identifica a la persona
+    });
     window.open(waLink(msg), "_blank", "noopener");
   }
 
@@ -1959,7 +3238,7 @@ export default function Home() {
 
             <a
               className="flex shrink-0 items-center gap-[9px] rounded-full bg-naranja px-5 py-3 text-[14.5px] font-bold text-white shadow-cta-sm hover:bg-naranja-osc hover:text-white w640:hidden"
-              {...wa(msgCotizar(), "header")}
+              {...wa(msgCotizar(), { origen: "header" })}
             >
               <Wa s={17} /> Cotizar
             </a>
@@ -2043,7 +3322,7 @@ export default function Home() {
                 <div className="absolute inset-0 z-0">
                   <Ph src={s.imagen} alt={s.imagenAlt} dark />
                 </div>
-                <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(5,43,89,.94)_0%,rgba(5,43,89,.8)_40%,rgba(5,43,89,.42)_70%,rgba(5,43,89,.14)_100%)]" />
+                <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(5,43,89,.94)_0%,rgba(5,43,89,.74)_34%,rgba(5,43,89,.20)_55%,rgba(5,43,89,.06)_72%,rgba(5,43,89,0)_100%)]" />
                
                 <div className="pointer-events-none relative z-[2] mx-auto grid max-w-page grid-cols-[minmax(0,680px)] items-center px-6 pb-[clamp(72px,7.5vw,104px)] pt-[clamp(56px,7vw,96px)]">
                   <div>
@@ -2051,12 +3330,25 @@ export default function Home() {
                       <span className="block h-[7px] w-[7px] rounded-full bg-naranja" />
                       IMPORTADORES DIRECTOS · STOCK EN LIMA
                     </div>
-                    <h1 className="mt-[22px] text-[clamp(27px,4.9vw,52px)] leading-[1.08] text-white">{s.titulo}</h1>
+                    {/* Un solo H1 en toda la página: el del slide de Graseras,
+                        que es el contenido principal de esta landing. Los demás
+                        slides usan H2 — antes cada uno emitía su propio H1 y la
+                        página quedaba con siete. El estilo es idéntico, así que
+                        el carrusel no cambia visualmente. */}
+                    {i === 0 ? (
+                      <h1 className={HERO_TITULO}>{s.titulo}</h1>
+                    ) : (
+                      <h2 className={HERO_TITULO}>{s.titulo}</h2>
+                    )}
                     <p className="mt-5 max-w-[560px] text-[18px] leading-[1.62] text-[#C4D6EA]">{s.descripcion}</p>
                     <div className="mt-8 flex flex-wrap gap-3.5">
                       <a
                         className={`${BTN_CTA} pointer-events-auto px-7 py-4 text-[16px] shadow-cta-lg`}
-                        {...wa(msgCotizar({ producto: s.ctaProducto }), `hero_${i + 1}`)}
+                        {...wa(msgCotizar({ producto: s.ctaProducto }), {
+                          origen: `hero_${i + 1}`,
+                          producto: s.ctaProducto,
+                          categoria: s.catId,
+                        })}
                       >
                         {s.ctaTexto} <Arrow s={18} />
                       </a>
@@ -2114,25 +3406,6 @@ export default function Home() {
                 <span className="text-[13px] font-extrabold tracking-[.08em]">{c.label.toUpperCase()}</span>
               </button>
             ))}
-            <a
-              href="#contacto"
-              className="flex flex-col items-center gap-3.5 rounded-lg px-2 py-3.5 text-white hover:bg-white/[.08] hover:text-white"
-            >
-              <svg
-                width="52"
-                height="52"
-                viewBox="0 0 48 48"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="2"
-                aria-hidden="true"
-                className="w640:h-[42px] w640:w-[42px]"
-              >
-                <rect x="8" y="16" width="32" height="24" rx="2" />
-                <path d="M16 16v-4a8 8 0 0116 0v4M24 26v6" />
-              </svg>
-              <span className="text-[13px] font-extrabold tracking-[.08em]">BAJO PEDIDO</span>
-            </a>
           </div>
         </section>
 
@@ -2153,7 +3426,7 @@ export default function Home() {
               {content.bento.map((b) => (
                 <button
                   key={b.titulo}
-                  onClick={() => irACategoria(b.catIndex)}
+                  onClick={() => irACategoria(CAT_INDEX[b.catId] ?? 0)}
                   className={`${TILE} w640:min-h-[260px] ${b.destacado ? "row-span-2 w640:row-auto" : ""}`}
                 >
                   <Ph src={b.imagen} alt={b.imagenAlt} dark />
@@ -2236,23 +3509,76 @@ export default function Home() {
               </div>
             ) : null}
 
-            {/* Productos */}
-            <div className="mt-9 grid grid-cols-4 gap-x-[26px] gap-y-[30px] w1024:grid-cols-3 w900:grid-cols-2 w640:gap-x-4 w640:gap-y-[26px] w380:grid-cols-1">
-              {items.map((p) => (
-                <article className="flex flex-col" key={p.sku}>
+            {/* Productos (3 columnas) + columna especial "Otros tipos..." */}
+            <div className="mt-9 grid grid-cols-4 gap-x-[26px] gap-y-[30px] w900:grid-cols-3 w640:grid-cols-2 w640:gap-x-4 w640:gap-y-[26px] w380:grid-cols-1">
+              {/* Columnas 1-3: solo productos reales (máx. 3 por fila) */}
+              <div className="col-span-3 grid grid-cols-3 gap-x-[26px] gap-y-[30px] w640:col-span-2 w640:grid-cols-2 w640:gap-x-4 w640:gap-y-[26px] w380:col-span-1 w380:grid-cols-1">
+                {items.map((p) => (
+                  <article className="flex flex-col" key={p.sku}>
+                    <div className="relative aspect-square overflow-hidden rounded-[10px] bg-white">
+                      <Ph src={p.imagen} alt={p.nombre} />
+                      <a
+                        aria-label={`Cotizar ${p.nombre} por WhatsApp`}
+                        {...wa(msgCotizar({ producto: p.nombre }), {
+                          origen: "catalogo_card",
+                          producto: p.nombre,
+                          categoria: p.catId,
+                          sku: p.sku,
+                        })}
+                        className="group absolute left-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white shadow-icon hover:bg-wa"
+                      >
+                        <WaLine />
+                      </a>
+                      <button
+                        aria-label={`Ver detalle de ${p.nombre}`}
+                        onClick={() => {
+                          setModalSku(p.sku);
+                          setQty(1);
+                          setMedida("");
+                        }}
+                        className="group absolute right-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full border-none bg-white shadow-icon hover:bg-naranja"
+                      >
+                        <svg
+                          width="21"
+                          height="21"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          strokeWidth="2"
+                          aria-hidden="true"
+                          className="stroke-texto transition-colors group-hover:stroke-white"
+                        >
+                          <circle cx="11" cy="11" r="7" />
+                          <path d="M20 20l-4-4" />
+                        </svg>
+                      </button>
+                    </div>
+                    <h3 className="mt-4 text-[16.5px] font-bold leading-[1.35] text-texto w520:text-[15px]">{p.nombre}</h3>
+                    <div className="mt-[5px] text-[14px] text-texto-3">{p.categoria}</div>
+                  </article>
+                ))}
+              </div>
+
+              {/* Columna 4: NO es un producto. Siempre 1 sola tarjeta centrada vertical. */}
+              <div className="flex items-center w900:col-span-3 w900:justify-center w640:col-span-2 w380:col-span-1">
+                <article className="flex w-full flex-col w900:max-w-[340px]">
                   <div className="relative aspect-square overflow-hidden rounded-[10px] bg-white">
-                    <Ph src={p.imagen} alt={p.nombre} />
+                    <Ph src={otros.imagen} alt={otros.nombre} />
                     <a
-                      aria-label={`Cotizar ${p.nombre} por WhatsApp`}
-                      {...wa(msgCotizar({ producto: p.nombre }), "catalogo_card")}
+                      aria-label={`${otros.nombre} de ${otros.categoria.toLowerCase()} por WhatsApp`}
+                      {...wa(msgCotizar({ producto: `Otros tipos de ${otros.categoria}` }), {
+                        origen: "catalogo_otros_tipos",
+                        producto: `Otros tipos de ${otros.categoria}`,
+                        categoria: otros.catId,
+                        sku: otros.sku,
+                      })}
                       className="group absolute left-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white shadow-icon hover:bg-wa"
                     >
                       <WaLine />
                     </a>
                     <button
-                      aria-label={`Ver detalle de ${p.nombre}`}
+                      aria-label={`Ver detalle de ${otros.nombre} (${otros.categoria.toLowerCase()})`}
                       onClick={() => {
-                        setModalSku(p.sku);
+                        setModalSku(otros.sku);
                         setQty(1);
                         setMedida("");
                       }}
@@ -2272,13 +3598,19 @@ export default function Home() {
                       </svg>
                     </button>
                   </div>
-                  <h3 className="mt-4 text-[16.5px] font-bold leading-[1.35] text-texto w520:text-[15px]">{p.nombre}</h3>
-                  <div className="mt-[5px] text-[14px] text-texto-3">{p.categoria}</div>
+                  <h3 className="mt-4 text-[16.5px] font-bold leading-[1.35] text-texto w520:text-[15px]">
+                    {otros.nombre}
+                  </h3>
+                  <div className="mt-[5px] text-[14px] text-texto-3">{otros.subtitulo}</div>
                 </article>
-              ))}
+              </div>
             </div>
 
-              {/* Paginado */}
+            {/* ------------------------------------------------------------------
+               Paginado desactivado: cada categoría muestra hasta 6 productos
+               (3 x 2) más la tarjeta "Otros tipos...", así que ya no hay páginas.
+               Se conserva comentado por si se vuelve a necesitar.
+            ---------------------------------------------------------------------
             <div className="mt-11 flex flex-wrap items-center justify-center gap-2">
               <button
                 aria-label="Página anterior"
@@ -2308,6 +3640,7 @@ export default function Home() {
                 <Chevron dir="right" s={16} c="currentColor" />
               </button>
             </div>
+            ------------------------------------------------------------------ */}
           </div>
         </section>
 
@@ -2332,7 +3665,11 @@ export default function Home() {
                     .map((s) => (
                       <a
                         key={s.titulo}
-                        {...wa(s.mensaje, `servicio_${s.titulo.toLowerCase().replace(/\s+/g, "_")}`)}
+                        {...wa(s.mensaje, {
+                          origen: `servicio_${s.titulo.toLowerCase().replace(/\s+/g, "_")}`,
+                          producto: s.titulo,
+                          categoria: "servicios",
+                        })}
                         className={`relative block overflow-hidden rounded-[14px] bg-azul-tile text-white hover:text-white ${fila.alto}`}
                       >
                         <Ph src={s.imagen} alt={s.imagenAlt} dark />
@@ -2362,7 +3699,10 @@ export default function Home() {
               </div>
               <a
                 className="inline-flex items-center gap-2.5 rounded-full bg-wa px-[30px] py-4 text-[16px] font-extrabold text-white shadow-wa-btn hover:bg-wa-osc hover:text-white"
-                {...wa("Hola VSI, quiero conversar sobre un servicio", "servicios_cta")}
+                {...wa("Hola VSI, quiero conversar sobre un servicio", {
+                  origen: "servicios_cta",
+                  categoria: "servicios",
+                })}
               >
                 <Wa s={21} /> Hablar con un asesor
               </a>
@@ -2429,7 +3769,7 @@ export default function Home() {
               <div className="mt-[30px] flex flex-wrap gap-3">
                 <a
                   className="inline-flex items-center gap-2.5 rounded-full bg-wa px-[22px] py-[13px] text-[15px] font-bold text-white hover:bg-wa-osc hover:text-white"
-                  {...wa(msgCotizar(), "cotiza_bloque")}
+                  {...wa(msgCotizar(), { origen: "cotiza_bloque" })}
                 >
                   <Wa s={19} /> WhatsApp directo
                 </a>
@@ -2520,10 +3860,31 @@ export default function Home() {
                 <textarea name="mensaje" rows={4} className={`${INPUT} resize-y`} />
               </label>
 
-              <label className="mt-[22px] flex cursor-pointer items-center gap-[11px] text-[15px] font-bold text-texto">
-                <input type="checkbox" name="terminos" required className="h-5 w-5 accent-naranja" />
-                Acepto términos y condiciones
-              </label>
+              {/* El botón de la política queda FUERA del <label>: un <button>
+                  anidado en un <label> es contenido interactivo inválido y
+                  además dispararía el checkbox al hacer clic. Con htmlFor el
+                  texto sigue marcando la casilla. */}
+              <div className="mt-[22px] flex items-center gap-[11px] text-[15px] font-bold text-texto">
+                <input
+                  id="terminos"
+                  type="checkbox"
+                  name="terminos"
+                  required
+                  className="h-5 w-5 shrink-0 accent-naranja"
+                />
+                <span>
+                  <label htmlFor="terminos" className="cursor-pointer">
+                    Acepto los términos y la
+                  </label>{" "}
+                  <button
+                    type="button"
+                    onClick={() => setPrivacidad(true)}
+                    className="border-none bg-transparent p-0 text-[15px] font-bold text-naranja underline underline-offset-2"
+                  >
+                    política de privacidad
+                  </button>
+                </span>
+              </div>
 
               <button
                 type="submit"
@@ -2592,7 +3953,7 @@ export default function Home() {
             ¿Necesitas cotizar hoy? Escríbenos y te respondemos el mismo día hábil.
           </div>
           <a
-            {...wa(msgCotizar(), "cta_band")}
+            {...wa(msgCotizar(), { origen: "cta_band" })}
             className="inline-flex items-center gap-2.5 rounded-full border-2 border-white px-[34px] py-[13px] text-[15.5px] font-bold text-white hover:border-naranja hover:bg-naranja hover:text-white"
           >
             Cotizar ahora
@@ -2670,7 +4031,7 @@ export default function Home() {
           <div>
             <h4 className={FOOTER_H4}>CHATEA CON NOSOTROS</h4>
             <div className="mt-4 flex gap-3">
-              <a aria-label="WhatsApp" {...wa(msgCotizar(), "footer")} className={`${SOCIAL_A} bg-wa`}>
+              <a aria-label="WhatsApp" {...wa(msgCotizar(), { origen: "footer" })} className={`${SOCIAL_A} bg-wa`}>
                 <Wa />
               </a>
               <a
@@ -2726,7 +4087,15 @@ export default function Home() {
             <span>
               © {new Date().getFullYear()} {site.name}. Todos los derechos reservados.
             </span>
-            <span>{site.url.replace("https://", "")}</span>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <button
+                onClick={() => setPrivacidad(true)}
+                className="border-none bg-transparent p-0 text-[13px] text-[#9FB8D4] hover:text-naranja"
+              >
+                Política de privacidad
+              </button>
+              <span>{site.url.replace("https://", "")}</span>
+            </div>
           </div>
         </div>
       </footer>
@@ -2792,7 +4161,14 @@ export default function Home() {
                     </button>
                   </div>
                   <a
-                    {...wa(modalMsg, "modal_producto")}
+                    {...wa(modalMsg, {
+                      origen: "modal_producto",
+                      producto: prod.nombre,
+                      categoria: prod.catId,
+                      sku: prod.sku,
+                      medida,
+                      cantidad: qty,
+                    })}
                     className="flex flex-1 basis-[260px] items-center justify-center gap-3 rounded-md bg-wa px-[22px] py-4 text-[16px] font-extrabold tracking-[.02em] text-white shadow-wa-modal hover:bg-wa-osc hover:text-white"
                   >
                     <Wa /> COTIZAR POR WHATSAPP
@@ -2816,9 +4192,58 @@ export default function Home() {
         </div>
       ) : null}
 
+      {/* ------------------------ política de privacidad --------------------- */}
+      {privacidad ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={content.privacidad.titulo}
+          onClick={() => setPrivacidad(false)}
+          className="fixed inset-0 z-[130] flex items-start justify-center overflow-auto bg-[rgba(9,20,35,.62)] p-6"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative m-auto w-full max-w-[720px] rounded-xl bg-white p-[clamp(26px,3.4vw,44px)] shadow-modal"
+          >
+            <button
+              aria-label="Cerrar"
+              onClick={() => setPrivacidad(false)}
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border-none bg-transparent hover:bg-[#F1F4F8]"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#12233B" strokeWidth="2.2" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+
+            <h3 className="pr-10 text-[clamp(22px,2.6vw,28px)] leading-[1.2] text-azul-osc">
+              {content.privacidad.titulo}
+            </h3>
+            <p className="mt-2 text-[13.5px] text-texto-3">
+              Última actualización: {content.privacidad.actualizado}
+            </p>
+
+            <div className="mt-7 grid gap-5">
+              {content.privacidad.bloques.map(([titulo, texto]) => (
+                <div key={titulo}>
+                  <h4 className="text-[16px] text-texto">{titulo}</h4>
+                  <p className="mt-1.5 text-[15px] leading-[1.65] text-texto-2">{texto}</p>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setPrivacidad(false)}
+              className="mt-8 rounded-lg border-none bg-azul px-8 py-[13px] text-[15px] font-bold text-white hover:bg-azul-osc"
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <a
         aria-label="Escríbenos por WhatsApp"
-        {...wa(msgCotizar(), "boton_flotante")}
+        {...wa(msgCotizar(), { origen: "boton_flotante" })}
         className="fixed bottom-6 right-6 z-[80] flex h-[58px] w-[58px] animate-wa-pulse items-center justify-center rounded-full bg-wa shadow-wa-float"
       >
         <Wa s={30} />

@@ -2,7 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { site, waLink, msgCotizar } from "@/lib/site";
-import { captureAttribution, convert, attributionText } from "@/lib/analytics";
+import {
+  captureAttribution,
+  captureFocus,
+  convert,
+  attributionText,
+  type ConvMeta,
+} from "@/lib/analytics";
 import content from "@/data/content.json";
 
 /* ==========================================================================
@@ -56,6 +62,9 @@ const FILAS_SERVICIOS = [
       "bg-[linear-gradient(180deg,rgba(5,43,89,.05)_0%,rgba(5,43,89,.26)_22%,rgba(5,43,89,.95)_100%)]",
   },
 ] as const;
+
+/** Título del hero. Mismo estilo para el H1 y para los H2 de los otros slides. */
+const HERO_TITULO = "mt-[22px] text-[clamp(27px,4.9vw,52px)] leading-[1.08] text-white";
 
 const SOCIAL_A =
   "flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white/[.12]";
@@ -383,6 +392,14 @@ const CatIcon = ({
 /* ------------------------------- datos derivados ---------------------------- */
 const CATS = content.categorias;
 const POR_PAGINA = 6;
+/** id de categoría → posición en CATS. Evita índices numéricos a mano. */
+const CAT_INDEX: Record<string, number> = Object.fromEntries(
+  CATS.map((c, i) => [c.id, i]),
+);
+/** Índice del slide del hero que corresponde a un `?focus=`. */
+const HERO_POR_FOCUS: Record<string, number> = Object.fromEntries(
+  content.hero.flatMap((h, i) => (h.focus ? [[h.focus, i] as const] : [])),
+);
 const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 type Prod = {
@@ -437,6 +454,9 @@ export default function Home() {
   const [modalSku, setModalSku] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
   const [medida, setMedida] = useState("");
+  /** `?focus=graseras` de Google Ads. "" en tráfico orgánico. */
+  const [focus, setFocus] = useState("");
+  const [privacidad, setPrivacidad] = useState(false);
 
   const heroTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -446,7 +466,26 @@ export default function Home() {
 
   useEffect(() => {
     captureAttribution();
-    heroTimer.current = setInterval(() => setHero((h) => (h + 1) % content.hero.length), 7000);
+
+    // Modo campaña: ?focus=graseras abre la landing con el hero y la categoría
+    // de Graseras ya seleccionados. Se resuelve aquí (no en el estado inicial)
+    // para que el HTML del servidor y el del cliente coincidan: leer
+    // window.location durante el render provocaría un error de hidratación.
+    const f = captureFocus();
+    if (f) {
+      setFocus(f);
+      const h = HERO_POR_FOCUS[f];
+      if (h !== undefined) setHero(h);
+      const c = CAT_INDEX[f];
+      if (c !== undefined) setCat(c);
+    }
+
+    // El auto-avance NO arranca en modo campaña: quien llega desde el anuncio
+    // debe quedarse en el hero de Graseras, no ver otro producto a los 7 s.
+    // Las flechas y los puntos siguen permitiendo navegar a mano (goHero).
+    if (!f) {
+      heroTimer.current = setInterval(() => setHero((h) => (h + 1) % content.hero.length), 7000);
+    }
     // Solo cierra si el clic ocurrió fuera del menú: en el App Router React
     // delega los eventos en `document`, así que este listener corre siempre
     // después del onClick del botón (stopPropagation no lo evita).
@@ -463,11 +502,11 @@ export default function Home() {
 
   // Bloquea el scroll del fondo mientras el modal está abierto.
   useEffect(() => {
-    document.body.style.overflow = modalSku ? "hidden" : "";
+    document.body.style.overflow = modalSku || privacidad ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [modalSku]);
+  }, [modalSku, privacidad]);
 
   function goHero(i: number) {
     if (heroTimer.current) clearInterval(heroTimer.current);
@@ -505,11 +544,17 @@ export default function Home() {
   const otros = OTROS[cat];
   const prod = modalSku ? [...TODOS, ...OTROS].find((p) => p.sku === modalSku) ?? null : null;
 
-  const wa = (mensaje: string, origen: string) => ({
+  /**
+   * Props de un enlace a WhatsApp + su conversión.
+   * `meta` viaja tal cual al dataLayer (origen, producto, categoria, sku,
+   * medida, cantidad). `focus`, `landing_page`, `gclid` y las UTM los agrega
+   * `track()` automáticamente, así que no hay que repetirlos en cada CTA.
+   */
+  const wa = (mensaje: string, meta: ConvMeta) => ({
     href: waLink(mensaje),
     target: "_blank",
     rel: "noopener",
-    onClick: () => convert("whatsapp", { origen }),
+    onClick: () => convert("whatsapp", meta),
   });
 
   function onSearch(e: React.ChangeEvent<HTMLInputElement>) {
@@ -539,7 +584,19 @@ export default function Home() {
     ]
       .filter(Boolean)
       .join("\n");
-    convert("formulario", { ciudad: g("ciudad") });
+    // Conversión PRINCIPAL. Se dispara solo aquí, después de que el navegador
+    // validó los campos required (si faltara alguno, `submit` ni se ejecuta).
+    // A propósito NO se dispara además `conv_whatsapp`: el flujo termina
+    // abriendo WhatsApp, pero es un único lead y contarlo dos veces inflaría
+    // las conversiones de Google Ads.
+    //
+    // Solo van parámetros de campaña y de negocio: nombre, apellido, celular,
+    // DNI/RUC y el texto del requerimiento NO se envían a analítica.
+    convert("formulario", {
+      origen: "formulario_cotizacion",
+      categoria: focus === "graseras" ? "graseras" : CATS[cat].id,
+      ciudad: g("ciudad"), // dato geográfico, no identifica a la persona
+    });
     window.open(waLink(msg), "_blank", "noopener");
   }
 
@@ -612,7 +669,7 @@ export default function Home() {
 
             <a
               className="flex shrink-0 items-center gap-[9px] rounded-full bg-naranja px-5 py-3 text-[14.5px] font-bold text-white shadow-cta-sm hover:bg-naranja-osc hover:text-white w640:hidden"
-              {...wa(msgCotizar(), "header")}
+              {...wa(msgCotizar(), { origen: "header" })}
             >
               <Wa s={17} /> Cotizar
             </a>
@@ -704,12 +761,25 @@ export default function Home() {
                       <span className="block h-[7px] w-[7px] rounded-full bg-naranja" />
                       IMPORTADORES DIRECTOS · STOCK EN LIMA
                     </div>
-                    <h1 className="mt-[22px] text-[clamp(27px,4.9vw,52px)] leading-[1.08] text-white">{s.titulo}</h1>
+                    {/* Un solo H1 en toda la página: el del slide de Graseras,
+                        que es el contenido principal de esta landing. Los demás
+                        slides usan H2 — antes cada uno emitía su propio H1 y la
+                        página quedaba con siete. El estilo es idéntico, así que
+                        el carrusel no cambia visualmente. */}
+                    {i === 0 ? (
+                      <h1 className={HERO_TITULO}>{s.titulo}</h1>
+                    ) : (
+                      <h2 className={HERO_TITULO}>{s.titulo}</h2>
+                    )}
                     <p className="mt-5 max-w-[560px] text-[18px] leading-[1.62] text-[#C4D6EA]">{s.descripcion}</p>
                     <div className="mt-8 flex flex-wrap gap-3.5">
                       <a
                         className={`${BTN_CTA} pointer-events-auto px-7 py-4 text-[16px] shadow-cta-lg`}
-                        {...wa(msgCotizar({ producto: s.ctaProducto }), `hero_${i + 1}`)}
+                        {...wa(msgCotizar({ producto: s.ctaProducto }), {
+                          origen: `hero_${i + 1}`,
+                          producto: s.ctaProducto,
+                          categoria: s.catId,
+                        })}
                       >
                         {s.ctaTexto} <Arrow s={18} />
                       </a>
@@ -787,7 +857,7 @@ export default function Home() {
               {content.bento.map((b) => (
                 <button
                   key={b.titulo}
-                  onClick={() => irACategoria(b.catIndex)}
+                  onClick={() => irACategoria(CAT_INDEX[b.catId] ?? 0)}
                   className={`${TILE} w640:min-h-[260px] ${b.destacado ? "row-span-2 w640:row-auto" : ""}`}
                 >
                   <Ph src={b.imagen} alt={b.imagenAlt} dark />
@@ -880,7 +950,12 @@ export default function Home() {
                       <Ph src={p.imagen} alt={p.nombre} />
                       <a
                         aria-label={`Cotizar ${p.nombre} por WhatsApp`}
-                        {...wa(msgCotizar({ producto: p.nombre }), "catalogo_card")}
+                        {...wa(msgCotizar({ producto: p.nombre }), {
+                          origen: "catalogo_card",
+                          producto: p.nombre,
+                          categoria: p.catId,
+                          sku: p.sku,
+                        })}
                         className="group absolute left-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white shadow-icon hover:bg-wa"
                       >
                         <WaLine />
@@ -921,7 +996,12 @@ export default function Home() {
                     <Ph src={otros.imagen} alt={otros.nombre} />
                     <a
                       aria-label={`${otros.nombre} de ${otros.categoria.toLowerCase()} por WhatsApp`}
-                      {...wa(msgCotizar({ producto: `Otros tipos de ${otros.categoria}` }), "catalogo_otros_tipos")}
+                      {...wa(msgCotizar({ producto: `Otros tipos de ${otros.categoria}` }), {
+                        origen: "catalogo_otros_tipos",
+                        producto: `Otros tipos de ${otros.categoria}`,
+                        categoria: otros.catId,
+                        sku: otros.sku,
+                      })}
                       className="group absolute left-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white shadow-icon hover:bg-wa"
                     >
                       <WaLine />
@@ -1016,7 +1096,11 @@ export default function Home() {
                     .map((s) => (
                       <a
                         key={s.titulo}
-                        {...wa(s.mensaje, `servicio_${s.titulo.toLowerCase().replace(/\s+/g, "_")}`)}
+                        {...wa(s.mensaje, {
+                          origen: `servicio_${s.titulo.toLowerCase().replace(/\s+/g, "_")}`,
+                          producto: s.titulo,
+                          categoria: "servicios",
+                        })}
                         className={`relative block overflow-hidden rounded-[14px] bg-azul-tile text-white hover:text-white ${fila.alto}`}
                       >
                         <Ph src={s.imagen} alt={s.imagenAlt} dark />
@@ -1046,7 +1130,10 @@ export default function Home() {
               </div>
               <a
                 className="inline-flex items-center gap-2.5 rounded-full bg-wa px-[30px] py-4 text-[16px] font-extrabold text-white shadow-wa-btn hover:bg-wa-osc hover:text-white"
-                {...wa("Hola VSI, quiero conversar sobre un servicio", "servicios_cta")}
+                {...wa("Hola VSI, quiero conversar sobre un servicio", {
+                  origen: "servicios_cta",
+                  categoria: "servicios",
+                })}
               >
                 <Wa s={21} /> Hablar con un asesor
               </a>
@@ -1113,7 +1200,7 @@ export default function Home() {
               <div className="mt-[30px] flex flex-wrap gap-3">
                 <a
                   className="inline-flex items-center gap-2.5 rounded-full bg-wa px-[22px] py-[13px] text-[15px] font-bold text-white hover:bg-wa-osc hover:text-white"
-                  {...wa(msgCotizar(), "cotiza_bloque")}
+                  {...wa(msgCotizar(), { origen: "cotiza_bloque" })}
                 >
                   <Wa s={19} /> WhatsApp directo
                 </a>
@@ -1204,10 +1291,31 @@ export default function Home() {
                 <textarea name="mensaje" rows={4} className={`${INPUT} resize-y`} />
               </label>
 
-              <label className="mt-[22px] flex cursor-pointer items-center gap-[11px] text-[15px] font-bold text-texto">
-                <input type="checkbox" name="terminos" required className="h-5 w-5 accent-naranja" />
-                Acepto términos y condiciones
-              </label>
+              {/* El botón de la política queda FUERA del <label>: un <button>
+                  anidado en un <label> es contenido interactivo inválido y
+                  además dispararía el checkbox al hacer clic. Con htmlFor el
+                  texto sigue marcando la casilla. */}
+              <div className="mt-[22px] flex items-center gap-[11px] text-[15px] font-bold text-texto">
+                <input
+                  id="terminos"
+                  type="checkbox"
+                  name="terminos"
+                  required
+                  className="h-5 w-5 shrink-0 accent-naranja"
+                />
+                <span>
+                  <label htmlFor="terminos" className="cursor-pointer">
+                    Acepto los términos y la
+                  </label>{" "}
+                  <button
+                    type="button"
+                    onClick={() => setPrivacidad(true)}
+                    className="border-none bg-transparent p-0 text-[15px] font-bold text-naranja underline underline-offset-2"
+                  >
+                    política de privacidad
+                  </button>
+                </span>
+              </div>
 
               <button
                 type="submit"
@@ -1276,7 +1384,7 @@ export default function Home() {
             ¿Necesitas cotizar hoy? Escríbenos y te respondemos el mismo día hábil.
           </div>
           <a
-            {...wa(msgCotizar(), "cta_band")}
+            {...wa(msgCotizar(), { origen: "cta_band" })}
             className="inline-flex items-center gap-2.5 rounded-full border-2 border-white px-[34px] py-[13px] text-[15.5px] font-bold text-white hover:border-naranja hover:bg-naranja hover:text-white"
           >
             Cotizar ahora
@@ -1354,7 +1462,7 @@ export default function Home() {
           <div>
             <h4 className={FOOTER_H4}>CHATEA CON NOSOTROS</h4>
             <div className="mt-4 flex gap-3">
-              <a aria-label="WhatsApp" {...wa(msgCotizar(), "footer")} className={`${SOCIAL_A} bg-wa`}>
+              <a aria-label="WhatsApp" {...wa(msgCotizar(), { origen: "footer" })} className={`${SOCIAL_A} bg-wa`}>
                 <Wa />
               </a>
               <a
@@ -1410,7 +1518,15 @@ export default function Home() {
             <span>
               © {new Date().getFullYear()} {site.name}. Todos los derechos reservados.
             </span>
-            <span>{site.url.replace("https://", "")}</span>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <button
+                onClick={() => setPrivacidad(true)}
+                className="border-none bg-transparent p-0 text-[13px] text-[#9FB8D4] hover:text-naranja"
+              >
+                Política de privacidad
+              </button>
+              <span>{site.url.replace("https://", "")}</span>
+            </div>
           </div>
         </div>
       </footer>
@@ -1476,7 +1592,14 @@ export default function Home() {
                     </button>
                   </div>
                   <a
-                    {...wa(modalMsg, "modal_producto")}
+                    {...wa(modalMsg, {
+                      origen: "modal_producto",
+                      producto: prod.nombre,
+                      categoria: prod.catId,
+                      sku: prod.sku,
+                      medida,
+                      cantidad: qty,
+                    })}
                     className="flex flex-1 basis-[260px] items-center justify-center gap-3 rounded-md bg-wa px-[22px] py-4 text-[16px] font-extrabold tracking-[.02em] text-white shadow-wa-modal hover:bg-wa-osc hover:text-white"
                   >
                     <Wa /> COTIZAR POR WHATSAPP
@@ -1500,9 +1623,58 @@ export default function Home() {
         </div>
       ) : null}
 
+      {/* ------------------------ política de privacidad --------------------- */}
+      {privacidad ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={content.privacidad.titulo}
+          onClick={() => setPrivacidad(false)}
+          className="fixed inset-0 z-[130] flex items-start justify-center overflow-auto bg-[rgba(9,20,35,.62)] p-6"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative m-auto w-full max-w-[720px] rounded-xl bg-white p-[clamp(26px,3.4vw,44px)] shadow-modal"
+          >
+            <button
+              aria-label="Cerrar"
+              onClick={() => setPrivacidad(false)}
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border-none bg-transparent hover:bg-[#F1F4F8]"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#12233B" strokeWidth="2.2" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+
+            <h3 className="pr-10 text-[clamp(22px,2.6vw,28px)] leading-[1.2] text-azul-osc">
+              {content.privacidad.titulo}
+            </h3>
+            <p className="mt-2 text-[13.5px] text-texto-3">
+              Última actualización: {content.privacidad.actualizado}
+            </p>
+
+            <div className="mt-7 grid gap-5">
+              {content.privacidad.bloques.map(([titulo, texto]) => (
+                <div key={titulo}>
+                  <h4 className="text-[16px] text-texto">{titulo}</h4>
+                  <p className="mt-1.5 text-[15px] leading-[1.65] text-texto-2">{texto}</p>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setPrivacidad(false)}
+              className="mt-8 rounded-lg border-none bg-azul px-8 py-[13px] text-[15px] font-bold text-white hover:bg-azul-osc"
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <a
         aria-label="Escríbenos por WhatsApp"
-        {...wa(msgCotizar(), "boton_flotante")}
+        {...wa(msgCotizar(), { origen: "boton_flotante" })}
         className="fixed bottom-6 right-6 z-[80] flex h-[58px] w-[58px] animate-wa-pulse items-center justify-center rounded-full bg-wa shadow-wa-float"
       >
         <Wa s={30} />

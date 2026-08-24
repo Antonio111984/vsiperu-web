@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
-import { site } from "@/lib/site";
+import { site, analyticsMode } from "@/lib/site";
+import content from "@/data/content.json";
 import "./globals.css";
 
 const head = Manrope({
@@ -18,16 +19,18 @@ const body = Plus_Jakarta_Sans({
 });
 
 const TITLE =
-  "Graseras, Válvulas y Suministros Industriales en Perú | VSI";
+  "Graseras de Acero Inoxidable y Suministros Industriales | VSI Perú";
 const DESC =
-  "Importadores directos de graseras (rectas, 45° y 90°) y válvulas cuchilla uni y bidireccionales. Stock inmediato en Lima, despacho a todo el Perú. Cotiza por WhatsApp.";
+  "Importadores directos de graseras de acero inoxidable: rectas, 45° y 90°, en roscas NPT y UNF. También válvulas, empaquetaduras y tubería HDPE. Stock en Lima y despacho a todo el Perú.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: { default: TITLE, template: "%s | VSI Suministros Industriales" },
   description: DESC,
   keywords: [
-    "graseras", "graseras rectas", "graseras 45 grados", "graseras 90 grados",
+    "graseras", "graseras de acero inoxidable", "graseras inoxidables",
+    "graseras industriales", "grasera recta", "grasera 45 grados", "grasera 90 grados",
+    "graseras NPT", "graseras UNF",
     "venta de graseras Lima", "graseras al por mayor Perú",
     "válvulas cuchilla", "válvula cuchilla unidireccional", "válvula cuchilla bidireccional",
     "tubería HDPE corrugada", "accesorios HDPE", "planchas de acero",
@@ -136,22 +139,19 @@ const jsonLd = {
       "@type": "ItemList",
       name: "Líneas de producto",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Graseras rectas, 45° y 90°", url: `${site.url}/#catalogo` },
-        { "@type": "ListItem", position: 2, name: "Válvulas cuchilla uni y bidireccionales", url: `${site.url}/#catalogo` },
-        { "@type": "ListItem", position: 3, name: "Tubería HDPE corrugada y accesorios", url: `${site.url}/#catalogo` },
-        { "@type": "ListItem", position: 4, name: "Planchas de acero", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 1, name: "Graseras de acero inoxidable rectas, 45° y 90° (roscas NPT y UNF)", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 2, name: "Válvulas industriales", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 3, name: "Empaquetaduras y sellado industrial", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 4, name: "Tubería HDPE y accesorios", url: `${site.url}/#catalogo` },
+        { "@type": "ListItem", position: 5, name: "Planchas y perfiles", url: `${site.url}/#catalogo` },
       ],
     },
     {
       "@type": "FAQPage",
       "@id": `${site.url}/#faq`,
-      mainEntity: [
-        ["¿Qué tipos de graseras manejan?", "Manejamos graseras rectas, de 45° y de 90°, en todas las medidas y grados. Somos importadores directos, por lo que atendemos tanto pedidos por unidad como volúmenes mayoristas."],
-        ["¿Cuál es la diferencia entre una válvula cuchilla unidireccional y una bidireccional?", "La unidireccional sella en un solo sentido del flujo y es la opción más económica para líneas de descarga. La bidireccional garantiza estanqueidad en ambos sentidos y se usa cuando la presión puede invertirse."],
-        ["¿Despachan a provincias?", "Sí. Despachamos a todo el Perú y coordinamos el envío a mina, planta u obra a través del operador logístico que prefieras."],
-        ["¿Venden a empresas con factura?", `Sí. Somos ${site.legalName}, RUC ${site.ruc}, y emitimos factura electrónica en todas nuestras ventas.`],
-        ["¿En cuánto tiempo responden una cotización?", "Dentro de las 24 horas hábiles. Por WhatsApp la respuesta suele ser el mismo día, en horario de oficina."],
-      ].map(([q, a]) => ({
+      // Fuente única: data/content.json. Así el schema nunca se desincroniza
+      // del acordeón visible, que es lo que Google exige para el rich result.
+      mainEntity: content.faqs.map(([q, a]) => ({
         "@type": "Question",
         name: q,
         acceptedAnswer: { "@type": "Answer", text: a },
@@ -171,7 +171,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        {site.gtmId ? (
+        {/* ------------------------------------------------------------------
+           MEDICIÓN — un solo sistema activo a la vez (ver lib/analytics.ts).
+
+           analyticsMode === "gtm"  → solo el contenedor de GTM. Es el modo
+             recomendado y el que documenta GOOGLE-ADS-SETUP.md. gtag.js NO se
+             carga: si conviviera con GTM, la misma conversión podría contarse
+             dos veces (una por el contenedor y otra por la etiqueta directa).
+
+           analyticsMode === "gtag" → fallback sin contenedor.
+           analyticsMode === "off"  → desarrollo: sin scripts de Google.
+        ------------------------------------------------------------------ */}
+
+        {/* El dataLayer existe antes que cualquier script para que ningún
+            evento temprano se pierda. */}
+        <Script id="dl-init" strategy="beforeInteractive">
+          {`window.dataLayer=window.dataLayer||[];`}
+        </Script>
+
+        {analyticsMode === "gtm" ? (
           <>
             <Script id="gtm" strategy="afterInteractive">
               {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${site.gtmId}');`}
@@ -187,7 +205,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </>
         ) : null}
 
-        {!site.gtmId && (site.ga4Id || site.adsId) ? (
+        {analyticsMode === "gtag" ? (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id || site.adsId}`}
