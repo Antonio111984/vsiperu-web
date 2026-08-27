@@ -66,6 +66,11 @@ const FILAS_SERVICIOS = [
 /** Título del hero. Mismo estilo para el H1 y para los H2 de los otros slides. */
 const HERO_TITULO = "mt-[22px] text-[clamp(27px,4.9vw,52px)] leading-[1.08] text-white";
 
+/** CTA secundario del hero ("Ver catálogo"). El contenedor del slide es
+    `pointer-events-none`, por eso lleva `pointer-events-auto`. */
+const BTN_HERO_SEC =
+  "pointer-events-auto inline-flex items-center gap-2.5 rounded-md border-[1.5px] border-white/[.34] px-[26px] py-4 text-[16px] font-semibold text-white hover:border-white hover:bg-white/[.07] hover:text-white";
+
 const SOCIAL_A =
   "flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white/[.12]";
 
@@ -437,7 +442,6 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [modalSku, setModalSku] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
-  const [medida, setMedida] = useState("");
   /** `?focus=graseras` de Google Ads. "" en tráfico orgánico. */
   const [focus, setFocus] = useState("");
   const [privacidad, setPrivacidad] = useState(false);
@@ -531,7 +535,7 @@ export default function Home() {
   /**
    * Props de un enlace a WhatsApp + su conversión.
    * `meta` viaja tal cual al dataLayer (origen, producto, categoria, sku,
-   * medida, cantidad). `focus`, `landing_page`, `gclid` y las UTM los agrega
+   * cantidad). `focus`, `landing_page`, `gclid` y las UTM los agrega
    * `track()` automáticamente, así que no hay que repetirlos en cada CTA.
    */
   const wa = (mensaje: string, meta: ConvMeta) => ({
@@ -585,7 +589,7 @@ export default function Home() {
   }
 
   const modalMsg = prod
-    ? msgCotizar({ producto: `${prod.nombre} (SKU ${prod.sku})`, medida, cantidad: qty })
+    ? msgCotizar({ producto: `${prod.nombre} (SKU ${prod.sku})`, cantidad: qty })
     : "";
 
   return (
@@ -767,12 +771,22 @@ export default function Home() {
                       >
                         {s.ctaTexto} <Arrow s={18} />
                       </a>
-                      <a
-                        href="#catalogo"
-                        className="pointer-events-auto inline-flex items-center gap-2.5 rounded-md border-[1.5px] border-white/[.34] px-[26px] py-4 text-[16px] font-semibold text-white hover:border-white hover:bg-white/[.07] hover:text-white"
-                      >
-                        Ver catálogo
-                      </a>
+                      {/* Las portadas cuyo `catId` existe en el catálogo abren
+                          esa categoría (mismo salto que la franja de tipos y el
+                          bento). Las que no tienen categoría propia —bridas,
+                          perfilería— siguen bajando al catálogo tal cual. */}
+                      {s.catId in CAT_INDEX ? (
+                        <button
+                          onClick={() => irACategoria(CAT_INDEX[s.catId])}
+                          className={BTN_HERO_SEC}
+                        >
+                          Ver catálogo
+                        </button>
+                      ) : (
+                        <a href="#catalogo" className={BTN_HERO_SEC}>
+                          Ver catálogo
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -949,7 +963,6 @@ export default function Home() {
                         onClick={() => {
                           setModalSku(p.sku);
                           setQty(1);
-                          setMedida("");
                         }}
                         className="group absolute right-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full border-none bg-white shadow-icon hover:bg-naranja"
                       >
@@ -995,7 +1008,6 @@ export default function Home() {
                       onClick={() => {
                         setModalSku(otros.sku);
                         setQty(1);
-                        setMedida("");
                       }}
                       className="group absolute right-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full border-none bg-white shadow-icon hover:bg-naranja"
                     >
@@ -1541,23 +1553,7 @@ export default function Home() {
                 <h3 className="text-[clamp(23px,2.6vw,30px)] leading-[1.18] text-texto">{prod.nombre}</h3>
                 <p className="mt-4 text-[16px] leading-[1.65] text-texto-2">{prod.desc}</p>
 
-                <div className="mt-[26px] flex flex-wrap items-center gap-4">
-                  <span className="text-[15px] font-bold text-texto">Medidas:</span>
-                  <select
-                    value={medida}
-                    onChange={(e) => setMedida(e.target.value)}
-                    className="flex-1 basis-[200px] rounded-md border border-[#D8E0EA] bg-white px-3.5 py-[13px] text-texto outline-none focus:border-naranja"
-                  >
-                    <option value="">Elige una opción</option>
-                    {prod.medidas.map((m) => (
-                      <option key={m} value={m}>
-                        {m}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="mt-5 flex flex-wrap items-stretch gap-3.5">
+                <div className="mt-[26px] flex flex-wrap items-stretch gap-3.5">
                   <div className="flex items-center overflow-hidden rounded-md border border-[#D8E0EA]">
                     <button
                       aria-label="Menos"
@@ -1581,7 +1577,6 @@ export default function Home() {
                       producto: prod.nombre,
                       categoria: prod.catId,
                       sku: prod.sku,
-                      medida,
                       cantidad: qty,
                     })}
                     className="flex flex-1 basis-[260px] items-center justify-center gap-3 rounded-md bg-wa px-[22px] py-4 text-[16px] font-extrabold tracking-[.02em] text-white shadow-wa-modal hover:bg-wa-osc hover:text-white"

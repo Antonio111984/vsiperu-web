@@ -36,14 +36,14 @@ export const site = {
   emailLogistica: "logistica@vsiperu.com.pe",
 
   address: {
-    street: "Av. Guillermo Dansey 1369",
-    district: "Cercado de Lima",
-    city: "Lima",
-    region: "Lima",
-    postalCode: "15001",
+    street: "Calle Eloy Ureta 163 (cruce con Pasaje 25)",
+    district: "La Perla",
+    city: "Callao",
+    region: "Callao",
+    postalCode: "07016",
     country: "PE",
   },
-  mapQuery: "Av. Guillermo Dansey 1369, Cercado de Lima, Lima, Perú",
+  mapQuery: "Calle Eloy Ureta 163, La Perla, Callao, Perú",
 
   social: {
     facebook: "https://www.facebook.com/profile.php?id=61552539471982",

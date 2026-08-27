@@ -155,8 +155,8 @@
     {
       "titulo": "Outlets",
       "mensaje": "Hola VSI, quiero consultar por outlets",
-      "imagen": "",
-      "imagenAlt": "Foto de outlets",
+      "imagen": "/servicios/OULETS.png",
+      "imagenAlt": "",
       "fila": 3
     },
     {
@@ -489,7 +489,7 @@
     "bloques": [
       [
         "Responsable del tratamiento",
-        "Suministros Industriales VSI (RUC 20609295539), con domicilio en Av. Guillermo Dansey 1369, Cercado de Lima, Lima, Perú."
+        "Suministros Industriales VSI (RUC 20609295539), con domicilio en Calle Eloy Ureta 163 (cruce con Pasaje 25), La Perla, Callao, Perú."
       ],
       [
         "Qué datos recogemos",
