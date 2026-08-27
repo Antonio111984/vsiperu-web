@@ -11,7 +11,7 @@
       "ctaProducto": "Graseras de acero inoxidable"
     },
     {
-      "focus": "",
+      "focus": "valvulas",
       "catId": "valvulas",
       "titulo": "VÁLVULAS CUCHILLA PARA LÍNEAS INDUSTRIALES EXIGENTES",
       "descripcion": "Soluciones unidireccionales y bidireccionales para manejo de sólidos, pulpas y fluidos industriales. Configuraciones manuales y neumáticas.",
@@ -42,7 +42,7 @@
     },
     {
       "focus": "",
-      "catId": "",
+      "catId": "instrumentos",
       "titulo": "MANÓMETROS E INSTRUMENTOS DE MEDICIÓN IDEALES PARA LA INDUSTRIA",
       "descripcion": "Instrumentos para determinar la presión de un fluido, como aire o agua.",
       "imagen": "/portadas/MANOMETROS.webp",
@@ -52,24 +52,34 @@
     },
     {
       "focus": "",
-      "catId": "",
+      "catId": "bridas",
       "titulo": "BRIDAS A105 IDEALES PARA CONEXIONES INDUSTRIALES",
       "descripcion": "Soluciones para montaje, mantenimiento y conexión de tuberías industriales. Cotiza según diámetro, medida y especificaciones de tu proyecto.",
-      "imagen": "/portadas/BRIDAS A105.webp",
+      "imagen": "/portadas/BRIDAS INOX Y EN ACERO AL CARBONO.png",
       "imagenAlt": "Bridas A105 para tuberías industriales",
       "ctaTexto": "Cotizar bridas",
       "ctaProducto": "Bridas A105"
     },
     {
       "focus": "",
-      "catId": "",
+      "catId": "perfileria",
       "titulo": "SOLUCIONES INTEGRALES PARA PERFILERÍA INDUSTRIAL EN TODAS LAS CALIDADES",
       "descripcion": "Optimiza tus procesos operativos con infraestructura sólida, flexible y de vanguardia.",
       "imagen": "/portadas/PERFILES.webp",
       "imagenAlt": "Perfiles metálicos para proyectos industriales",
       "ctaTexto": "Cotizar perfiles",
       "ctaProducto": "Perfiles metálicos"
-    }
+    },
+    {
+      "focus": "",
+      "catId": "conduit",
+      "titulo": "FALTA DEFINIR EL TEXTO PARA ESTO",
+      "descripcion": "FALTA DEFINIR EL TEXTO PARA ESTO",
+      "imagen": "/portadas/PRODUCTOS CONDUIT UL.png",
+      "imagenAlt": "",
+      "ctaTexto": "Cotizar productos conduit UL",
+      "ctaProducto": "productos conduit UL"
+    }    
   ],
   "bento": [
     {
@@ -224,14 +234,6 @@
         "desc": "¿No encuentras el tipo, la rosca o la medida que necesitas? Trabajamos graseras en otras roscas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
         "imagen": "/productos/OTRAS GRASERAS.webp"
       },
-      "medidas": [
-        "1/8\" NPT",
-        "1/4\" NPT",
-        "M6 x 1",
-        "M8 x 1.25",
-        "M10 x 1",
-        "Otra medida"
-      ],
       "productos": [
         {
           "nombre": "Grasera NPT recta",
@@ -275,14 +277,6 @@
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos válvulas en otros diámetros, materiales y presiones de trabajo bajo pedido. Cuéntanos qué buscas y te cotizamos.",
         "imagen": ""
       },
-      "medidas": [
-        "2\"",
-        "3\"",
-        "4\"",
-        "6\"",
-        "8\"",
-        "Otra medida"
-      ],
       "productos": [
         {
           "nombre": "Válvula compuerta",
@@ -326,13 +320,6 @@
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos empaquetaduras en otros espesores, materiales y dimensiones bajo pedido. Cuéntanos qué buscas y te cotizamos.",
         "imagen": "/productos/OTRAS EMPAQUETADURAS.webp"
       },
-      "medidas": [
-        "1/8\" espesor",
-        "3/16\" espesor",
-        "1/4\" espesor",
-        "3/8\" espesor",
-        "Otro espesor"
-      ],
       "productos": [
         {
           "nombre": "Empaquetadura de asbesto",
@@ -374,151 +361,123 @@
         "titulo": "Otros tipos...",
         "subtitulo": "Descubre más tubos",
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos tubos y conduit en otros diámetros, espesores y materiales bajo pedido. Cuéntanos qué buscas y te cotizamos.",
-        "imagen": "/categorias/tubos.png"
+        "imagen": "/productos/OTROS PRODUCTOS TUBOS.webp"
       },
-      "medidas": [
-        "4\"",
-        "6\"",
-        "8\"",
-        "12\"",
-        "Otra medida"
-      ],
       "productos": [
         {
-          "nombre": "Tubería HDPE corrugada 4\"",
-          "desc": "Drenaje agrícola y pluvial. Ligera, flexible y de instalación rápida.",
-          "imagen": ""
+          "nombre": "Codo HDPE",
+          "desc": "",
+          "imagen": "/productos/CODO HDPE.webp"
         },
         {
-          "nombre": "Tubería HDPE corrugada 6\"",
-          "desc": "Conducción de mediano caudal con alta resistencia química.",
-          "imagen": ""
+          "nombre": "Conexion TEE HDPE",
+          "desc": "",
+          "imagen": "/productos/CONEXION TEE HDPE.webp"
         },
         {
-          "nombre": "Tubería HDPE corrugada 8\"",
-          "desc": "Obra civil y minería, con buena resistencia al aplastamiento.",
-          "imagen": ""
+          "nombre": "Conexion YEE HDPE",
+          "desc": "",
+          "imagen": "/productos/CONEXION YEE HDPE.webp"
         },
         {
-          "nombre": "Tubería HDPE corrugada 12\"",
-          "desc": "Alto caudal para colectores principales y drenaje de gran escala.",
-          "imagen": ""
+          "nombre": "Flange adapter",
+          "desc": "",
+          "imagen": "/productos/FLANGE ADAPTER.webp"
         },
         {
-          "nombre": "Codo HDPE 90°",
-          "desc": "Cambio de dirección en línea corrugada sin pérdida de estanqueidad.",
-          "imagen": ""
+          "nombre": "Tubo HDPE",
+          "desc": "",
+          "imagen": "/productos/TUBO HDPE.webp"
         },
         {
-          "nombre": "Tee HDPE",
-          "desc": "Derivación de línea para ramales secundarios.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Unión / cople HDPE",
-          "desc": "Empalme de tramos con sello confiable.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Tapón HDPE",
-          "desc": "Cierre de extremo de línea para pruebas o final de tramo.",
+          "nombre": "",
+          "desc": "",
           "imagen": ""
         }
       ]
     },
     {
-      "id": "planchas",
-      "label": "Planchas",
-      "skuPrefijo": "PLA",
-      "otros": {
-        "titulo": "Otros tipos...",
-        "subtitulo": "Descubre más planchas",
-        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos planchas y empaquetaduras en otros espesores, materiales y dimensiones bajo pedido. Cuéntanos qué buscas y te cotizamos.",
-        "imagen": "/categorias/planchas.png"
-      },
-      "medidas": [
-        "1/8\"",
-        "3/16\"",
-        "1/4\"",
-        "3/8\"",
-        "1/2\"",
-        "Otro espesor"
-      ],
-      "productos": [
-        {
-          "nombre": "Plancha LAC (laminada en caliente)",
-          "desc": "Estructuras, bases de equipo y trabajos de metalmecánica pesada.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha LAF (laminada en frío)",
-          "desc": "Acabado fino para carpintería metálica y piezas a la vista.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha estriada",
-          "desc": "Pisos y plataformas antideslizantes en planta y escaleras.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha galvanizada",
-          "desc": "Resistencia a la corrosión en aplicaciones expuestas a intemperie.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha inoxidable 304",
-          "desc": "Alimentos, pesca y farmacéutica: superficie sanitaria y de fácil limpieza.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha inoxidable 316",
-          "desc": "Ambientes salinos y químicos agresivos, con molibdeno para mayor resistencia.",
-          "imagen": ""
-        }
-      ]
-    },
-    {
-      "id": "accesorios",
-      "label": "Accesorios",
-      "skuPrefijo": "ACC",
+      "id": "conduit",
+      "label": "Productos conduit",
+      "skuPrefijo": "C-UL",
       "otros": {
         "titulo": "Otros tipos...",
         "subtitulo": "Descubre más accesorios",
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos accesorios en otras medidas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
-        "imagen": "/categorias/accesorios.png"
+        "imagen": ""
       },
-      "medidas": [
-        "Según requerimiento"
-      ],
       "productos": [
         {
-          "nombre": "Abrazaderas metálicas",
-          "desc": "Sujeción firme de mangueras y líneas en distintos diámetros.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Niples roscados",
-          "desc": "Empalmes cortos en las medidas más usadas en planta.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Conexiones roscadas",
-          "desc": "Codos, tees y uniones bajo pedido según tu especificación.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Bridas",
-          "desc": "Según norma y diámetro requerido para conexión de líneas.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Tapones y reducciones",
-          "desc": "Complemento de línea para cierres y cambios de diámetro.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Suministro bajo pedido",
-          "desc": "¿No está en la lista? Lo importamos para ti con tu especificación exacta.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
+          "imagen": ""
+        }
+      ]
+    },      
+    {
+      "id": "instrumentos",
+      "label": "Instrumentos",
+      "skuPrefijo": "ITS",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más instrumentos",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos accesorios en otras medidas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/productos/OTROS PRODCUTOS.webp"
+      },
+      "productos": [
+        {
+          "nombre": "",
+          "desc": "",
+          "imagen": "/productos/MANOMETRO CON DIAFRAGMA.webp"
+        },
+        {
+          "nombre": "",
+          "desc": "",
+          "imagen": "/productos/MANOMETROS.webp"
+        },
+        {
+          "nombre": "",
+          "desc": "",
+          "imagen": "/productos/TERMOMETRO.webp"
+        },
+        {
+          "nombre": "",
+          "desc": "",
+          "imagen": "/productos/VACUOMETROS.webp"
+        },
+        {
+          "nombre": "Falta imagen y productos",
+          "desc": "",
+          "imagen": ""
+        },
+        {
+          "nombre": "Falta imagen y productos",
+          "desc": "",
           "imagen": ""
         }
       ]

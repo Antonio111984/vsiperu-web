@@ -264,75 +264,6 @@ const CAT_ICONS: Record<string, React.ReactNode> = {
   ),
 
   /* -------------------------
-     PLANCHAS METÁLICAS
-  ------------------------- */
-  planchas: (
-    <>
-      {/* Plancha superior */}
-      <path
-        d="
-          M9 15
-          L31 9
-          L40 14
-          L18 21
-          L9 15Z
-        "
-      />
-
-      {/* Espesor superior */}
-      <path d="M9 15V19L18 25L40 18V14" />
-
-      {/* Segunda plancha */}
-      <path d="M9 24L18 30L40 23" />
-      <path d="M9 24V28L18 34L40 27V23" />
-
-      {/* Tercera plancha */}
-      <path d="M9 33L18 39L40 32" />
-      <path d="M9 33V37L18 43L40 36V32" />
-    </>
-  ),
-
-  /* -------------------------
-     ACCESORIOS / CODO INDUSTRIAL
-  ------------------------- */
-  accesorios: (
-    <>
-      {/* Boca superior */}
-      <rect x="27" y="5" width="12" height="7" rx="1" />
-      <path d="M30 12V17" />
-      <path d="M36 12V17" />
-
-      {/* Codo */}
-      <path
-        d="
-          M33 17
-          C33 17 33 17 33 17
-          C23 17 17 23 17 33
-        "
-      />
-
-      <path
-        d="
-          M28 17
-          C19.5 19
-          14 24.5
-          12 33
-        "
-      />
-
-      {/* Boca inferior */}
-      <rect x="7" y="33" width="12" height="8" rx="1" />
-
-      {/* Detalles de brida */}
-      <path d="M10 33V30M16 33V30" />
-      <path d="M30 8H36" />
-
-      {/* Unión */}
-      <circle cx="17" cy="28" r="1.8" />
-    </>
-  ),
-
-  /* -------------------------
      EMPAQUETADURA / GASKET
   ------------------------- */
   empaquetaduras: (
@@ -353,6 +284,62 @@ const CAT_ICONS: Record<string, React.ReactNode> = {
       <circle cx="36.3" cy="11.7" r="1.6" />
     </>
   ),
+
+  /* -------------------------
+     PRODUCTOS CONDUIT
+     Tubería / conduit industrial
+  ------------------------- */
+  conduit: (
+    <>
+      {/* Conduit superior */}
+      <path d="M8 14H29C35 14 39 18 39 24V26" />
+      <path d="M8 20H28C31 20 33 22 33 25V26" />
+
+      {/* Terminales izquierdos */}
+      <path d="M8 11V23" />
+      <path d="M11 12V22" />
+
+      {/* Curva / salida */}
+      <path d="M33 26V37" />
+      <path d="M39 26V37" />
+
+      {/* Rosca inferior */}
+      <path d="M31 37H41" />
+      <path d="M31 40H41" />
+      <path d="M33 43H39" />
+    </>
+  ),
+
+  /* -------------------------
+     INSTRUMENTOS
+     Manómetro / instrumento industrial
+  ------------------------- */
+  instrumentos: (
+    <>
+      {/* Cuerpo del manómetro */}
+      <circle cx="24" cy="20" r="13" />
+      <circle cx="24" cy="20" r="9.5" />
+
+      {/* Marcas del indicador */}
+      <path d="M24 10V13" />
+      <path d="M16.5 13L18.5 15" />
+      <path d="M31.5 13L29.5 15" />
+      <path d="M14 20H17" />
+      <path d="M31 20H34" />
+
+      {/* Aguja */}
+      <path d="M24 20L30 15" />
+      <circle cx="24" cy="20" r="1.5" />
+
+      {/* Conexión inferior */}
+      <path d="M21 33V37H27V33" />
+      <path d="M20 37H28V41H20Z" />
+
+      {/* Rosca */}
+      <path d="M21 41V45M27 41V45" />
+      <path d="M21 43H27M21 45H27" />
+    </>
+  )
 };
 
 
@@ -409,7 +396,6 @@ type Prod = {
   catIndex: number;
   catId: string;
   categoria: string;
-  medidas: string[];
   sku: string;
   busca: string;
 };
@@ -420,7 +406,6 @@ const TODOS: Prod[] = CATS.flatMap((c, ci) =>
     catIndex: ci,
     catId: c.id,
     categoria: c.label,
-    medidas: c.medidas,
     sku: `VSI-${c.skuPrefijo}-${String(pi + 1).padStart(2, "0")}`,
     busca: norm(`${p.nombre} ${p.desc} ${c.label}`),
   })),
@@ -440,7 +425,6 @@ const OTROS: (Prod & { subtitulo: string })[] = CATS.map((c, ci) => ({
   catIndex: ci,
   catId: c.id,
   categoria: c.label,
-  medidas: c.medidas,
   sku: `VSI-${c.skuPrefijo}-OTROS`,
   busca: "",
 }));

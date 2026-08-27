@@ -63,36 +63,37 @@ public/
     cotizar.png
     persona1.png
   portadas/
-    BRIDAS A105.webp
+    BRIDAS INOX Y EN ACERO AL CARBONO.png
     EMPAQUETADURAS.webp
     GRASERAS.webp
     HDPE.webp
     MANOMETROS.webp
     PERFILES.webp
+    PRODUCTOS CONDUIT UL.png
     VALVULAS.webp
   productos/
-    01_Tubo_Conduit_PVC_SCH40_UL651.webp
-    02_Tubo_Conduit_PVC_SCH80.webp
-    03_Tubo_Conduit_Flexible_UL.webp
-    04_Tubo_Conduit_Flexible_PVC.webp
-    05_Union_Conduit_PVC_SCH40_UL.webp
-    06_Conector_Hembra_PVC_SCH40_UL.webp
-    07_Conector_Macho_PVC_SCH40_UL.webp
-    08_Curva_Conduit_PVC_SCH40_90.webp
-    09_Conector_a_Caja_PVC_SCH40_UL.webp
-    a1.jpeg
-    a2.jpeg
+    CODO HDPE.webp
+    CONEXION TEE HDPE.webp
+    CONEXION YEE HDPE.webp
     EMPAQUETADURA DE ASBESTO.webp
     EMPAQUETADURA DE CAUCHO.webp
     EMPAQUETADURA DE NO ASBESTO.webp
     EMPAQUETADURA EN PLANCHA .webp
     EMPAQUETADURA TRENZADA.webp
     ESPIROMETALICO.webp
+    FLANGE ADAPTER.webp
     GRASEAR X 90.webp
     GRASERA RECTA.webp
     GRASERA X 45.webp
+    MANOMETRO CON DIAFRAGMA.webp
+    MANOMETROS.webp
     OTRAS EMPAQUETADURAS.webp
     OTRAS GRASERAS.webp
+    OTROS PRODCUTOS.webp
+    OTROS PRODUCTOS TUBOS.webp
+    TERMOMETRO.webp
+    TUBO HDPE.webp
+    VACUOMETROS.webp
     VALVULA COMPUERTA.webp
     VALVULA DE RETENCIO.webp
     VALVULA ESFERICA.webp
@@ -127,6 +128,157 @@ tsconfig.json
 <files>
 This section contains the contents of the repository's files.
 
+<file path="app/globals.css">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Solo lo que no puede vivir como utilidad: resets base, comportamiento de
+   scroll y el offset de las anclas (que cambia con el alto real del header).
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 overflow-x-hidden bg-white font-body text-texto antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply m-0 font-head font-extrabold tracking-[-0.02em] text-balance;
+  }
+
+  p {
+    @apply m-0 text-pretty;
+  }
+
+  img {
+    @apply block max-w-full;
+  }
+
+  svg,
+  iframe,
+  video {
+    @apply max-w-full;
+  }
+
+  a {
+    @apply text-azul no-underline;
+  }
+
+  a:hover {
+    @apply text-naranja;
+  }
+
+  ul {
+    @apply m-0 list-none p-0;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font-family: inherit;
+    font-size: 15px;
+  }
+
+  /* Offset de anclas = alto del header sticky. Cambia cuando el buscador
+     pasa a su propia línea (760px). */
+  section[id],
+  div[id] {
+    scroll-margin-top: 152px;
+  }
+
+  @media (max-width: 760px) {
+    section[id],
+    div[id] {
+      scroll-margin-top: 176px;
+    }
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    height: 0;
+  }
+}
+</file>
+
+<file path="app/robots.ts">
+import type { MetadataRoute } from "next";
+import { site } from "@/lib/site";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [{ userAgent: "*", allow: "/" }],
+    sitemap: `${site.url}/sitemap.xml`,
+    host: site.url,
+  };
+}
+</file>
+
+<file path="app/sitemap.ts">
+import type { MetadataRoute } from "next";
+import { site } from "@/lib/site";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: site.url,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+  ];
+}
+</file>
+
+<file path="public/vsiperu-favicon.svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" zoomAndPan="magnify" viewBox="0 0 48 48" height="64" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><filter x="0%" y="0%" width="100%" height="100%" id="a214d29365"><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" color-interpolation-filters="sRGB"/></filter><filter x="0%" y="0%" width="100%" height="100%" id="da476c6123"><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.2126 0.7152 0.0722 0 0" color-interpolation-filters="sRGB"/></filter><clipPath id="5480b169f0"><path d="M 3.203125 0.734375 L 45.078125 0.734375 L 45.078125 46.285156 L 3.203125 46.285156 Z M 3.203125 0.734375 " clip-rule="nonzero"/></clipPath><clipPath id="324b0994db"><path d="M 0.203125 0.734375 L 42.078125 0.734375 L 42.078125 46.285156 L 0.203125 46.285156 Z M 0.203125 0.734375 " clip-rule="nonzero"/></clipPath><clipPath id="5ca408cb78"><path d="M 0.203125 0.734375 L 42.078125 0.734375 L 42.078125 46.285156 L 0.203125 46.285156 Z M 0.203125 0.734375 " clip-rule="nonzero"/></clipPath><clipPath id="781c4eea96"><path d="M 0.203125 1 L 42 1 L 42 46 L 0.203125 46 Z M 0.203125 1 " clip-rule="nonzero"/></clipPath><mask id="c05a12f9a5"><g filter="url(#a214d29365)"><g filter="url(#da476c6123)" transform="matrix(0.235102, 0, 0, 0.235102, 0.0759181, 0.705308)"><image x="0" y="0" width="179" xlink:href="data:image/png;base64,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" height="194" preserveAspectRatio="xMidYMid meet"/></g></g></mask><clipPath id="00b56c34f7"><rect x="0" width="43" y="0" height="47"/></clipPath><clipPath id="a51f037601"><rect x="0" width="43" y="0" height="47"/></clipPath><mask id="244712f6f2"><g filter="url(#a214d29365)"><g transform="matrix(1, 0, 0, 1, -0.000000000000000888, 0.000000000000005107)"><g clip-path="url(#a51f037601)"><g clip-path="url(#5ca408cb78)"><g transform="matrix(1, 0, 0, 1, -0.000000000000000888, 0.000000000000005107)"><g clip-path="url(#00b56c34f7)"><g clip-path="url(#781c4eea96)"><g mask="url(#c05a12f9a5)"><g transform="matrix(0.235102, 0, 0, 0.235102, 0.0759181, 0.705308)"><image x="0" y="0" width="179" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALMAAADCCAIAAACNCGTAAAAABmJLR0QA/wD/AP+gvaeTAAAAfElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfgyXwwABj+vA4AAAAABJRU5ErkJggg==" height="194" preserveAspectRatio="xMidYMid meet"/></g></g></g></g></g></g></g></g></g></mask><clipPath id="6dcef9b6e1"><path d="M 0.203125 1 L 42 1 L 42 33 L 0.203125 33 Z M 0.203125 1 " clip-rule="nonzero"/></clipPath><clipPath id="85e6cfa784"><path d="M 0.203125 27 L 42 27 L 42 46 L 0.203125 46 Z M 0.203125 27 " clip-rule="nonzero"/></clipPath><clipPath id="7b77d158f9"><rect x="0" width="43" y="0" height="47"/></clipPath><clipPath id="e900ec92a5"><rect x="0" width="43" y="0" height="47"/></clipPath></defs><g clip-path="url(#5480b169f0)"><g transform="matrix(1, 0, 0, 1, 3, 0.000000000000005107)"><g clip-path="url(#e900ec92a5)"><g clip-path="url(#324b0994db)"><g mask="url(#244712f6f2)"><g transform="matrix(1, 0, 0, 1, -0.000000000000000888, 0.000000000000005107)"><g clip-path="url(#7b77d158f9)"><g clip-path="url(#6dcef9b6e1)"><path fill="#0c3c9a" d="M 0.566406 32.109375 L 0.566406 10.957031 C 0.566406 8.25 1.546875 5.914062 3.507812 3.949219 C 5.347656 2.101562 7.679688 1.117188 10.375 1.117188 L 41.273438 1.117188 L 41.273438 24.976562 L 40.90625 25.101562 C 35.511719 24.238281 30.730469 23.746094 26.4375 23.746094 C 17.855469 23.746094 9.640625 25.714844 0.566406 32.109375 Z M 0.566406 32.109375 " fill-opacity="1" fill-rule="nonzero"/></g><g clip-path="url(#85e6cfa784)"><path fill="#ff8616" d="M 0.566406 36.539062 C 9.761719 29.894531 18.347656 27.066406 29.011719 27.066406 C 32.9375 27.066406 36.984375 27.4375 41.273438 28.050781 L 41.273438 43.179688 C 36.125 42.316406 31.589844 41.949219 27.542969 41.949219 C 17.242188 41.949219 8.292969 44.039062 0.566406 45.882812 Z M 0.566406 36.539062 " fill-opacity="1" fill-rule="nonzero"/></g></g></g></g></g></g></g></g></svg>
+</file>
+
+<file path="public/vsiperu-logo.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1450 460" width="1450" height="460" fill="none">
+  <defs>
+    <style>
+      .topText { font: 900 112px 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 2px; }
+      .bottomText { font: 900 110px 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 1px; }
+      .iconText { font: 900 176px 'Arial Black', Arial, Helvetica, sans-serif; }
+    </style>
+    <mask id="vsiCutout" maskUnits="userSpaceOnUse" x="0" y="0" width="470" height="460">
+      <rect x="0" y="0" width="470" height="460" fill="white"/>
+      <text x="118" y="299" class="iconText" fill="black" letter-spacing="-18">VSI</text>
+    </mask>
+  </defs>
+
+  <!-- Ícono izquierdo con recorte transparente en VSI -->
+  <g mask="url(#vsiCutout)">
+    <path d="M92 298V126c0-22 8-41 24-57 15-15 34-23 56-23h252v194l-3 1c-44-7-83-11-118-11-70 0-137 16-211 68z" fill="#0C3C9A"/>
+    <path d="M92 334c75-54 145-77 232-77 32 0 65 3 100 8v123c-42-7-79-10-112-10-84 0-157 17-220 32V334z" fill="#FF8616"/>
+  </g>
+
+  <!-- Texto derecho -->
+  <text x="480" y="176" class="topText" fill="#0C3C9A">SUMINISTROS</text>
+  <text x="480" y="279" class="bottomText" fill="#FF8616">INDUSTRIALES</text>
+</svg>
+</file>
+
 <file path=".env.example">
 # ---------------------------------------------------------------------------
 # VSI — Variables de medición.
@@ -148,12 +300,12 @@ This section contains the contents of the repository's files.
 # Contenedor de Google Tag Manager. Es la única variable que necesitas para el
 # esquema recomendado (GTM → GA4 + Google Ads).
 # Si está definida, gtag.js NO se carga y las conversiones las dispara solo GTM.
-NEXT_PUBLIC_GTM_ID=
+NEXT_PUBLIC_GTM_ID=GTM-KVTLX92L
 
 # --- FALLBACK SIN GTM ------------------------------------------------------
 # Solo se usan si NEXT_PUBLIC_GTM_ID está VACÍA. Sirven para medir sin
 # contenedor. Nunca conviven con GTM (ahí nacen las conversiones duplicadas).
-NEXT_PUBLIC_GA4_ID=
+NEXT_PUBLIC_GA4_ID=G-B3CNGEL3QP
 NEXT_PUBLIC_GOOGLE_ADS_ID=
 
 # Etiquetas de conversión de Google Ads, formato completo `AW-XXXXXXXXX/AbCdEfGhIjKl`.
@@ -165,6 +317,43 @@ NEXT_PUBLIC_ADS_CONVERSION_LLAMADA=
 # --- SEARCH CONSOLE --------------------------------------------------------
 # Solo el valor del atributo content de la meta tag, sin las comillas ni el HTML.
 NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=
+</file>
+
+<file path=".gitignore">
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
 </file>
 
 <file path="CAMBIOS-CAMPANA-GRASERAS.md">
@@ -940,124 +1129,169 @@ distorsionar el CPA.
       mismos nombres marcadas como Primary.
 </file>
 
-<file path="app/globals.css">
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+<file path="next.config.mjs">
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  poweredByHeader: false,
+  compress: true,
+  images: { formats: ["image/avif", "image/webp"] },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+        ],
+      },
+    ];
+  },
+};
 
-/* ---------------------------------------------------------------------------
-   Solo lo que no puede vivir como utilidad: resets base, comportamiento de
-   scroll y el offset de las anclas (que cambia con el alto real del header).
---------------------------------------------------------------------------- */
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+export default nextConfig;
+</file>
 
-  body {
-    @apply m-0 overflow-x-hidden bg-white font-body text-texto antialiased;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply m-0 font-head font-extrabold tracking-[-0.02em] text-balance;
-  }
-
-  p {
-    @apply m-0 text-pretty;
-  }
-
-  img {
-    @apply block max-w-full;
-  }
-
-  svg,
-  iframe,
-  video {
-    @apply max-w-full;
-  }
-
-  a {
-    @apply text-azul no-underline;
-  }
-
-  a:hover {
-    @apply text-naranja;
-  }
-
-  ul {
-    @apply m-0 list-none p-0;
-  }
-
-  button {
-    @apply cursor-pointer;
-  }
-
-  input,
-  textarea,
-  select,
-  button {
-    font-family: inherit;
-    font-size: 15px;
-  }
-
-  /* Offset de anclas = alto del header sticky. Cambia cuando el buscador
-     pasa a su propia línea (760px). */
-  section[id],
-  div[id] {
-    scroll-margin-top: 152px;
-  }
-
-  @media (max-width: 760px) {
-    section[id],
-    div[id] {
-      scroll-margin-top: 176px;
-    }
-  }
-
-  summary::-webkit-details-marker {
-    display: none;
-  }
-}
-
-@layer utilities {
-  .no-scrollbar {
-    scrollbar-width: none;
-  }
-  .no-scrollbar::-webkit-scrollbar {
-    height: 0;
+<file path="package.json">
+{
+  "name": "vsiperu-landing",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^15.3.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.0"
   }
 }
 </file>
 
-<file path="app/robots.ts">
-import type { MetadataRoute } from "next";
-import { site } from "@/lib/site";
+<file path="postcss.config.mjs">
+const config = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
 
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: [{ userAgent: "*", allow: "/" }],
-    sitemap: `${site.url}/sitemap.xml`,
-    host: site.url,
-  };
-}
+export default config;
 </file>
 
-<file path="app/sitemap.ts">
-import type { MetadataRoute } from "next";
-import { site } from "@/lib/site";
+<file path="tailwind.config.ts">
+import type { Config } from "tailwindcss";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: site.url,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
+/**
+ * Paleta y escalas de VSI. Los breakpoints `w****` son max-width:
+ * replican exactamente los cortes del diseño original (1180 → 380).
+ */
+const config: Config = {
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        azul: "#083B7A",
+        "azul-osc": "#052B59",
+        "azul-cl": "#0A4788",
+        naranja: "#E47A24",
+        "naranja-osc": "#CF6A18",
+        wa: "#25D366",
+        "wa-osc": "#1EB857",
+        gris: "#F5F7FA",
+        "gris-2": "#F9FAFC",
+        "gris-3": "#F7F9FC",
+        linea: "#E3E8EF",
+        "linea-2": "#EDF1F6",
+        texto: "#12233B",
+        "texto-2": "#55637A",
+        "texto-3": "#8494AB",
+        "azul-tile": "#0A2F5C",
+      },
+      fontFamily: {
+        head: ["var(--font-head)", "system-ui", "sans-serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
+      },
+      maxWidth: {
+        page: "1240px",
+      },
+      screens: {
+        w1180: { max: "1180px" },
+        w1024: { max: "1024px" },
+        w900: { max: "900px" },
+        w760: { max: "760px" },
+        w640: { max: "640px" },
+        w520: { max: "520px" },
+        w380: { max: "380px" },
+      },
+      boxShadow: {
+        header: "0 2px 18px rgba(8,59,122,.09)",
+        cta: "0 8px 22px rgba(228,122,36,.28)",
+        "cta-lg": "0 10px 26px rgba(228,122,36,.34)",
+        "cta-sm": "0 6px 16px rgba(228,122,36,.28)",
+        "wa-btn": "0 10px 26px rgba(37,211,102,.3)",
+        "wa-modal": "0 10px 26px rgba(37,211,102,.32)",
+        "wa-float": "0 10px 26px rgba(37,211,102,.42)",
+        note: "0 18px 40px rgba(5,43,89,.32)",
+        icon: "0 4px 16px rgba(5,43,89,.16)",
+        menu: "0 18px 40px rgba(5,43,89,.18)",
+        card: "0 10px 34px rgba(5,43,89,.07)",
+        form: "0 30px 70px rgba(0,0,0,.28)",
+        modal: "0 30px 80px rgba(0,0,0,.4)",
+        avatar: "0 20px 50px rgba(0,0,0,.3)",
+        "form-btn": "0 10px 24px rgba(228,122,36,.3)",
+      },
+      keyframes: {
+        waPulse: {
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(37,211,102,.55)" },
+          "50%": { boxShadow: "0 0 0 14px rgba(37,211,102,0)" },
+        },
+      },
+      animation: {
+        "wa-pulse": "waPulse 2.6s infinite",
+      },
     },
-  ];
+  },
+  plugins: [],
+};
+
+export default config;
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    "paths": { "@/*": ["./*"] }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
 </file>
 
@@ -1295,136 +1529,6 @@ function getLandingPage(): string {
 }
 </file>
 
-<file path="public/vsiperu-favicon.svg">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" zoomAndPan="magnify" viewBox="0 0 48 48" height="64" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><filter x="0%" y="0%" width="100%" height="100%" id="a214d29365"><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" color-interpolation-filters="sRGB"/></filter><filter x="0%" y="0%" width="100%" height="100%" id="da476c6123"><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.2126 0.7152 0.0722 0 0" color-interpolation-filters="sRGB"/></filter><clipPath id="5480b169f0"><path d="M 3.203125 0.734375 L 45.078125 0.734375 L 45.078125 46.285156 L 3.203125 46.285156 Z M 3.203125 0.734375 " clip-rule="nonzero"/></clipPath><clipPath id="324b0994db"><path d="M 0.203125 0.734375 L 42.078125 0.734375 L 42.078125 46.285156 L 0.203125 46.285156 Z M 0.203125 0.734375 " clip-rule="nonzero"/></clipPath><clipPath id="5ca408cb78"><path d="M 0.203125 0.734375 L 42.078125 0.734375 L 42.078125 46.285156 L 0.203125 46.285156 Z M 0.203125 0.734375 " clip-rule="nonzero"/></clipPath><clipPath id="781c4eea96"><path d="M 0.203125 1 L 42 1 L 42 46 L 0.203125 46 Z M 0.203125 1 " clip-rule="nonzero"/></clipPath><mask id="c05a12f9a5"><g filter="url(#a214d29365)"><g filter="url(#da476c6123)" transform="matrix(0.235102, 0, 0, 0.235102, 0.0759181, 0.705308)"><image x="0" y="0" width="179" xlink:href="data:image/png;base64,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" height="194" preserveAspectRatio="xMidYMid meet"/></g></g></mask><clipPath id="00b56c34f7"><rect x="0" width="43" y="0" height="47"/></clipPath><clipPath id="a51f037601"><rect x="0" width="43" y="0" height="47"/></clipPath><mask id="244712f6f2"><g filter="url(#a214d29365)"><g transform="matrix(1, 0, 0, 1, -0.000000000000000888, 0.000000000000005107)"><g clip-path="url(#a51f037601)"><g clip-path="url(#5ca408cb78)"><g transform="matrix(1, 0, 0, 1, -0.000000000000000888, 0.000000000000005107)"><g clip-path="url(#00b56c34f7)"><g clip-path="url(#781c4eea96)"><g mask="url(#c05a12f9a5)"><g transform="matrix(0.235102, 0, 0, 0.235102, 0.0759181, 0.705308)"><image x="0" y="0" width="179" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALMAAADCCAIAAACNCGTAAAAABmJLR0QA/wD/AP+gvaeTAAAAfElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfgyXwwABj+vA4AAAAABJRU5ErkJggg==" height="194" preserveAspectRatio="xMidYMid meet"/></g></g></g></g></g></g></g></g></g></mask><clipPath id="6dcef9b6e1"><path d="M 0.203125 1 L 42 1 L 42 33 L 0.203125 33 Z M 0.203125 1 " clip-rule="nonzero"/></clipPath><clipPath id="85e6cfa784"><path d="M 0.203125 27 L 42 27 L 42 46 L 0.203125 46 Z M 0.203125 27 " clip-rule="nonzero"/></clipPath><clipPath id="7b77d158f9"><rect x="0" width="43" y="0" height="47"/></clipPath><clipPath id="e900ec92a5"><rect x="0" width="43" y="0" height="47"/></clipPath></defs><g clip-path="url(#5480b169f0)"><g transform="matrix(1, 0, 0, 1, 3, 0.000000000000005107)"><g clip-path="url(#e900ec92a5)"><g clip-path="url(#324b0994db)"><g mask="url(#244712f6f2)"><g transform="matrix(1, 0, 0, 1, -0.000000000000000888, 0.000000000000005107)"><g clip-path="url(#7b77d158f9)"><g clip-path="url(#6dcef9b6e1)"><path fill="#0c3c9a" d="M 0.566406 32.109375 L 0.566406 10.957031 C 0.566406 8.25 1.546875 5.914062 3.507812 3.949219 C 5.347656 2.101562 7.679688 1.117188 10.375 1.117188 L 41.273438 1.117188 L 41.273438 24.976562 L 40.90625 25.101562 C 35.511719 24.238281 30.730469 23.746094 26.4375 23.746094 C 17.855469 23.746094 9.640625 25.714844 0.566406 32.109375 Z M 0.566406 32.109375 " fill-opacity="1" fill-rule="nonzero"/></g><g clip-path="url(#85e6cfa784)"><path fill="#ff8616" d="M 0.566406 36.539062 C 9.761719 29.894531 18.347656 27.066406 29.011719 27.066406 C 32.9375 27.066406 36.984375 27.4375 41.273438 28.050781 L 41.273438 43.179688 C 36.125 42.316406 31.589844 41.949219 27.542969 41.949219 C 17.242188 41.949219 8.292969 44.039062 0.566406 45.882812 Z M 0.566406 36.539062 " fill-opacity="1" fill-rule="nonzero"/></g></g></g></g></g></g></g></g></svg>
-</file>
-
-<file path="public/vsiperu-logo.svg">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1450 460" width="1450" height="460" fill="none">
-  <defs>
-    <style>
-      .topText { font: 900 112px 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 2px; }
-      .bottomText { font: 900 110px 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 1px; }
-      .iconText { font: 900 176px 'Arial Black', Arial, Helvetica, sans-serif; }
-    </style>
-    <mask id="vsiCutout" maskUnits="userSpaceOnUse" x="0" y="0" width="470" height="460">
-      <rect x="0" y="0" width="470" height="460" fill="white"/>
-      <text x="118" y="299" class="iconText" fill="black" letter-spacing="-18">VSI</text>
-    </mask>
-  </defs>
-
-  <!-- Ícono izquierdo con recorte transparente en VSI -->
-  <g mask="url(#vsiCutout)">
-    <path d="M92 298V126c0-22 8-41 24-57 15-15 34-23 56-23h252v194l-3 1c-44-7-83-11-118-11-70 0-137 16-211 68z" fill="#0C3C9A"/>
-    <path d="M92 334c75-54 145-77 232-77 32 0 65 3 100 8v123c-42-7-79-10-112-10-84 0-157 17-220 32V334z" fill="#FF8616"/>
-  </g>
-
-  <!-- Texto derecho -->
-  <text x="480" y="176" class="topText" fill="#0C3C9A">SUMINISTROS</text>
-  <text x="480" y="279" class="bottomText" fill="#FF8616">INDUSTRIALES</text>
-</svg>
-</file>
-
-<file path=".gitignore">
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
-.env
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-</file>
-
-<file path="next.config.mjs">
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  poweredByHeader: false,
-  compress: true,
-  images: { formats: ["image/avif", "image/webp"] },
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-        ],
-      },
-    ];
-  },
-};
-
-export default nextConfig;
-</file>
-
-<file path="package.json">
-{
-  "name": "vsiperu-landing",
-  "version": "2.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "^15.3.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  },
-  "devDependencies": {
-    "@types/node": "^22.10.0",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.0",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.0"
-  }
-}
-</file>
-
-<file path="postcss.config.mjs">
-const config = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-};
-
-export default config;
-</file>
-
 <file path="README.md">
 # VSI Suministros Industriales — Landing (Next.js 15 + React 19 + Tailwind CSS)
 
@@ -1561,109 +1665,6 @@ eventos de esa sesión. Es la misma página `/`: no hay ruta aparte.
 ## Deploy
 
 Vercel es lo más simple: importa el repo, apunta `vsiperu.com.pe` y listo. Después del deploy: verifica el dominio en Search Console y envía `https://vsiperu.com.pe/sitemap.xml`.
-</file>
-
-<file path="tailwind.config.ts">
-import type { Config } from "tailwindcss";
-
-/**
- * Paleta y escalas de VSI. Los breakpoints `w****` son max-width:
- * replican exactamente los cortes del diseño original (1180 → 380).
- */
-const config: Config = {
-  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
-  theme: {
-    extend: {
-      colors: {
-        azul: "#083B7A",
-        "azul-osc": "#052B59",
-        "azul-cl": "#0A4788",
-        naranja: "#E47A24",
-        "naranja-osc": "#CF6A18",
-        wa: "#25D366",
-        "wa-osc": "#1EB857",
-        gris: "#F5F7FA",
-        "gris-2": "#F9FAFC",
-        "gris-3": "#F7F9FC",
-        linea: "#E3E8EF",
-        "linea-2": "#EDF1F6",
-        texto: "#12233B",
-        "texto-2": "#55637A",
-        "texto-3": "#8494AB",
-        "azul-tile": "#0A2F5C",
-      },
-      fontFamily: {
-        head: ["var(--font-head)", "system-ui", "sans-serif"],
-        body: ["var(--font-body)", "system-ui", "sans-serif"],
-      },
-      maxWidth: {
-        page: "1240px",
-      },
-      screens: {
-        w1180: { max: "1180px" },
-        w1024: { max: "1024px" },
-        w900: { max: "900px" },
-        w760: { max: "760px" },
-        w640: { max: "640px" },
-        w520: { max: "520px" },
-        w380: { max: "380px" },
-      },
-      boxShadow: {
-        header: "0 2px 18px rgba(8,59,122,.09)",
-        cta: "0 8px 22px rgba(228,122,36,.28)",
-        "cta-lg": "0 10px 26px rgba(228,122,36,.34)",
-        "cta-sm": "0 6px 16px rgba(228,122,36,.28)",
-        "wa-btn": "0 10px 26px rgba(37,211,102,.3)",
-        "wa-modal": "0 10px 26px rgba(37,211,102,.32)",
-        "wa-float": "0 10px 26px rgba(37,211,102,.42)",
-        note: "0 18px 40px rgba(5,43,89,.32)",
-        icon: "0 4px 16px rgba(5,43,89,.16)",
-        menu: "0 18px 40px rgba(5,43,89,.18)",
-        card: "0 10px 34px rgba(5,43,89,.07)",
-        form: "0 30px 70px rgba(0,0,0,.28)",
-        modal: "0 30px 80px rgba(0,0,0,.4)",
-        avatar: "0 20px 50px rgba(0,0,0,.3)",
-        "form-btn": "0 10px 24px rgba(228,122,36,.3)",
-      },
-      keyframes: {
-        waPulse: {
-          "0%, 100%": { boxShadow: "0 0 0 0 rgba(37,211,102,.55)" },
-          "50%": { boxShadow: "0 0 0 14px rgba(37,211,102,0)" },
-        },
-      },
-      animation: {
-        "wa-pulse": "waPulse 2.6s infinite",
-      },
-    },
-  },
-  plugins: [],
-};
-
-export default config;
-</file>
-
-<file path="tsconfig.json">
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [{ "name": "next" }],
-    "paths": { "@/*": ["./*"] }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
-}
 </file>
 
 <file path="lib/site.ts">
@@ -2029,7 +2030,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       "ctaProducto": "Graseras de acero inoxidable"
     },
     {
-      "focus": "",
+      "focus": "valvulas",
       "catId": "valvulas",
       "titulo": "VÁLVULAS CUCHILLA PARA LÍNEAS INDUSTRIALES EXIGENTES",
       "descripcion": "Soluciones unidireccionales y bidireccionales para manejo de sólidos, pulpas y fluidos industriales. Configuraciones manuales y neumáticas.",
@@ -2060,7 +2061,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     },
     {
       "focus": "",
-      "catId": "",
+      "catId": "instrumentos",
       "titulo": "MANÓMETROS E INSTRUMENTOS DE MEDICIÓN IDEALES PARA LA INDUSTRIA",
       "descripcion": "Instrumentos para determinar la presión de un fluido, como aire o agua.",
       "imagen": "/portadas/MANOMETROS.webp",
@@ -2070,24 +2071,34 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     },
     {
       "focus": "",
-      "catId": "",
+      "catId": "bridas",
       "titulo": "BRIDAS A105 IDEALES PARA CONEXIONES INDUSTRIALES",
       "descripcion": "Soluciones para montaje, mantenimiento y conexión de tuberías industriales. Cotiza según diámetro, medida y especificaciones de tu proyecto.",
-      "imagen": "/portadas/BRIDAS A105.webp",
+      "imagen": "/portadas/BRIDAS INOX Y EN ACERO AL CARBONO.png",
       "imagenAlt": "Bridas A105 para tuberías industriales",
       "ctaTexto": "Cotizar bridas",
       "ctaProducto": "Bridas A105"
     },
     {
       "focus": "",
-      "catId": "",
+      "catId": "perfileria",
       "titulo": "SOLUCIONES INTEGRALES PARA PERFILERÍA INDUSTRIAL EN TODAS LAS CALIDADES",
       "descripcion": "Optimiza tus procesos operativos con infraestructura sólida, flexible y de vanguardia.",
       "imagen": "/portadas/PERFILES.webp",
       "imagenAlt": "Perfiles metálicos para proyectos industriales",
       "ctaTexto": "Cotizar perfiles",
       "ctaProducto": "Perfiles metálicos"
-    }
+    },
+    {
+      "focus": "",
+      "catId": "conduit",
+      "titulo": "FALTA DEFINIR EL TEXTO PARA ESTO",
+      "descripcion": "FALTA DEFINIR EL TEXTO PARA ESTO",
+      "imagen": "/portadas/PRODUCTOS CONDUIT UL.png",
+      "imagenAlt": "",
+      "ctaTexto": "Cotizar productos conduit UL",
+      "ctaProducto": "productos conduit UL"
+    }    
   ],
   "bento": [
     {
@@ -2242,14 +2253,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         "desc": "¿No encuentras el tipo, la rosca o la medida que necesitas? Trabajamos graseras en otras roscas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
         "imagen": "/productos/OTRAS GRASERAS.webp"
       },
-      "medidas": [
-        "1/8\" NPT",
-        "1/4\" NPT",
-        "M6 x 1",
-        "M8 x 1.25",
-        "M10 x 1",
-        "Otra medida"
-      ],
       "productos": [
         {
           "nombre": "Grasera NPT recta",
@@ -2293,14 +2296,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos válvulas en otros diámetros, materiales y presiones de trabajo bajo pedido. Cuéntanos qué buscas y te cotizamos.",
         "imagen": ""
       },
-      "medidas": [
-        "2\"",
-        "3\"",
-        "4\"",
-        "6\"",
-        "8\"",
-        "Otra medida"
-      ],
       "productos": [
         {
           "nombre": "Válvula compuerta",
@@ -2344,13 +2339,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos empaquetaduras en otros espesores, materiales y dimensiones bajo pedido. Cuéntanos qué buscas y te cotizamos.",
         "imagen": "/productos/OTRAS EMPAQUETADURAS.webp"
       },
-      "medidas": [
-        "1/8\" espesor",
-        "3/16\" espesor",
-        "1/4\" espesor",
-        "3/8\" espesor",
-        "Otro espesor"
-      ],
       "productos": [
         {
           "nombre": "Empaquetadura de asbesto",
@@ -2392,151 +2380,123 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         "titulo": "Otros tipos...",
         "subtitulo": "Descubre más tubos",
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos tubos y conduit en otros diámetros, espesores y materiales bajo pedido. Cuéntanos qué buscas y te cotizamos.",
-        "imagen": "/categorias/tubos.png"
+        "imagen": "/productos/OTROS PRODUCTOS TUBOS.webp"
       },
-      "medidas": [
-        "4\"",
-        "6\"",
-        "8\"",
-        "12\"",
-        "Otra medida"
-      ],
       "productos": [
         {
-          "nombre": "Tubería HDPE corrugada 4\"",
-          "desc": "Drenaje agrícola y pluvial. Ligera, flexible y de instalación rápida.",
-          "imagen": ""
+          "nombre": "Codo HDPE",
+          "desc": "",
+          "imagen": "/productos/CODO HDPE.webp"
         },
         {
-          "nombre": "Tubería HDPE corrugada 6\"",
-          "desc": "Conducción de mediano caudal con alta resistencia química.",
-          "imagen": ""
+          "nombre": "Conexion TEE HDPE",
+          "desc": "",
+          "imagen": "/productos/CONEXION TEE HDPE.webp"
         },
         {
-          "nombre": "Tubería HDPE corrugada 8\"",
-          "desc": "Obra civil y minería, con buena resistencia al aplastamiento.",
-          "imagen": ""
+          "nombre": "Conexion YEE HDPE",
+          "desc": "",
+          "imagen": "/productos/CONEXION YEE HDPE.webp"
         },
         {
-          "nombre": "Tubería HDPE corrugada 12\"",
-          "desc": "Alto caudal para colectores principales y drenaje de gran escala.",
-          "imagen": ""
+          "nombre": "Flange adapter",
+          "desc": "",
+          "imagen": "/productos/FLANGE ADAPTER.webp"
         },
         {
-          "nombre": "Codo HDPE 90°",
-          "desc": "Cambio de dirección en línea corrugada sin pérdida de estanqueidad.",
-          "imagen": ""
+          "nombre": "Tubo HDPE",
+          "desc": "",
+          "imagen": "/productos/TUBO HDPE.webp"
         },
         {
-          "nombre": "Tee HDPE",
-          "desc": "Derivación de línea para ramales secundarios.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Unión / cople HDPE",
-          "desc": "Empalme de tramos con sello confiable.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Tapón HDPE",
-          "desc": "Cierre de extremo de línea para pruebas o final de tramo.",
+          "nombre": "",
+          "desc": "",
           "imagen": ""
         }
       ]
     },
     {
-      "id": "planchas",
-      "label": "Planchas",
-      "skuPrefijo": "PLA",
-      "otros": {
-        "titulo": "Otros tipos...",
-        "subtitulo": "Descubre más planchas",
-        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos planchas y empaquetaduras en otros espesores, materiales y dimensiones bajo pedido. Cuéntanos qué buscas y te cotizamos.",
-        "imagen": "/categorias/planchas.png"
-      },
-      "medidas": [
-        "1/8\"",
-        "3/16\"",
-        "1/4\"",
-        "3/8\"",
-        "1/2\"",
-        "Otro espesor"
-      ],
-      "productos": [
-        {
-          "nombre": "Plancha LAC (laminada en caliente)",
-          "desc": "Estructuras, bases de equipo y trabajos de metalmecánica pesada.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha LAF (laminada en frío)",
-          "desc": "Acabado fino para carpintería metálica y piezas a la vista.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha estriada",
-          "desc": "Pisos y plataformas antideslizantes en planta y escaleras.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha galvanizada",
-          "desc": "Resistencia a la corrosión en aplicaciones expuestas a intemperie.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha inoxidable 304",
-          "desc": "Alimentos, pesca y farmacéutica: superficie sanitaria y de fácil limpieza.",
-          "imagen": ""
-        },
-        {
-          "nombre": "Plancha inoxidable 316",
-          "desc": "Ambientes salinos y químicos agresivos, con molibdeno para mayor resistencia.",
-          "imagen": ""
-        }
-      ]
-    },
-    {
-      "id": "accesorios",
-      "label": "Accesorios",
-      "skuPrefijo": "ACC",
+      "id": "conduit",
+      "label": "Productos conduit",
+      "skuPrefijo": "C-UL",
       "otros": {
         "titulo": "Otros tipos...",
         "subtitulo": "Descubre más accesorios",
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos accesorios en otras medidas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
-        "imagen": "/categorias/accesorios.png"
+        "imagen": ""
       },
-      "medidas": [
-        "Según requerimiento"
-      ],
       "productos": [
         {
-          "nombre": "Abrazaderas metálicas",
-          "desc": "Sujeción firme de mangueras y líneas en distintos diámetros.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Niples roscados",
-          "desc": "Empalmes cortos en las medidas más usadas en planta.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Conexiones roscadas",
-          "desc": "Codos, tees y uniones bajo pedido según tu especificación.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Bridas",
-          "desc": "Según norma y diámetro requerido para conexión de líneas.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Tapones y reducciones",
-          "desc": "Complemento de línea para cierres y cambios de diámetro.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
           "imagen": ""
         },
         {
-          "nombre": "Suministro bajo pedido",
-          "desc": "¿No está en la lista? Lo importamos para ti con tu especificación exacta.",
+          "nombre": "Imagen esta rota",
+          "desc": "",
+          "imagen": ""
+        }
+      ]
+    },      
+    {
+      "id": "instrumentos",
+      "label": "Instrumentos",
+      "skuPrefijo": "ITS",
+      "otros": {
+        "titulo": "Otros tipos...",
+        "subtitulo": "Descubre más instrumentos",
+        "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos accesorios en otras medidas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
+        "imagen": "/productos/OTROS PRODCUTOS.webp"
+      },
+      "productos": [
+        {
+          "nombre": "",
+          "desc": "",
+          "imagen": "/productos/MANOMETRO CON DIAFRAGMA.webp"
+        },
+        {
+          "nombre": "",
+          "desc": "",
+          "imagen": "/productos/MANOMETROS.webp"
+        },
+        {
+          "nombre": "",
+          "desc": "",
+          "imagen": "/productos/TERMOMETRO.webp"
+        },
+        {
+          "nombre": "",
+          "desc": "",
+          "imagen": "/productos/VACUOMETROS.webp"
+        },
+        {
+          "nombre": "Falta imagen y productos",
+          "desc": "",
+          "imagen": ""
+        },
+        {
+          "nombre": "Falta imagen y productos",
+          "desc": "",
           "imagen": ""
         }
       ]
@@ -2838,75 +2798,6 @@ const CAT_ICONS: Record<string, React.ReactNode> = {
   ),
 
   /* -------------------------
-     PLANCHAS METÁLICAS
-  ------------------------- */
-  planchas: (
-    <>
-      {/* Plancha superior */}
-      <path
-        d="
-          M9 15
-          L31 9
-          L40 14
-          L18 21
-          L9 15Z
-        "
-      />
-
-      {/* Espesor superior */}
-      <path d="M9 15V19L18 25L40 18V14" />
-
-      {/* Segunda plancha */}
-      <path d="M9 24L18 30L40 23" />
-      <path d="M9 24V28L18 34L40 27V23" />
-
-      {/* Tercera plancha */}
-      <path d="M9 33L18 39L40 32" />
-      <path d="M9 33V37L18 43L40 36V32" />
-    </>
-  ),
-
-  /* -------------------------
-     ACCESORIOS / CODO INDUSTRIAL
-  ------------------------- */
-  accesorios: (
-    <>
-      {/* Boca superior */}
-      <rect x="27" y="5" width="12" height="7" rx="1" />
-      <path d="M30 12V17" />
-      <path d="M36 12V17" />
-
-      {/* Codo */}
-      <path
-        d="
-          M33 17
-          C33 17 33 17 33 17
-          C23 17 17 23 17 33
-        "
-      />
-
-      <path
-        d="
-          M28 17
-          C19.5 19
-          14 24.5
-          12 33
-        "
-      />
-
-      {/* Boca inferior */}
-      <rect x="7" y="33" width="12" height="8" rx="1" />
-
-      {/* Detalles de brida */}
-      <path d="M10 33V30M16 33V30" />
-      <path d="M30 8H36" />
-
-      {/* Unión */}
-      <circle cx="17" cy="28" r="1.8" />
-    </>
-  ),
-
-  /* -------------------------
      EMPAQUETADURA / GASKET
   ------------------------- */
   empaquetaduras: (
@@ -2927,6 +2818,62 @@ const CAT_ICONS: Record<string, React.ReactNode> = {
       <circle cx="36.3" cy="11.7" r="1.6" />
     </>
   ),
+
+  /* -------------------------
+     PRODUCTOS CONDUIT
+     Tubería / conduit industrial
+  ------------------------- */
+  conduit: (
+    <>
+      {/* Conduit superior */}
+      <path d="M8 14H29C35 14 39 18 39 24V26" />
+      <path d="M8 20H28C31 20 33 22 33 25V26" />
+
+      {/* Terminales izquierdos */}
+      <path d="M8 11V23" />
+      <path d="M11 12V22" />
+
+      {/* Curva / salida */}
+      <path d="M33 26V37" />
+      <path d="M39 26V37" />
+
+      {/* Rosca inferior */}
+      <path d="M31 37H41" />
+      <path d="M31 40H41" />
+      <path d="M33 43H39" />
+    </>
+  ),
+
+  /* -------------------------
+     INSTRUMENTOS
+     Manómetro / instrumento industrial
+  ------------------------- */
+  instrumentos: (
+    <>
+      {/* Cuerpo del manómetro */}
+      <circle cx="24" cy="20" r="13" />
+      <circle cx="24" cy="20" r="9.5" />
+
+      {/* Marcas del indicador */}
+      <path d="M24 10V13" />
+      <path d="M16.5 13L18.5 15" />
+      <path d="M31.5 13L29.5 15" />
+      <path d="M14 20H17" />
+      <path d="M31 20H34" />
+
+      {/* Aguja */}
+      <path d="M24 20L30 15" />
+      <circle cx="24" cy="20" r="1.5" />
+
+      {/* Conexión inferior */}
+      <path d="M21 33V37H27V33" />
+      <path d="M20 37H28V41H20Z" />
+
+      {/* Rosca */}
+      <path d="M21 41V45M27 41V45" />
+      <path d="M21 43H27M21 45H27" />
+    </>
+  )
 };
 
 
@@ -2983,7 +2930,6 @@ type Prod = {
   catIndex: number;
   catId: string;
   categoria: string;
-  medidas: string[];
   sku: string;
   busca: string;
 };
@@ -2994,7 +2940,6 @@ const TODOS: Prod[] = CATS.flatMap((c, ci) =>
     catIndex: ci,
     catId: c.id,
     categoria: c.label,
-    medidas: c.medidas,
     sku: `VSI-${c.skuPrefijo}-${String(pi + 1).padStart(2, "0")}`,
     busca: norm(`${p.nombre} ${p.desc} ${c.label}`),
   })),
@@ -3014,7 +2959,6 @@ const OTROS: (Prod & { subtitulo: string })[] = CATS.map((c, ci) => ({
   catIndex: ci,
   catId: c.id,
   categoria: c.label,
-  medidas: c.medidas,
   sku: `VSI-${c.skuPrefijo}-OTROS`,
   busca: "",
 }));
@@ -3054,7 +2998,12 @@ export default function Home() {
       if (c !== undefined) setCat(c);
     }
 
-    heroTimer.current = setInterval(() => setHero((h) => (h + 1) % content.hero.length), 7000);
+    // El auto-avance NO arranca en modo campaña: quien llega desde el anuncio
+    // debe quedarse en el hero de Graseras, no ver otro producto a los 7 s.
+    // Las flechas y los puntos siguen permitiendo navegar a mano (goHero).
+    if (!f) {
+      heroTimer.current = setInterval(() => setHero((h) => (h + 1) % content.hero.length), 7000);
+    }
     // Solo cierra si el clic ocurrió fuera del menú: en el App Router React
     // delega los eventos en `document`, así que este listener corre siempre
     // después del onClick del botón (stopPropagation no lo evita).
