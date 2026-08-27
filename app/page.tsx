@@ -1151,11 +1151,11 @@ export default function Home() {
               >
                 <Chevron dir="left" c="#083B7A" />
               </button>
-              <div ref={marcasRef} className="no-scrollbar flex flex-1 gap-[26px] overflow-x-auto scroll-smooth px-0.5 py-1">
+              <div ref={marcasRef} className="no-scrollbar bg-white flex flex-1 gap-[26px] overflow-x-auto scroll-smooth px-0.5 py-1">
                 {content.marcas.map((m) => (
                   <div
                     key={m.nombre}
-                    className="h-[70px] shrink-0 basis-[200px] overflow-hidden w640:h-20 w640:basis-[160px] w380:basis-[140px]"
+                    className="h-[70px] shrink-0 basis-[200px] bg-white overflow-hidden w640:h-20 w640:basis-[160px] w380:basis-[140px]"
                   >
                     <Ph src={m.imagen} alt={m.nombre} />
                   </div>
@@ -1427,19 +1427,19 @@ export default function Home() {
                 Graseras rectas, 45° y 90°
               </a>
               <a href="#catalogo" className={FOOTER_LINK}>
-                Válvulas cuchilla
+                Válvulas
               </a>
               <a href="#catalogo" className={FOOTER_LINK}>
-                Tubería HDPE corrugada
+                Tubería HDPE
               </a>
               <a href="#catalogo" className={FOOTER_LINK}>
-                Accesorios HDPE
+                Productos conduit UL
               </a>
               <a href="#catalogo" className={FOOTER_LINK}>
-                Planchas de acero
+                Empaquetaduras
               </a>
               <a href="#contacto" className={FOOTER_LINK}>
-                Importación bajo pedido
+                Manómetros e Instrumentos
               </a>
             </div>
           </div>

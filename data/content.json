@@ -169,36 +169,32 @@
   ],
   "marcas": [
     {
-      "nombre": "Marca 1",
+      "nombre": "Sunvalve",
+      "imagen": "/testimonios/sunvalve-logoo.png"
+    },
+    {
+      "nombre": "Cimberio",
+      "imagen": "/testimonios/cimberio-logo.png"
+    },
+    {
+      "nombre": "Genebre",
       "imagen": "/testimonios/genebre-logo.jpg"
     },
     {
-      "nombre": "Marca 2",
+      "nombre": "Swagelok",
       "imagen": "/testimonios/swagelok-logo.jpg"
     },
     {
-      "nombre": "Marca 3",
-      "imagen": "/testimonios/genebre-logo.jpg"
+      "nombre": "WIKA",
+      "imagen": "/testimonios/wika-logo.png"
     },
     {
-      "nombre": "Marca 4",
-      "imagen": "/testimonios/swagelok-logo.jpg"
+      "nombre": "Giacomini",
+      "imagen": "/testimonios/giacomini-logo.png"
     },
     {
-      "nombre": "Marca 5",
-      "imagen": "/testimonios/genebre-logo.jpg"
-    },
-    {
-      "nombre": "Marca 6",
-      "imagen": "/testimonios/swagelok-logo.jpg"
-    },
-    {
-      "nombre": "Marca 7",
-      "imagen": "/testimonios/genebre-logo.jpg"
-    },
-    {
-      "nombre": "Marca 8",
-      "imagen": "/testimonios/swagelok-logo.jpg"
+      "nombre": "Crane",
+      "imagen": "/testimonios/crane-logo.png"
     }
   ],
   "faqs": [
