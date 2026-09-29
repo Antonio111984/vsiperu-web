@@ -104,11 +104,17 @@ public/
     Arenado granallado y galvanizado.png
     Corte de tubos y fabricación de niples.png
     Fabricación de bridas rompeagua.png
+    OULETS.png
     Pintado de tubos.png
     Roscado y ranurado.png
   testimonios/
+    cimberio-logo.png
+    crane-logo.png
     genebre-logo.jpg
+    giacomini-logo.png
+    sunvalve-logoo.png
     swagelok-logo.jpg
+    wika-logo.png
   apple-touch-icon.png
   favicon.ico
   vsiperu-favicon.svg
@@ -1667,128 +1673,6 @@ eventos de esa sesión. Es la misma página `/`: no hay ruta aparte.
 Vercel es lo más simple: importa el repo, apunta `vsiperu.com.pe` y listo. Después del deploy: verifica el dominio en Search Console y envía `https://vsiperu.com.pe/sitemap.xml`.
 </file>
 
-<file path="lib/site.ts">
-// ---------------------------------------------------------------------------
-// DATOS DE LA EMPRESA + CONFIGURACIÓN DE MEDICIÓN.
-//
-// Los IDs de Google YA NO se editan aquí: vienen de variables de entorno
-// (ver .env.example y GOOGLE-ADS-SETUP.md). Así se administran desde Vercel
-// sin tocar código. Todas son NEXT_PUBLIC_* porque se ejecutan en el navegador
-// y no son secretos (viajan en el HTML de cualquier forma).
-//
-// El contenido de la página (hero, productos, servicios, marcas, FAQ)
-// vive en  data/content.json
-// ---------------------------------------------------------------------------
-
-/** Lee una env pública y normaliza vacíos/espacios a "". */
-const env = (v: string | undefined) => (v ?? "").trim();
-
-// Next.js reemplaza `process.env.NEXT_PUBLIC_*` en build time, por lo que hay
-// que escribir el nombre completo y literal de cada variable (no indexar).
-const GTM_ID = env(process.env.NEXT_PUBLIC_GTM_ID);
-const GA4_ID = env(process.env.NEXT_PUBLIC_GA4_ID);
-const ADS_ID = env(process.env.NEXT_PUBLIC_GOOGLE_ADS_ID);
-
-export const site = {
-  name: "VSI Suministros Industriales",
-  legalName: "Suministros Industriales VSI",
-  ruc: "20609295539",
-  url: "https://vsiperu.com.pe",
-  locale: "es_PE",
-
-  // Número en formato internacional SIN "+" ni espacios (para wa.me)
-  whatsapp: "51946685886",
-  whatsappDisplay: "+51 946 685 886",
-  phone: "+51946685886",
-  phoneDisplay: "+51 946 685 886",
-
-  email: "ventas@vsiperu.com.pe",
-  emailLogistica: "logistica@vsiperu.com.pe",
-
-  address: {
-    street: "Av. Guillermo Dansey 1369",
-    district: "Cercado de Lima",
-    city: "Lima",
-    region: "Lima",
-    postalCode: "15001",
-    country: "PE",
-  },
-  mapQuery: "Av. Guillermo Dansey 1369, Cercado de Lima, Lima, Perú",
-
-  social: {
-    facebook: "https://www.facebook.com/profile.php?id=61552539471982",
-    linkedin:
-      "https://pe.linkedin.com/in/vsi-per%C3%BA-20a117190?utm_source=share&utm_medium=member_mweb&utm_campaign=share_via&utm_content=profile",
-  },
-
-  hours: "Lun–Vie 8:00–18:00 · Sáb 9:00–13:00",
-  foundingYear: 2016,
-
-  // --- Medición (todo desde .env / Vercel) ---------------------------------
-  gtmId: GTM_ID, // NEXT_PUBLIC_GTM_ID          → GTM-XXXXXXX
-  ga4Id: GA4_ID, // NEXT_PUBLIC_GA4_ID          → G-XXXXXXXXXX
-  adsId: ADS_ID, // NEXT_PUBLIC_GOOGLE_ADS_ID   → AW-XXXXXXXXX
-
-  /**
-   * Etiquetas de conversión de Google Ads en formato `AW-XXXXXXXXX/AbCdEfGhIjKl`.
-   * SOLO se usan en modo fallback (sin GTM). Con GTM configurado, la conversión
-   * la dispara el contenedor y estas variables se ignoran por completo.
-   */
-  adsConversionLabels: {
-    whatsapp: env(process.env.NEXT_PUBLIC_ADS_CONVERSION_WHATSAPP),
-    llamada: env(process.env.NEXT_PUBLIC_ADS_CONVERSION_LLAMADA),
-    formulario: env(process.env.NEXT_PUBLIC_ADS_CONVERSION_FORMULARIO),
-  },
-
-  // Código de verificación de Google Search Console (meta tag)
-  googleSiteVerification: env(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION),
-};
-
-/**
- * Modo de etiquetado ACTIVO. Es una sola fuente de verdad, evaluada igual en
- * servidor y cliente, para que `layout.tsx` (qué scripts cargar) y
- * `analytics.ts` (cómo registrar la conversión) nunca se contradigan.
- *
- *  - "gtm"  → GTM es el único sistema de etiquetado. Todo va al dataLayer.
- *             NO se carga gtag.js ni se llama a gtag() para conversiones.
- *  - "gtag" → No hay GTM. Se carga gtag.js con GA4 y/o Ads y las conversiones
- *             se envían directo con las etiquetas de `adsConversionLabels`.
- *  - "off"  → Sin IDs configurados (desarrollo). Los eventos se siguen
- *             empujando al dataLayer para poder depurarlos, sin red.
- *
- * Nunca puede ser "gtm" y "gtag" a la vez: ahí es donde nacen las conversiones
- * duplicadas.
- */
-export type AnalyticsMode = "gtm" | "gtag" | "off";
-export const analyticsMode: AnalyticsMode = site.gtmId
-  ? "gtm"
-  : site.ga4Id || site.adsId
-    ? "gtag"
-    : "off";
-
-export function waLink(mensaje: string) {
-  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensaje)}`;
-}
-
-/**
- * Mensaje estándar de los botones de cotización.
- * Los campos que no se conocen van vacíos para que el cliente los complete.
- */
-export function msgCotizar(
-  datos: { producto?: string; medida?: string; cantidad?: number | string } = {},
-) {
-  return [
-    "Hola, deseo solicitar una cotización a VSIPERU.",
-    "RUC: ",
-    "RAZON SOCIAL: ",
-    `Producto: ${datos.producto ?? ""}`,
-    `Medida: ${datos.medida ?? ""}`,
-    `Cantidad: ${datos.cantidad ?? ""}`,
-    "Ciudad: ",
-  ].join("\n");
-}
-</file>
-
 <file path="app/layout.tsx">
 import type { Metadata, Viewport } from "next";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
@@ -2016,6 +1900,128 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 </file>
 
+<file path="lib/site.ts">
+// ---------------------------------------------------------------------------
+// DATOS DE LA EMPRESA + CONFIGURACIÓN DE MEDICIÓN.
+//
+// Los IDs de Google YA NO se editan aquí: vienen de variables de entorno
+// (ver .env.example y GOOGLE-ADS-SETUP.md). Así se administran desde Vercel
+// sin tocar código. Todas son NEXT_PUBLIC_* porque se ejecutan en el navegador
+// y no son secretos (viajan en el HTML de cualquier forma).
+//
+// El contenido de la página (hero, productos, servicios, marcas, FAQ)
+// vive en  data/content.json
+// ---------------------------------------------------------------------------
+
+/** Lee una env pública y normaliza vacíos/espacios a "". */
+const env = (v: string | undefined) => (v ?? "").trim();
+
+// Next.js reemplaza `process.env.NEXT_PUBLIC_*` en build time, por lo que hay
+// que escribir el nombre completo y literal de cada variable (no indexar).
+const GTM_ID = env(process.env.NEXT_PUBLIC_GTM_ID);
+const GA4_ID = env(process.env.NEXT_PUBLIC_GA4_ID);
+const ADS_ID = env(process.env.NEXT_PUBLIC_GOOGLE_ADS_ID);
+
+export const site = {
+  name: "VSI Suministros Industriales",
+  legalName: "Suministros Industriales VSI",
+  ruc: "20609295539",
+  url: "https://vsiperu.com.pe",
+  locale: "es_PE",
+
+  // Número en formato internacional SIN "+" ni espacios (para wa.me)
+  whatsapp: "51946685886",
+  whatsappDisplay: "+51 946 685 886",
+  phone: "+51946685886",
+  phoneDisplay: "+51 946 685 886",
+
+  email: "ventas@vsiperu.com.pe",
+  emailLogistica: "logistica@vsiperu.com.pe",
+
+  address: {
+    street: "Calle Eloy Ureta 163 (cruce con Pasaje 25)",
+    district: "La Perla",
+    city: "Callao",
+    region: "Callao",
+    postalCode: "07016",
+    country: "PE",
+  },
+  mapQuery: "Calle Eloy Ureta 163, La Perla, Callao, Perú",
+
+  social: {
+    facebook: "https://www.facebook.com/profile.php?id=61552539471982",
+    linkedin:
+      "https://pe.linkedin.com/in/vsi-per%C3%BA-20a117190?utm_source=share&utm_medium=member_mweb&utm_campaign=share_via&utm_content=profile",
+  },
+
+  hours: "Lun–Vie 8:00–18:00 · Sáb 9:00–13:00",
+  foundingYear: 2016,
+
+  // --- Medición (todo desde .env / Vercel) ---------------------------------
+  gtmId: GTM_ID, // NEXT_PUBLIC_GTM_ID          → GTM-XXXXXXX
+  ga4Id: GA4_ID, // NEXT_PUBLIC_GA4_ID          → G-XXXXXXXXXX
+  adsId: ADS_ID, // NEXT_PUBLIC_GOOGLE_ADS_ID   → AW-XXXXXXXXX
+
+  /**
+   * Etiquetas de conversión de Google Ads en formato `AW-XXXXXXXXX/AbCdEfGhIjKl`.
+   * SOLO se usan en modo fallback (sin GTM). Con GTM configurado, la conversión
+   * la dispara el contenedor y estas variables se ignoran por completo.
+   */
+  adsConversionLabels: {
+    whatsapp: env(process.env.NEXT_PUBLIC_ADS_CONVERSION_WHATSAPP),
+    llamada: env(process.env.NEXT_PUBLIC_ADS_CONVERSION_LLAMADA),
+    formulario: env(process.env.NEXT_PUBLIC_ADS_CONVERSION_FORMULARIO),
+  },
+
+  // Código de verificación de Google Search Console (meta tag)
+  googleSiteVerification: env(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION),
+};
+
+/**
+ * Modo de etiquetado ACTIVO. Es una sola fuente de verdad, evaluada igual en
+ * servidor y cliente, para que `layout.tsx` (qué scripts cargar) y
+ * `analytics.ts` (cómo registrar la conversión) nunca se contradigan.
+ *
+ *  - "gtm"  → GTM es el único sistema de etiquetado. Todo va al dataLayer.
+ *             NO se carga gtag.js ni se llama a gtag() para conversiones.
+ *  - "gtag" → No hay GTM. Se carga gtag.js con GA4 y/o Ads y las conversiones
+ *             se envían directo con las etiquetas de `adsConversionLabels`.
+ *  - "off"  → Sin IDs configurados (desarrollo). Los eventos se siguen
+ *             empujando al dataLayer para poder depurarlos, sin red.
+ *
+ * Nunca puede ser "gtm" y "gtag" a la vez: ahí es donde nacen las conversiones
+ * duplicadas.
+ */
+export type AnalyticsMode = "gtm" | "gtag" | "off";
+export const analyticsMode: AnalyticsMode = site.gtmId
+  ? "gtm"
+  : site.ga4Id || site.adsId
+    ? "gtag"
+    : "off";
+
+export function waLink(mensaje: string) {
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensaje)}`;
+}
+
+/**
+ * Mensaje estándar de los botones de cotización.
+ * Los campos que no se conocen van vacíos para que el cliente los complete.
+ */
+export function msgCotizar(
+  datos: { producto?: string; medida?: string; cantidad?: number | string } = {},
+) {
+  return [
+    "Hola, deseo solicitar una cotización a VSIPERU.",
+    "RUC: ",
+    "RAZON SOCIAL: ",
+    `Producto: ${datos.producto ?? ""}`,
+    `Medida: ${datos.medida ?? ""}`,
+    `Cantidad: ${datos.cantidad ?? ""}`,
+    "Ciudad: ",
+  ].join("\n");
+}
+</file>
+
 <file path="data/content.json">
 {
   "hero": [
@@ -2174,8 +2180,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     {
       "titulo": "Outlets",
       "mensaje": "Hola VSI, quiero consultar por outlets",
-      "imagen": "",
-      "imagenAlt": "Foto de outlets",
+      "imagen": "/servicios/OULETS.png",
+      "imagenAlt": "",
       "fila": 3
     },
     {
@@ -2188,36 +2194,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   ],
   "marcas": [
     {
-      "nombre": "Marca 1",
+      "nombre": "Sunvalve",
+      "imagen": "/testimonios/sunvalve-logoo.png"
+    },
+    {
+      "nombre": "Cimberio",
+      "imagen": "/testimonios/cimberio-logo.png"
+    },
+    {
+      "nombre": "Genebre",
       "imagen": "/testimonios/genebre-logo.jpg"
     },
     {
-      "nombre": "Marca 2",
+      "nombre": "Swagelok",
       "imagen": "/testimonios/swagelok-logo.jpg"
     },
     {
-      "nombre": "Marca 3",
-      "imagen": "/testimonios/genebre-logo.jpg"
+      "nombre": "WIKA",
+      "imagen": "/testimonios/wika-logo.png"
     },
     {
-      "nombre": "Marca 4",
-      "imagen": "/testimonios/swagelok-logo.jpg"
+      "nombre": "Giacomini",
+      "imagen": "/testimonios/giacomini-logo.png"
     },
     {
-      "nombre": "Marca 5",
-      "imagen": "/testimonios/genebre-logo.jpg"
-    },
-    {
-      "nombre": "Marca 6",
-      "imagen": "/testimonios/swagelok-logo.jpg"
-    },
-    {
-      "nombre": "Marca 7",
-      "imagen": "/testimonios/genebre-logo.jpg"
-    },
-    {
-      "nombre": "Marca 8",
-      "imagen": "/testimonios/swagelok-logo.jpg"
+      "nombre": "Crane",
+      "imagen": "/testimonios/crane-logo.png"
     }
   ],
   "faqs": [
@@ -2508,7 +2510,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     "bloques": [
       [
         "Responsable del tratamiento",
-        "Suministros Industriales VSI (RUC 20609295539), con domicilio en Av. Guillermo Dansey 1369, Cercado de Lima, Lima, Perú."
+        "Suministros Industriales VSI (RUC 20609295539), con domicilio en Calle Eloy Ureta 163 (cruce con Pasaje 25), La Perla, Callao, Perú."
       ],
       [
         "Qué datos recogemos",
@@ -2599,6 +2601,11 @@ const FILAS_SERVICIOS = [
 
 /** Título del hero. Mismo estilo para el H1 y para los H2 de los otros slides. */
 const HERO_TITULO = "mt-[22px] text-[clamp(27px,4.9vw,52px)] leading-[1.08] text-white";
+
+/** CTA secundario del hero ("Ver catálogo"). El contenedor del slide es
+    `pointer-events-none`, por eso lleva `pointer-events-auto`. */
+const BTN_HERO_SEC =
+  "pointer-events-auto inline-flex items-center gap-2.5 rounded-md border-[1.5px] border-white/[.34] px-[26px] py-4 text-[16px] font-semibold text-white hover:border-white hover:bg-white/[.07] hover:text-white";
 
 const SOCIAL_A =
   "flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white/[.12]";
@@ -2971,7 +2978,6 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [modalSku, setModalSku] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
-  const [medida, setMedida] = useState("");
   /** `?focus=graseras` de Google Ads. "" en tráfico orgánico. */
   const [focus, setFocus] = useState("");
   const [privacidad, setPrivacidad] = useState(false);
@@ -3065,7 +3071,7 @@ export default function Home() {
   /**
    * Props de un enlace a WhatsApp + su conversión.
    * `meta` viaja tal cual al dataLayer (origen, producto, categoria, sku,
-   * medida, cantidad). `focus`, `landing_page`, `gclid` y las UTM los agrega
+   * cantidad). `focus`, `landing_page`, `gclid` y las UTM los agrega
    * `track()` automáticamente, así que no hay que repetirlos en cada CTA.
    */
   const wa = (mensaje: string, meta: ConvMeta) => ({
@@ -3119,7 +3125,7 @@ export default function Home() {
   }
 
   const modalMsg = prod
-    ? msgCotizar({ producto: `${prod.nombre} (SKU ${prod.sku})`, medida, cantidad: qty })
+    ? msgCotizar({ producto: `${prod.nombre} (SKU ${prod.sku})`, cantidad: qty })
     : "";
 
   return (
@@ -3301,12 +3307,22 @@ export default function Home() {
                       >
                         {s.ctaTexto} <Arrow s={18} />
                       </a>
-                      <a
-                        href="#catalogo"
-                        className="pointer-events-auto inline-flex items-center gap-2.5 rounded-md border-[1.5px] border-white/[.34] px-[26px] py-4 text-[16px] font-semibold text-white hover:border-white hover:bg-white/[.07] hover:text-white"
-                      >
-                        Ver catálogo
-                      </a>
+                      {/* Las portadas cuyo `catId` existe en el catálogo abren
+                          esa categoría (mismo salto que la franja de tipos y el
+                          bento). Las que no tienen categoría propia —bridas,
+                          perfilería— siguen bajando al catálogo tal cual. */}
+                      {s.catId in CAT_INDEX ? (
+                        <button
+                          onClick={() => irACategoria(CAT_INDEX[s.catId])}
+                          className={BTN_HERO_SEC}
+                        >
+                          Ver catálogo
+                        </button>
+                      ) : (
+                        <a href="#catalogo" className={BTN_HERO_SEC}>
+                          Ver catálogo
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -3483,7 +3499,6 @@ export default function Home() {
                         onClick={() => {
                           setModalSku(p.sku);
                           setQty(1);
-                          setMedida("");
                         }}
                         className="group absolute right-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full border-none bg-white shadow-icon hover:bg-naranja"
                       >
@@ -3529,7 +3544,6 @@ export default function Home() {
                       onClick={() => {
                         setModalSku(otros.sku);
                         setQty(1);
-                        setMedida("");
                       }}
                       className="group absolute right-3 top-3 z-[3] flex h-[46px] w-[46px] items-center justify-center rounded-full border-none bg-white shadow-icon hover:bg-naranja"
                     >
@@ -3673,11 +3687,11 @@ export default function Home() {
               >
                 <Chevron dir="left" c="#083B7A" />
               </button>
-              <div ref={marcasRef} className="no-scrollbar flex flex-1 gap-[26px] overflow-x-auto scroll-smooth px-0.5 py-1">
+              <div ref={marcasRef} className="no-scrollbar bg-white flex flex-1 gap-[26px] overflow-x-auto scroll-smooth px-0.5 py-1">
                 {content.marcas.map((m) => (
                   <div
                     key={m.nombre}
-                    className="h-[70px] shrink-0 basis-[200px] overflow-hidden w640:h-20 w640:basis-[160px] w380:basis-[140px]"
+                    className="h-[70px] shrink-0 basis-[200px] bg-white overflow-hidden w640:h-20 w640:basis-[160px] w380:basis-[140px]"
                   >
                     <Ph src={m.imagen} alt={m.nombre} />
                   </div>
@@ -3949,19 +3963,19 @@ export default function Home() {
                 Graseras rectas, 45° y 90°
               </a>
               <a href="#catalogo" className={FOOTER_LINK}>
-                Válvulas cuchilla
+                Válvulas
               </a>
               <a href="#catalogo" className={FOOTER_LINK}>
-                Tubería HDPE corrugada
+                Tubería HDPE
               </a>
               <a href="#catalogo" className={FOOTER_LINK}>
-                Accesorios HDPE
+                Productos conduit UL
               </a>
               <a href="#catalogo" className={FOOTER_LINK}>
-                Planchas de acero
+                Empaquetaduras
               </a>
               <a href="#contacto" className={FOOTER_LINK}>
-                Importación bajo pedido
+                Manómetros e Instrumentos
               </a>
             </div>
           </div>
@@ -4075,23 +4089,7 @@ export default function Home() {
                 <h3 className="text-[clamp(23px,2.6vw,30px)] leading-[1.18] text-texto">{prod.nombre}</h3>
                 <p className="mt-4 text-[16px] leading-[1.65] text-texto-2">{prod.desc}</p>
 
-                <div className="mt-[26px] flex flex-wrap items-center gap-4">
-                  <span className="text-[15px] font-bold text-texto">Medidas:</span>
-                  <select
-                    value={medida}
-                    onChange={(e) => setMedida(e.target.value)}
-                    className="flex-1 basis-[200px] rounded-md border border-[#D8E0EA] bg-white px-3.5 py-[13px] text-texto outline-none focus:border-naranja"
-                  >
-                    <option value="">Elige una opción</option>
-                    {prod.medidas.map((m) => (
-                      <option key={m} value={m}>
-                        {m}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="mt-5 flex flex-wrap items-stretch gap-3.5">
+                <div className="mt-[26px] flex flex-wrap items-stretch gap-3.5">
                   <div className="flex items-center overflow-hidden rounded-md border border-[#D8E0EA]">
                     <button
                       aria-label="Menos"
@@ -4115,7 +4113,6 @@ export default function Home() {
                       producto: prod.nombre,
                       categoria: prod.catId,
                       sku: prod.sku,
-                      medida,
                       cantidad: qty,
                     })}
                     className="flex flex-1 basis-[260px] items-center justify-center gap-3 rounded-md bg-wa px-[22px] py-4 text-[16px] font-extrabold tracking-[.02em] text-white shadow-wa-modal hover:bg-wa-osc hover:text-white"

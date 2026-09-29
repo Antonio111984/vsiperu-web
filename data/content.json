@@ -73,8 +73,8 @@
     {
       "focus": "",
       "catId": "conduit",
-      "titulo": "FALTA DEFINIR EL TEXTO PARA ESTO",
-      "descripcion": "FALTA DEFINIR EL TEXTO PARA ESTO",
+      "titulo": "PRODUCTOS CONDUIT UL PARA INSTALACIONES ELÉCTRICAS INDUSTRIALES",
+      "descripcion": "Soluciones de tuberías y accesorios conduit con certificación UL, ideales para instalaciones eléctricas industriales.",
       "imagen": "/portadas/PRODUCTOS CONDUIT UL.png",
       "imagenAlt": "",
       "ctaTexto": "Cotizar productos conduit UL",
@@ -127,7 +127,7 @@
     {
       "titulo": "Fabricación de bridas rompeagua",
       "mensaje": "Hola VSI, quiero consultar por bridas rompeagua",
-      "imagen": "/servicios/Fabricación de bridas rompeagua.png",
+      "imagen": "/servicios/bridas_rompeagua.png",
       "imagenAlt": "Foto de bridas rompeagua",
       "fila": 1
     },
@@ -141,7 +141,7 @@
     {
       "titulo": "Corte de tubos y fabricación de niples",
       "mensaje": "Hola VSI, quiero consultar por corte de tubos y fabricación de niples",
-      "imagen": "/servicios/Corte de tubos y fabricación de niples.png",
+      "imagen": "/servicios/corte_tubos_fabricacion_niples.png",
       "imagenAlt": "Foto de corte de tubos y fabricación de niples",
       "fila": 2
     },
@@ -268,10 +268,10 @@
       "label": "Válvulas",
       "skuPrefijo": "VAL",
       "otros": {
-        "titulo": "Otros tipos...",
+        "titulo": "Otras valvulas...",
         "subtitulo": "Descubre más válvulas",
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos válvulas en otros diámetros, materiales y presiones de trabajo bajo pedido. Cuéntanos qué buscas y te cotizamos.",
-        "imagen": ""
+        "imagen": "/productos/OtrasValvulas.jpg"
       },
       "productos": [
         {
@@ -386,9 +386,9 @@
           "imagen": "/productos/TUBO HDPE.webp"
         },
         {
-          "nombre": "",
-          "desc": "",
-          "imagen": ""
+          "nombre": "Backing Ring",
+          "desc": "Backing Ring",
+          "imagen": "/productos/BACKING RING.webp"
         }
       ]
     },
@@ -398,40 +398,40 @@
       "skuPrefijo": "C-UL",
       "otros": {
         "titulo": "Otros tipos...",
-        "subtitulo": "Descubre más accesorios",
+        "subtitulo": "Descubre más productos conduit",
         "desc": "¿No encuentras el tipo o la medida que necesitas? Trabajamos accesorios en otras medidas, materiales y acabados bajo pedido. Cuéntanos qué buscas y te cotizamos.",
-        "imagen": ""
+        "imagen": "/productos/03_Tubo_Conduit_Flexible_UL.jpg"
       },
       "productos": [
         {
-          "nombre": "Imagen esta rota",
-          "desc": "",
-          "imagen": ""
+          "nombre": "Tubo Conduit PVC UL651",
+          "desc": "Tubo de conduit PVC con certificación UL651, ideal para instalaciones eléctricas.",
+          "imagen": "/productos/01_Tubo_Conduit_PVC_SCH40_UL651.jpg"
         },
         {
-          "nombre": "Imagen esta rota",
-          "desc": "",
-          "imagen": ""
+          "nombre": "Tubo Conduit Flexible UL",
+          "desc": "Tubo de conduit flexible con certificación UL, ideal para instalaciones eléctricas en espacios reducidos.",
+          "imagen": "/productos/09_Conector_a_Caja_PVC_SCH40_UL.jpg"
         },
         {
-          "nombre": "Imagen esta rota",
-          "desc": "",
-          "imagen": ""
+          "nombre": "Union Conduit PVC SCH40 UL",
+          "desc": "Accesorio de unión para tuberías de conduit PVC con certificación UL, ideal para instalaciones eléctricas.",
+          "imagen": "/productos/05_Union_Conduit_PVC_SCH40_UL.jpg"
         },
         {
-          "nombre": "Imagen esta rota",
-          "desc": "",
-          "imagen": ""
+          "nombre": "Conector Hembra PVC SCH40 UL",
+          "desc": "Conector hembra para tuberías de conduit PVC con certificación UL, ideal para instalaciones eléctricas.",
+          "imagen": "/productos/06_Conector_Hembra_PVC_SCH40_UL.jpg"
         },
         {
-          "nombre": "Imagen esta rota",
-          "desc": "",
-          "imagen": ""
+          "nombre": "Conector Macho PVC SCH40 UL",
+          "desc": "Conector macho para tuberías de conduit PVC con certificación UL, ideal para instalaciones eléctricas.",
+          "imagen": "/productos/07_Conector_Macho_PVC_SCH40_UL.jpg"
         },
         {
-          "nombre": "Imagen esta rota",
-          "desc": "",
-          "imagen": ""
+          "nombre": "Curva Conduit PVC SCH40 90",
+          "desc": "Curva para tuberías de conduit PVC con certificación UL, ideal para instalaciones eléctricas.",
+          "imagen": "/productos/08_Curva_Conduit_PVC_SCH40_90.jpg"
         }
       ]
     },      
@@ -447,34 +447,34 @@
       },
       "productos": [
         {
-          "nombre": "",
-          "desc": "",
+          "nombre": "Manómetro con diafragma",
+          "desc": "Manómetro con diafragma para medir la presión en sistemas industriales.",
           "imagen": "/productos/MANOMETRO CON DIAFRAGMA.webp"
         },
         {
-          "nombre": "",
-          "desc": "",
+          "nombre": "Manómetros",
+          "desc": "Variedad de manómetros para diferentes aplicaciones industriales.",
           "imagen": "/productos/MANOMETROS.webp"
         },
         {
-          "nombre": "",
-          "desc": "",
+          "nombre": "Termómetros",
+          "desc": "Termómetros para medir la temperatura en diferentes aplicaciones.",
           "imagen": "/productos/TERMOMETRO.webp"
         },
         {
-          "nombre": "",
-          "desc": "",
+          "nombre": "Vacuómetros",
+          "desc": "Vacuómetros para medir la presión en sistemas de vacío.",
           "imagen": "/productos/VACUOMETROS.webp"
         },
         {
-          "nombre": "Falta imagen y productos",
-          "desc": "",
-          "imagen": ""
+          "nombre": "Válvula aguja",
+          "desc": "Válvula aguja para controlar el flujo de líquidos en sistemas industriales.",
+          "imagen": "/productos/VALVULA AGUJA.png"
         },
         {
-          "nombre": "Falta imagen y productos",
-          "desc": "",
-          "imagen": ""
+          "nombre": "Válvula de bloqueo y purga",
+          "desc": "Válvula de bloqueo y purga para controlar el flujo de líquidos en sistemas industriales.",
+          "imagen": "/productos/VALVULA DE BLOQUEO Y PURGA.png"
         }
       ]
     }
